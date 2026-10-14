@@ -1,0 +1,520 @@
+{
+  "classification": "synthetic and formal checks only; NOT empirical field evidence or external peer review",
+  "version": "v1.0.0 conceptual/methodological submission candidate",
+  "manuscript_sha256": "5d21f0a3b40c05ea702be37106cfc760b02ac1bbfdbde5a2fd0e1efbd6de7d78",
+  "P0_status": {
+    "R3-01": "FORMAL_ARGUMENT_REPAIRED_IN_TEXT; REAL CALIBRATION OPEN",
+    "R3-02": "FULL_FIVE_MARGINAL_BOUNDS_AND_DECISION_ANALYSIS_REPAIRED; REAL CALIBRATION OPEN",
+    "R3-03": "DATED_SYNTHETIC_JOINT_POLICY_WITNESS_REPAIRED; FIELD EVIDENCE OPEN",
+    "R3-04": "CONCEPTUAL CONTRIBUTION SCOPED; EMPIRICAL INCREMENT NOT CLAIMED"
+  },
+  "P0-01": {
+    "serial_probability": "0.6043824000",
+    "offpath_marginals": [
+      "0.7200",
+      "0.8200"
+    ]
+  },
+  "P0-02": {
+    "full_frechet_bounds": [
+      0.5299999999999996,
+      0.8
+    ],
+    "restricted_two_renewal_independent": [
+      0.5336000000000002,
+      0.8
+    ],
+    "switch_prob": "0.555555555555555555555555555555555555555555556",
+    "J_B_bounds": [
+      "128.8500",
+      "141.000"
+    ]
+  },
+  "P0-03": {
+    "witness": {
+      "valid": true,
+      "balance": {
+        "m": 3,
+        "e": 3,
+        "cash": 20
+      },
+      "births": [
+        [
+          3,
+          "F1"
+        ],
+        [
+          6,
+          "F2"
+        ]
+      ],
+      "services": [
+        [
+          0,
+          [
+            "e"
+          ]
+        ],
+        [
+          3,
+          [
+            "e",
+            "qN"
+          ]
+        ],
+        [
+          6,
+          [
+            "e",
+            "qN"
+          ]
+        ]
+      ],
+      "retired": [
+        "F0",
+        "F1"
+      ]
+    },
+    "negative_cases": {
+      "no_material": "ESCROW",
+      "no_energy": "ESCROW",
+      "no_cash": "ESCROW",
+      "no_fabrication_right": "PERMISSION",
+      "no_future_right": "FUTURE_RIGHT",
+      "deadline_5": "DEADLINE",
+      "slot_capacity_1": "JOINT_CAPACITY"
+    },
+    "field_certification": "NOT_PERFORMED"
+  },
+  "P0-04": {
+    "proposition_scope": "constructed impossibility and joint bundle noncompositionality, not original general theorem",
+    "equal_prior_value_of_perfect_permission_info": "50",
+    "evidence_cost": "12",
+    "net_information_gain_in_toy": "38",
+    "fair_bellman_optimum": "35.2767865600",
+    "novelty_empirical": "UNPROVEN"
+  },
+  "checks": [
+    {
+      "check": "P0-01 serial chain exact",
+      "pass": true,
+      "details": "0.6043824000"
+    },
+    {
+      "check": "P0-01 three-gate counterexample",
+      "pass": true,
+      "details": null
+    },
+    {
+      "check": "P0-01 marginal underidentification",
+      "pass": true,
+      "details": [
+        "0.7200",
+        "0.8200"
+      ]
+    },
+    {
+      "check": "P0-02 LP solves",
+      "pass": true,
+      "details": null
+    },
+    {
+      "check": "P0-02 LP matches analytic and sharp bounds",
+      "pass": true,
+      "details": [
+        0.5299999999999996,
+        0.8
+      ]
+    },
+    {
+      "check": "P0-02 feasible atom distribution lower",
+      "pass": true,
+      "details": {
+        "support": [
+          [
+            [
+              0,
+              1,
+              1,
+              1,
+              1
+            ],
+            0.1
+          ],
+          [
+            [
+              1,
+              0,
+              1,
+              1,
+              1
+            ],
+            0.2
+          ],
+          [
+            [
+              1,
+              1,
+              0,
+              1,
+              1
+            ],
+            0.05
+          ],
+          [
+            [
+              1,
+              1,
+              1,
+              0,
+              1
+            ],
+            0.06
+          ],
+          [
+            [
+              1,
+              1,
+              1,
+              1,
+              0
+            ],
+            0.06
+          ],
+          [
+            [
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            0.53
+          ]
+        ]
+      }
+    },
+    {
+      "check": "P0-02 feasible atom distribution upper",
+      "pass": true,
+      "details": {
+        "support": [
+          [
+            [
+              0,
+              0,
+              0,
+              1,
+              0
+            ],
+            0.005
+          ],
+          [
+            [
+              0,
+              0,
+              1,
+              1,
+              1
+            ],
+            0.095
+          ],
+          [
+            [
+              1,
+              0,
+              0,
+              0,
+              1
+            ],
+            0.045
+          ],
+          [
+            [
+              1,
+              0,
+              1,
+              0,
+              0
+            ],
+            0.015
+          ],
+          [
+            [
+              1,
+              0,
+              1,
+              1,
+              0
+            ],
+            0.04
+          ],
+          [
+            [
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            0.8
+          ]
+        ]
+      }
+    },
+    {
+      "check": "P0-02 pair renewal allowed bound",
+      "pass": true,
+      "details": [
+        0.5336000000000002,
+        0.8
+      ]
+    },
+    {
+      "check": "P0-02 choice switch",
+      "pass": true,
+      "details": "0.555555555555555555555555555555555555555555556"
+    },
+    {
+      "check": "P0-02 choice undecidable under latent marginals",
+      "pass": true,
+      "details": {
+        "Jlo": "128.8500",
+        "Jhi": "141.000"
+      }
+    },
+    {
+      "check": "P0-02 chain choice conditional",
+      "pass": true,
+      "details": "132.197208000000"
+    },
+    {
+      "check": "P0-02 organisational gate",
+      "pass": true,
+      "details": null
+    },
+    {
+      "check": "P0-02 distinct conditional parameter intervals",
+      "pass": true,
+      "details": null
+    },
+    {
+      "check": "P0-03 independent 2 generation witness",
+      "pass": true,
+      "details": {
+        "valid": true,
+        "balance": {
+          "m": 3,
+          "e": 3,
+          "cash": 20
+        },
+        "births": [
+          [
+            3,
+            "F1"
+          ],
+          [
+            6,
+            "F2"
+          ]
+        ],
+        "services": [
+          [
+            0,
+            [
+              "e"
+            ]
+          ],
+          [
+            3,
+            [
+              "e",
+              "qN"
+            ]
+          ],
+          [
+            6,
+            [
+              "e",
+              "qN"
+            ]
+          ]
+        ],
+        "retired": [
+          "F0",
+          "F1"
+        ]
+      }
+    },
+    {
+      "check": "P0-03 negative no_material",
+      "pass": true,
+      "details": "ESCROW"
+    },
+    {
+      "check": "P0-03 negative no_energy",
+      "pass": true,
+      "details": "ESCROW"
+    },
+    {
+      "check": "P0-03 negative no_cash",
+      "pass": true,
+      "details": "ESCROW"
+    },
+    {
+      "check": "P0-03 negative no_fabrication_right",
+      "pass": true,
+      "details": "PERMISSION"
+    },
+    {
+      "check": "P0-03 negative no_future_right",
+      "pass": true,
+      "details": "FUTURE_RIGHT"
+    },
+    {
+      "check": "P0-03 negative deadline_5",
+      "pass": true,
+      "details": "DEADLINE"
+    },
+    {
+      "check": "P0-03 negative slot_capacity_1",
+      "pass": true,
+      "details": "JOINT_CAPACITY"
+    },
+    {
+      "check": "P0-03 resources total",
+      "pass": true,
+      "details": null
+    },
+    {
+      "check": "P0-03 field qualification NOT CLAIMED",
+      "pass": true,
+      "details": "No field data supplied, UNKNOWN/NOT_FIELD_CERTIFIED"
+    },
+    {
+      "check": "P0-04 individual service feasible a",
+      "pass": true,
+      "details": null
+    },
+    {
+      "check": "P0-04 individual service feasible b",
+      "pass": true,
+      "details": null
+    },
+    {
+      "check": "P0-04 joint service not feasible",
+      "pass": true,
+      "details": "1 shared slot at two deadlines, requires 2"
+    },
+    {
+      "check": "P0-04 indistinguishable observable identical",
+      "pass": true,
+      "details": null
+    },
+    {
+      "check": "P0-04 opposite outcomes with missing right",
+      "pass": true,
+      "details": {
+        "valid": false,
+        "reason": "PERMISSION"
+      }
+    },
+    {
+      "check": "P0-04 costed evidence example",
+      "pass": true,
+      "details": "38"
+    },
+    {
+      "check": "P0-04 same-information Bellman parity",
+      "pass": true,
+      "details": "35.2767865600"
+    },
+    {
+      "check": "paper text QA Proposition 1 (separate feasibility",
+      "pass": true,
+      "details": null
+    },
+    {
+      "check": "paper text QA Proposition 2 (aggregate-state nonidentification",
+      "pass": true,
+      "details": null
+    },
+    {
+      "check": "paper text QA testable hypothesis",
+      "pass": true,
+      "details": null
+    },
+    {
+      "check": "paper text QA 0.53",
+      "pass": true,
+      "details": null
+    },
+    {
+      "check": "paper text QA 0.80",
+      "pass": true,
+      "details": null
+    },
+    {
+      "check": "paper text QA 0.6043824",
+      "pass": true,
+      "details": null
+    },
+    {
+      "check": "paper text QA fully informed conventional optimizer",
+      "pass": true,
+      "details": null
+    },
+    {
+      "check": "paper text QA NOT FIELD CERTIFIED",
+      "pass": true,
+      "details": null
+    },
+    {
+      "check": "paper has seven parts 1",
+      "pass": true,
+      "details": null
+    },
+    {
+      "check": "paper has seven parts 2",
+      "pass": true,
+      "details": null
+    },
+    {
+      "check": "paper has seven parts 3",
+      "pass": true,
+      "details": null
+    },
+    {
+      "check": "paper has seven parts 4",
+      "pass": true,
+      "details": null
+    },
+    {
+      "check": "paper has seven parts 5",
+      "pass": true,
+      "details": null
+    },
+    {
+      "check": "paper has seven parts 6",
+      "pass": true,
+      "details": null
+    },
+    {
+      "check": "paper has seven parts 7",
+      "pass": true,
+      "details": null
+    },
+    {
+      "check": "bibliography comparator MDP",
+      "pass": true,
+      "details": null
+    },
+    {
+      "check": "no empty binary citation placeholders",
+      "pass": true,
+      "details": null
+    }
+  ],
+  "check_count": 47,
+  "check_pass": 47
+}

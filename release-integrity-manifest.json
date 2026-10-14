@@ -1,0 +1,34 @@
+{
+  "METRE_Paper01_Final_Synthetic_Verification.py": {
+    "bytes": 11085,
+    "sha256": "b889c4f12704cf15d626a22cd3147ffe6661ebc0c289c04e309ace71d7142118"
+  },
+  "METRE_Paper01_Final_Model_Verification_Receipt.json": {
+    "bytes": 10388,
+    "sha256": "2f1bacbb4aa223a446684792626faced7f5e4d3d79dcd2270ac592c834ff37ab"
+  },
+  "METRE_Paper01_Figure1_Recursion.png": {
+    "bytes": 115690,
+    "sha256": "e41bd0715e3e0ef3bb560df3343387dc851bb5576e721a5fb2726ace919510be"
+  },
+  "METRE_Paper01_Verified_Source_Anchors.json": {
+    "bytes": 1120,
+    "sha256": "7bf9900da416ce5f38d8b398558c3100971891925becb9502d042fd4412eaa3b"
+  },
+  "METRE_Paper01_Final_Submission_Candidate_v1.0.0_EN.pdf": {
+    "bytes": 513068,
+    "sha256": "ec292d810aa38acd50f025536a10ff7295fe9ff7bb91955fce5654d95f1ee79e"
+  },
+  "METRE_Paper01_Final_Submission_Candidate_v1.0.0_EN.md": {
+    "bytes": 114122,
+    "sha256": "5d21f0a3b40c05ea702be37106cfc760b02ac1bbfdbde5a2fd0e1efbd6de7d78"
+  },
+  "README.md": {
+    "bytes": 2692,
+    "sha256": "1377ebd9c7b0453d8ce36e418c56e53ba68498ce25cb51d8b766b433f979d620"
+  },
+  "METRE_Paper01_Final_Submission_Candidate_v1.0.0_EN.docx": {
+    "bytes": 185648,
+    "sha256": "eff6397a40b86c62e215fbbf6843efc69ba645710967a36863ae17ba63ef007f"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "scope": "verified bibliographic identity and abstract/theory proximity for selected key works; not exhaustive theorem-level comparison",
+  "sources": {
+    "Baier, Chau and Klueppelholz 2025": "https://doi.org/10.1016/j.peva.2025.102482",
+    "Doyen and De Lara 2010": "https://doi.org/10.1016/j.sysconle.2010.07.008",
+    "Funke, Jantsch and Baier 2020": "https://doi.org/10.1007/978-3-030-45190-5_18",
+    "Chatterjee et al 2025": "https://doi.org/10.1007/978-3-031-90653-4_7",
+    "Acemoglu and Azar 2020": "https://doi.org/10.3982/ECTA15899",
+    "Trammell and Korinek 2026": "https://doi.org/10.1146/annurev-economics-051624-061002",
+    "Davidson et al 2026": "https://doi.org/10.3386/w35155",
+    "Jones 2026": "https://doi.org/10.1257/jep.20261505",
+    "Brynjolfsson and Hitzig 2026": "https://www.nber.org/books-and-chapters/economics-transformative-ai/ais-use-knowledge-society",
+    "Alonso et al 2015": "https://doi.org/10.1257/mic.20130100",
+    "Siggelkow and Levinthal 2003": "https://doi.org/10.1287/orsc.14.6.650.24840",
+    "Hordijk et al 2023": "https://doi.org/10.1007/s00191-023-00838-2"
+  }
+}
