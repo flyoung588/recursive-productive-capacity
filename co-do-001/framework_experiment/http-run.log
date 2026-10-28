@@ -1,0 +1,3 @@
+baseline {"samples": 8, "expected_decisions": 2, "wrong_delegations": 0, "actual_http_tasks": 0}
+treatment {"samples": 8, "expected_decisions": 6, "wrong_delegations": 1, "actual_http_tasks": 6}
+PASS: real localhost SDK discovery + JSON-RPC/SSE + A2AAgent; real model UNTESTED

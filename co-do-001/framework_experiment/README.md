@@ -1,5 +1,7 @@
 # Offline real-framework description-composition experiment
 
+**Round 2 update:** [Real localhost HTTP/JSON-RPC/SSE experiment](HTTP_INTEROP.md) now replaces the transport double for a separate set of 16 runs. The round 1 record below remains historical; real-model efficacy remains untested.
+
 This is an AI-assisted, independently maintained experimental companion to Microsoft Agent Framework #9561. It does not modify upstream code or propose a permanent API. Maintainer guidance remains **design review only**; no upstream PR or acceptance is claimed.
 
 ## What actually runs

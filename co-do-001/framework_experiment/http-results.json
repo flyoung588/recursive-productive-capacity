@@ -1,0 +1,626 @@
+{
+  "discovery": [
+    {
+      "method": "GET",
+      "path": "/.well-known/agent-card.json",
+      "request": "",
+      "response": "{\"name\":\"alpha\",\"description\":\"General purpose assistant\",\"supportedInterfaces\":[{\"url\":\"http://127.0.0.1:57486/\",\"protocolBinding\":\"JSONRPC\",\"protocolVersion\":\"1.0\"}],\"version\":\"1.0.0\",\"capabilities\":{\"streaming\":true,\"extendedAgentCard\":true},\"defaultInputModes\":[\"text/plain\"],\"defaultOutputModes\":[\"text/plain\"],\"skills\":[{\"id\":\"translate\",\"name\":\"translate\",\"description\":\"Translate bonjour\",\"tags\":[\"fixture\"]},{\"id\":\"summarize\",\"name\":\"summarize\",\"description\":\"Summarize words\",\"tags\":[\"fixture\"]},{\"id\":\"surgery\",\"name\":\"surgery\",\"description\":\"Expert surgery\",\"tags\":[\"fixture\"]},{\"id\":\"analysis\",\"name\":\"analysis\",\"description\":\"General analysis\",\"tags\":[\"fixture\"]}]}",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/.well-known/agent-card.json",
+      "request": "",
+      "response": "{\"name\":\"beta\",\"description\":\"General purpose assistant\",\"supportedInterfaces\":[{\"url\":\"http://127.0.0.1:57487/\",\"protocolBinding\":\"JSONRPC\",\"protocolVersion\":\"1.0\"}],\"version\":\"1.0.0\",\"capabilities\":{\"streaming\":true,\"extendedAgentCard\":true},\"defaultInputModes\":[\"text/plain\"],\"defaultOutputModes\":[\"text/plain\"],\"skills\":[{\"id\":\"calculate\",\"name\":\"calculate\",\"description\":\"Calculate 2+3\",\"tags\":[\"fixture\"]},{\"id\":\"translate\",\"name\":\"translate\",\"description\":\"Translate bonjour\",\"tags\":[\"fixture\"]},{\"id\":\"spectroscopy\",\"name\":\"spectroscopy\",\"description\":\"Analyze spectroscopy\",\"tags\":[\"fixture\"]}]}",
+      "status": 200
+    }
+  ],
+  "samples": [
+    {
+      "case": "similar descriptions distinct skills",
+      "arm": "baseline",
+      "task": "calculate 2+3",
+      "selected": null,
+      "eligible": [
+        "beta"
+      ],
+      "expected_decision": false,
+      "wrong_delegation": false,
+      "calls": [],
+      "wire": [],
+      "error": null,
+      "outputs": [
+        "fixture complete"
+      ],
+      "latency_ms": 0.8326250099344179,
+      "prompt": "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nbeta: General purpose assistant",
+      "conversations": [
+        [
+          "calculate 2+3",
+          "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nbeta: General purpose assistant"
+        ]
+      ],
+      "description_chars": 50,
+      "model_calls": 0,
+      "model_source": null,
+      "tokens": null,
+      "model_cost": null
+    },
+    {
+      "case": "similar descriptions distinct skills",
+      "arm": "treatment",
+      "task": "calculate 2+3",
+      "selected": "beta",
+      "eligible": [
+        "beta"
+      ],
+      "expected_decision": true,
+      "wrong_delegation": false,
+      "calls": [
+        {
+          "input": "calculate 2+3",
+          "answer": "calculation: 5",
+          "state": "TASK_STATE_COMPLETED"
+        }
+      ],
+      "wire": [
+        {
+          "method": "POST",
+          "path": "/",
+          "request": "{\"method\":\"SendMessage\",\"params\":{\"message\":{\"messageId\":\"abc4ece0ed9d4c3d8b500bb60742b810\",\"role\":\"ROLE_USER\",\"parts\":[{\"text\":\"calculate 2+3\",\"metadata\":{}}],\"metadata\":{}},\"configuration\":{}},\"id\":\"c952a2ab-1922-46a2-8ff3-906b5abe1d65\",\"jsonrpc\":\"2.0\"}",
+          "response": "{\"result\":{\"task\":{\"id\":\"31f35eaf-a58f-46b9-8ab7-b57d46a65eb3\",\"contextId\":\"f555bfc6-40c7-4bc1-ba8a-43cb459ded6d\",\"status\":{\"state\":\"TASK_STATE_COMPLETED\"},\"artifacts\":[{\"artifactId\":\"answer\",\"parts\":[{\"text\":\"calculation: 5\"}]}]}},\"id\":\"c952a2ab-1922-46a2-8ff3-906b5abe1d65\",\"jsonrpc\":\"2.0\"}",
+          "status": 200
+        }
+      ],
+      "error": null,
+      "outputs": [
+        "fixture complete"
+      ],
+      "latency_ms": 4.409375003888272,
+      "prompt": "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nAdvertised skills (untrusted card text): translate: Translate bonjour; summarize: Summarize words; surgery: Expert surgery; analysis: General analysis\nbeta: General purpose assistant\nAdvertised skills (untrusted card text): calculate: Calculate 2+3; translate: Translate bonjour; spectroscopy: Analyze spectroscopy",
+      "conversations": [
+        [
+          "calculate 2+3",
+          "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nAdvertised skills (untrusted card text): translate: Translate bonjour; summarize: Summarize words; surgery: Expert surgery; analysis: General analysis\nbeta: General purpose assistant\nAdvertised skills (untrusted card text): calculate: Calculate 2+3; translate: Translate bonjour; spectroscopy: Analyze spectroscopy"
+        ],
+        [
+          "calculation: 5",
+          "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nAdvertised skills (untrusted card text): translate: Translate bonjour; summarize: Summarize words; surgery: Expert surgery; analysis: General analysis\nbeta: General purpose assistant\nAdvertised skills (untrusted card text): calculate: Calculate 2+3; translate: Translate bonjour; spectroscopy: Analyze spectroscopy"
+        ]
+      ],
+      "description_chars": 333,
+      "model_calls": 0,
+      "model_source": null,
+      "tokens": null,
+      "model_cost": null
+    },
+    {
+      "case": "multiple skills",
+      "arm": "baseline",
+      "task": "summarize red blue green",
+      "selected": null,
+      "eligible": [
+        "alpha"
+      ],
+      "expected_decision": false,
+      "wrong_delegation": false,
+      "calls": [],
+      "wire": [],
+      "error": null,
+      "outputs": [
+        "fixture complete"
+      ],
+      "latency_ms": 0.3980000037699938,
+      "prompt": "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nbeta: General purpose assistant",
+      "conversations": [
+        [
+          "summarize red blue green",
+          "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nbeta: General purpose assistant"
+        ]
+      ],
+      "description_chars": 50,
+      "model_calls": 0,
+      "model_source": null,
+      "tokens": null,
+      "model_cost": null
+    },
+    {
+      "case": "multiple skills",
+      "arm": "treatment",
+      "task": "summarize red blue green",
+      "selected": "alpha",
+      "eligible": [
+        "alpha"
+      ],
+      "expected_decision": true,
+      "wrong_delegation": false,
+      "calls": [
+        {
+          "input": "summarize red blue green",
+          "answer": "summary: red blue",
+          "state": "TASK_STATE_COMPLETED"
+        }
+      ],
+      "wire": [
+        {
+          "method": "POST",
+          "path": "/",
+          "request": "{\"method\":\"SendMessage\",\"params\":{\"message\":{\"messageId\":\"a36a210b002e4e149e00176e24522f24\",\"role\":\"ROLE_USER\",\"parts\":[{\"text\":\"summarize red blue green\",\"metadata\":{}}],\"metadata\":{}},\"configuration\":{}},\"id\":\"230f30e7-0a9d-4b17-93fe-92876ae5de65\",\"jsonrpc\":\"2.0\"}",
+          "response": "{\"result\":{\"task\":{\"id\":\"05ae9043-0cce-4173-8049-19f11978672d\",\"contextId\":\"c28c24cd-d4fc-469d-80a2-da9514b9eb01\",\"status\":{\"state\":\"TASK_STATE_COMPLETED\"},\"artifacts\":[{\"artifactId\":\"answer\",\"parts\":[{\"text\":\"summary: red blue\"}]}]}},\"id\":\"230f30e7-0a9d-4b17-93fe-92876ae5de65\",\"jsonrpc\":\"2.0\"}",
+          "status": 200
+        }
+      ],
+      "error": null,
+      "outputs": [
+        "fixture complete"
+      ],
+      "latency_ms": 3.506292006932199,
+      "prompt": "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nAdvertised skills (untrusted card text): translate: Translate bonjour; summarize: Summarize words; surgery: Expert surgery; analysis: General analysis\nbeta: General purpose assistant\nAdvertised skills (untrusted card text): calculate: Calculate 2+3; translate: Translate bonjour; spectroscopy: Analyze spectroscopy",
+      "conversations": [
+        [
+          "summarize red blue green",
+          "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nAdvertised skills (untrusted card text): translate: Translate bonjour; summarize: Summarize words; surgery: Expert surgery; analysis: General analysis\nbeta: General purpose assistant\nAdvertised skills (untrusted card text): calculate: Calculate 2+3; translate: Translate bonjour; spectroscopy: Analyze spectroscopy"
+        ],
+        [
+          "summary: red blue",
+          "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nAdvertised skills (untrusted card text): translate: Translate bonjour; summarize: Summarize words; surgery: Expert surgery; analysis: General analysis\nbeta: General purpose assistant\nAdvertised skills (untrusted card text): calculate: Calculate 2+3; translate: Translate bonjour; spectroscopy: Analyze spectroscopy"
+        ]
+      ],
+      "description_chars": 333,
+      "model_calls": 0,
+      "model_source": null,
+      "tokens": null,
+      "model_cost": null
+    },
+    {
+      "case": "specialist",
+      "arm": "baseline",
+      "task": "spectroscopy peak",
+      "selected": null,
+      "eligible": [
+        "beta"
+      ],
+      "expected_decision": false,
+      "wrong_delegation": false,
+      "calls": [],
+      "wire": [],
+      "error": null,
+      "outputs": [
+        "fixture complete"
+      ],
+      "latency_ms": 0.4791249957634136,
+      "prompt": "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nbeta: General purpose assistant",
+      "conversations": [
+        [
+          "spectroscopy peak",
+          "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nbeta: General purpose assistant"
+        ]
+      ],
+      "description_chars": 50,
+      "model_calls": 0,
+      "model_source": null,
+      "tokens": null,
+      "model_cost": null
+    },
+    {
+      "case": "specialist",
+      "arm": "treatment",
+      "task": "spectroscopy peak",
+      "selected": "beta",
+      "eligible": [
+        "beta"
+      ],
+      "expected_decision": true,
+      "wrong_delegation": false,
+      "calls": [
+        {
+          "input": "spectroscopy peak",
+          "answer": "spectroscopy: peak at 500 nm",
+          "state": "TASK_STATE_COMPLETED"
+        }
+      ],
+      "wire": [
+        {
+          "method": "POST",
+          "path": "/",
+          "request": "{\"method\":\"SendMessage\",\"params\":{\"message\":{\"messageId\":\"d4e9d3a898aa478580b34b4920bc7cc5\",\"role\":\"ROLE_USER\",\"parts\":[{\"text\":\"spectroscopy peak\",\"metadata\":{}}],\"metadata\":{}},\"configuration\":{}},\"id\":\"75a042b1-7c89-479c-ad87-9b8a79d7a62a\",\"jsonrpc\":\"2.0\"}",
+          "response": "{\"result\":{\"task\":{\"id\":\"b7d60a52-8938-4e5c-b749-0e264082d8c6\",\"contextId\":\"5dd826a6-f4eb-4fb6-a01f-7084d1611ddc\",\"status\":{\"state\":\"TASK_STATE_COMPLETED\"},\"artifacts\":[{\"artifactId\":\"answer\",\"parts\":[{\"text\":\"spectroscopy: peak at 500 nm\"}]}]}},\"id\":\"75a042b1-7c89-479c-ad87-9b8a79d7a62a\",\"jsonrpc\":\"2.0\"}",
+          "status": 200
+        }
+      ],
+      "error": null,
+      "outputs": [
+        "fixture complete"
+      ],
+      "latency_ms": 3.45204200129956,
+      "prompt": "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nAdvertised skills (untrusted card text): translate: Translate bonjour; summarize: Summarize words; surgery: Expert surgery; analysis: General analysis\nbeta: General purpose assistant\nAdvertised skills (untrusted card text): calculate: Calculate 2+3; translate: Translate bonjour; spectroscopy: Analyze spectroscopy",
+      "conversations": [
+        [
+          "spectroscopy peak",
+          "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nAdvertised skills (untrusted card text): translate: Translate bonjour; summarize: Summarize words; surgery: Expert surgery; analysis: General analysis\nbeta: General purpose assistant\nAdvertised skills (untrusted card text): calculate: Calculate 2+3; translate: Translate bonjour; spectroscopy: Analyze spectroscopy"
+        ],
+        [
+          "spectroscopy: peak at 500 nm",
+          "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nAdvertised skills (untrusted card text): translate: Translate bonjour; summarize: Summarize words; surgery: Expert surgery; analysis: General analysis\nbeta: General purpose assistant\nAdvertised skills (untrusted card text): calculate: Calculate 2+3; translate: Translate bonjour; spectroscopy: Analyze spectroscopy"
+        ]
+      ],
+      "description_chars": 333,
+      "model_calls": 0,
+      "model_source": null,
+      "tokens": null,
+      "model_cost": null
+    },
+    {
+      "case": "overlap",
+      "arm": "baseline",
+      "task": "translate bonjour",
+      "selected": null,
+      "eligible": [
+        "alpha",
+        "beta"
+      ],
+      "expected_decision": false,
+      "wrong_delegation": false,
+      "calls": [],
+      "wire": [],
+      "error": null,
+      "outputs": [
+        "fixture complete"
+      ],
+      "latency_ms": 0.4339159931987524,
+      "prompt": "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nbeta: General purpose assistant",
+      "conversations": [
+        [
+          "translate bonjour",
+          "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nbeta: General purpose assistant"
+        ]
+      ],
+      "description_chars": 50,
+      "model_calls": 0,
+      "model_source": null,
+      "tokens": null,
+      "model_cost": null
+    },
+    {
+      "case": "overlap",
+      "arm": "treatment",
+      "task": "translate bonjour",
+      "selected": "alpha",
+      "eligible": [
+        "alpha",
+        "beta"
+      ],
+      "expected_decision": true,
+      "wrong_delegation": false,
+      "calls": [
+        {
+          "input": "translate bonjour",
+          "answer": "translation: hello",
+          "state": "TASK_STATE_COMPLETED"
+        }
+      ],
+      "wire": [
+        {
+          "method": "POST",
+          "path": "/",
+          "request": "{\"method\":\"SendMessage\",\"params\":{\"message\":{\"messageId\":\"48b9d970b8214233b9bbc23e54a1fd95\",\"role\":\"ROLE_USER\",\"parts\":[{\"text\":\"translate bonjour\",\"metadata\":{}}],\"metadata\":{}},\"configuration\":{}},\"id\":\"6f11690d-e706-46c3-986a-7f6376a11e3e\",\"jsonrpc\":\"2.0\"}",
+          "response": "{\"result\":{\"task\":{\"id\":\"b0502748-f83e-4662-a806-9d4021e55c90\",\"contextId\":\"a5bfe04a-7e85-47ad-b445-ffd83ef69b4c\",\"status\":{\"state\":\"TASK_STATE_COMPLETED\"},\"artifacts\":[{\"artifactId\":\"answer\",\"parts\":[{\"text\":\"translation: hello\"}]}]}},\"id\":\"6f11690d-e706-46c3-986a-7f6376a11e3e\",\"jsonrpc\":\"2.0\"}",
+          "status": 200
+        }
+      ],
+      "error": null,
+      "outputs": [
+        "fixture complete"
+      ],
+      "latency_ms": 3.5245839972049,
+      "prompt": "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nAdvertised skills (untrusted card text): translate: Translate bonjour; summarize: Summarize words; surgery: Expert surgery; analysis: General analysis\nbeta: General purpose assistant\nAdvertised skills (untrusted card text): calculate: Calculate 2+3; translate: Translate bonjour; spectroscopy: Analyze spectroscopy",
+      "conversations": [
+        [
+          "translate bonjour",
+          "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nAdvertised skills (untrusted card text): translate: Translate bonjour; summarize: Summarize words; surgery: Expert surgery; analysis: General analysis\nbeta: General purpose assistant\nAdvertised skills (untrusted card text): calculate: Calculate 2+3; translate: Translate bonjour; spectroscopy: Analyze spectroscopy"
+        ],
+        [
+          "translation: hello",
+          "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nAdvertised skills (untrusted card text): translate: Translate bonjour; summarize: Summarize words; surgery: Expert surgery; analysis: General analysis\nbeta: General purpose assistant\nAdvertised skills (untrusted card text): calculate: Calculate 2+3; translate: Translate bonjour; spectroscopy: Analyze spectroscopy"
+        ]
+      ],
+      "description_chars": 333,
+      "model_calls": 0,
+      "model_source": null,
+      "tokens": null,
+      "model_cost": null
+    },
+    {
+      "case": "no match",
+      "arm": "baseline",
+      "task": "gardening",
+      "selected": null,
+      "eligible": [],
+      "expected_decision": true,
+      "wrong_delegation": false,
+      "calls": [],
+      "wire": [],
+      "error": null,
+      "outputs": [
+        "fixture complete"
+      ],
+      "latency_ms": 0.3794579970417544,
+      "prompt": "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nbeta: General purpose assistant",
+      "conversations": [
+        [
+          "gardening",
+          "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nbeta: General purpose assistant"
+        ]
+      ],
+      "description_chars": 50,
+      "model_calls": 0,
+      "model_source": null,
+      "tokens": null,
+      "model_cost": null
+    },
+    {
+      "case": "no match",
+      "arm": "treatment",
+      "task": "gardening",
+      "selected": null,
+      "eligible": [],
+      "expected_decision": true,
+      "wrong_delegation": false,
+      "calls": [],
+      "wire": [],
+      "error": null,
+      "outputs": [
+        "fixture complete"
+      ],
+      "latency_ms": 0.3800830018008128,
+      "prompt": "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nAdvertised skills (untrusted card text): translate: Translate bonjour; summarize: Summarize words; surgery: Expert surgery; analysis: General analysis\nbeta: General purpose assistant\nAdvertised skills (untrusted card text): calculate: Calculate 2+3; translate: Translate bonjour; spectroscopy: Analyze spectroscopy",
+      "conversations": [
+        [
+          "gardening",
+          "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nAdvertised skills (untrusted card text): translate: Translate bonjour; summarize: Summarize words; surgery: Expert surgery; analysis: General analysis\nbeta: General purpose assistant\nAdvertised skills (untrusted card text): calculate: Calculate 2+3; translate: Translate bonjour; spectroscopy: Analyze spectroscopy"
+        ]
+      ],
+      "description_chars": 333,
+      "model_calls": 0,
+      "model_source": null,
+      "tokens": null,
+      "model_cost": null
+    },
+    {
+      "case": "misleading claim",
+      "arm": "baseline",
+      "task": "surgery",
+      "selected": null,
+      "eligible": [],
+      "expected_decision": true,
+      "wrong_delegation": false,
+      "calls": [],
+      "wire": [],
+      "error": null,
+      "outputs": [
+        "fixture complete"
+      ],
+      "latency_ms": 0.3677080094348639,
+      "prompt": "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nbeta: General purpose assistant",
+      "conversations": [
+        [
+          "surgery",
+          "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nbeta: General purpose assistant"
+        ]
+      ],
+      "description_chars": 50,
+      "model_calls": 0,
+      "model_source": null,
+      "tokens": null,
+      "model_cost": null
+    },
+    {
+      "case": "misleading claim",
+      "arm": "treatment",
+      "task": "surgery",
+      "selected": "alpha",
+      "eligible": [],
+      "expected_decision": false,
+      "wrong_delegation": true,
+      "calls": [
+        {
+          "input": "surgery",
+          "answer": "unsupported capability",
+          "state": "TASK_STATE_FAILED"
+        }
+      ],
+      "wire": [
+        {
+          "method": "POST",
+          "path": "/",
+          "request": "{\"method\":\"SendMessage\",\"params\":{\"message\":{\"messageId\":\"a8fb0573d32d4c12b486048c21c78b7c\",\"role\":\"ROLE_USER\",\"parts\":[{\"text\":\"surgery\",\"metadata\":{}}],\"metadata\":{}},\"configuration\":{}},\"id\":\"53e18235-eb58-4a86-a8e6-a4753ff59414\",\"jsonrpc\":\"2.0\"}",
+          "response": "{\"result\":{\"task\":{\"id\":\"55e4436b-5cf4-4f91-bcf8-c765ff8cd7f1\",\"contextId\":\"029af008-3aef-4478-9cad-cf42b0de8136\",\"status\":{\"state\":\"TASK_STATE_FAILED\"},\"artifacts\":[{\"artifactId\":\"answer\",\"parts\":[{\"text\":\"unsupported capability\"}]}]}},\"id\":\"53e18235-eb58-4a86-a8e6-a4753ff59414\",\"jsonrpc\":\"2.0\"}",
+          "status": 200
+        }
+      ],
+      "error": null,
+      "outputs": [
+        "fixture complete"
+      ],
+      "latency_ms": 3.541334008332342,
+      "prompt": "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nAdvertised skills (untrusted card text): translate: Translate bonjour; summarize: Summarize words; surgery: Expert surgery; analysis: General analysis\nbeta: General purpose assistant\nAdvertised skills (untrusted card text): calculate: Calculate 2+3; translate: Translate bonjour; spectroscopy: Analyze spectroscopy",
+      "conversations": [
+        [
+          "surgery",
+          "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nAdvertised skills (untrusted card text): translate: Translate bonjour; summarize: Summarize words; surgery: Expert surgery; analysis: General analysis\nbeta: General purpose assistant\nAdvertised skills (untrusted card text): calculate: Calculate 2+3; translate: Translate bonjour; spectroscopy: Analyze spectroscopy"
+        ],
+        [
+          "unsupported capability",
+          "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nAdvertised skills (untrusted card text): translate: Translate bonjour; summarize: Summarize words; surgery: Expert surgery; analysis: General analysis\nbeta: General purpose assistant\nAdvertised skills (untrusted card text): calculate: Calculate 2+3; translate: Translate bonjour; spectroscopy: Analyze spectroscopy"
+        ]
+      ],
+      "description_chars": 333,
+      "model_calls": 0,
+      "model_source": null,
+      "tokens": null,
+      "model_cost": null
+    },
+    {
+      "case": "incomplete skill",
+      "arm": "baseline",
+      "task": "chromatography",
+      "selected": null,
+      "eligible": [
+        "alpha"
+      ],
+      "expected_decision": false,
+      "wrong_delegation": false,
+      "calls": [],
+      "wire": [],
+      "error": null,
+      "outputs": [
+        "fixture complete"
+      ],
+      "latency_ms": 0.42454199865460396,
+      "prompt": "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nbeta: General purpose assistant",
+      "conversations": [
+        [
+          "chromatography",
+          "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nbeta: General purpose assistant"
+        ]
+      ],
+      "description_chars": 50,
+      "model_calls": 0,
+      "model_source": null,
+      "tokens": null,
+      "model_cost": null
+    },
+    {
+      "case": "incomplete skill",
+      "arm": "treatment",
+      "task": "chromatography",
+      "selected": null,
+      "eligible": [
+        "alpha"
+      ],
+      "expected_decision": false,
+      "wrong_delegation": false,
+      "calls": [],
+      "wire": [],
+      "error": null,
+      "outputs": [
+        "fixture complete"
+      ],
+      "latency_ms": 0.40212499152403325,
+      "prompt": "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nAdvertised skills (untrusted card text): translate: Translate bonjour; summarize: Summarize words; surgery: Expert surgery; analysis: General analysis\nbeta: General purpose assistant\nAdvertised skills (untrusted card text): calculate: Calculate 2+3; translate: Translate bonjour; spectroscopy: Analyze spectroscopy",
+      "conversations": [
+        [
+          "chromatography",
+          "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nAdvertised skills (untrusted card text): translate: Translate bonjour; summarize: Summarize words; surgery: Expert surgery; analysis: General analysis\nbeta: General purpose assistant\nAdvertised skills (untrusted card text): calculate: Calculate 2+3; translate: Translate bonjour; spectroscopy: Analyze spectroscopy"
+        ]
+      ],
+      "description_chars": 333,
+      "model_calls": 0,
+      "model_source": null,
+      "tokens": null,
+      "model_cost": null
+    },
+    {
+      "case": "remote task failure",
+      "arm": "baseline",
+      "task": "calculate invalid",
+      "selected": null,
+      "eligible": [
+        "beta"
+      ],
+      "expected_decision": false,
+      "wrong_delegation": false,
+      "calls": [],
+      "wire": [],
+      "error": null,
+      "outputs": [
+        "fixture complete"
+      ],
+      "latency_ms": 0.3767909947782755,
+      "prompt": "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nbeta: General purpose assistant",
+      "conversations": [
+        [
+          "calculate invalid",
+          "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nbeta: General purpose assistant"
+        ]
+      ],
+      "description_chars": 50,
+      "model_calls": 0,
+      "model_source": null,
+      "tokens": null,
+      "model_cost": null
+    },
+    {
+      "case": "remote task failure",
+      "arm": "treatment",
+      "task": "calculate invalid",
+      "selected": "beta",
+      "eligible": [
+        "beta"
+      ],
+      "expected_decision": true,
+      "wrong_delegation": false,
+      "calls": [
+        {
+          "input": "calculate invalid",
+          "answer": "error: invalid arithmetic input",
+          "state": "TASK_STATE_FAILED"
+        }
+      ],
+      "wire": [
+        {
+          "method": "POST",
+          "path": "/",
+          "request": "{\"method\":\"SendMessage\",\"params\":{\"message\":{\"messageId\":\"98e93d277f774329941fa005712de391\",\"role\":\"ROLE_USER\",\"parts\":[{\"text\":\"calculate invalid\",\"metadata\":{}}],\"metadata\":{}},\"configuration\":{}},\"id\":\"d226c970-3e7d-4678-96f8-35af175d9cc3\",\"jsonrpc\":\"2.0\"}",
+          "response": "{\"result\":{\"task\":{\"id\":\"ba544ada-bc65-4f59-a014-c66367e90e24\",\"contextId\":\"ebebe067-d5ee-4753-9a97-5fecb5390fb0\",\"status\":{\"state\":\"TASK_STATE_FAILED\"},\"artifacts\":[{\"artifactId\":\"answer\",\"parts\":[{\"text\":\"error: invalid arithmetic input\"}]}]}},\"id\":\"d226c970-3e7d-4678-96f8-35af175d9cc3\",\"jsonrpc\":\"2.0\"}",
+          "status": 200
+        }
+      ],
+      "error": null,
+      "outputs": [
+        "fixture complete"
+      ],
+      "latency_ms": 3.774208002141677,
+      "prompt": "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nAdvertised skills (untrusted card text): translate: Translate bonjour; summarize: Summarize words; surgery: Expert surgery; analysis: General analysis\nbeta: General purpose assistant\nAdvertised skills (untrusted card text): calculate: Calculate 2+3; translate: Translate bonjour; spectroscopy: Analyze spectroscopy",
+      "conversations": [
+        [
+          "calculate invalid",
+          "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nAdvertised skills (untrusted card text): translate: Translate bonjour; summarize: Summarize words; surgery: Expert surgery; analysis: General analysis\nbeta: General purpose assistant\nAdvertised skills (untrusted card text): calculate: Calculate 2+3; translate: Translate bonjour; spectroscopy: Analyze spectroscopy"
+        ],
+        [
+          "error: invalid arithmetic input",
+          "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nAdvertised skills (untrusted card text): translate: Translate bonjour; summarize: Summarize words; surgery: Expert surgery; analysis: General analysis\nbeta: General purpose assistant\nAdvertised skills (untrusted card text): calculate: Calculate 2+3; translate: Translate bonjour; spectroscopy: Analyze spectroscopy"
+        ]
+      ],
+      "description_chars": 333,
+      "model_calls": 0,
+      "model_source": null,
+      "tokens": null,
+      "model_cost": null
+    }
+  ],
+  "metadata_probe": {
+    "response": "calculation: 5",
+    "wire": [
+      {
+        "method": "POST",
+        "path": "/",
+        "request": "{\"method\":\"SendMessage\",\"params\":{\"message\":{\"messageId\":\"8fc54bb9509f42b7883763b5cdbd56e2\",\"role\":\"ROLE_USER\",\"parts\":[{\"text\":\"calculate 2+3\",\"metadata\":{}}],\"metadata\":{\"application_probe\":\"round2\"}},\"configuration\":{}},\"id\":\"3b2a6b14-ee6d-48c5-970f-36924a56d0e4\",\"jsonrpc\":\"2.0\"}",
+        "response": "{\"result\":{\"task\":{\"id\":\"abf43b8a-0959-4e81-ab71-91765934c47d\",\"contextId\":\"3edc2746-e2cf-45b9-89d3-c9433d606d74\",\"status\":{\"state\":\"TASK_STATE_COMPLETED\"},\"artifacts\":[{\"artifactId\":\"answer\",\"parts\":[{\"text\":\"calculation: 5\"}]}]}},\"id\":\"3b2a6b14-ee6d-48c5-970f-36924a56d0e4\",\"jsonrpc\":\"2.0\"}",
+        "status": 200
+      }
+    ]
+  },
+  "streaming_probe": {
+    "text": "translation: hello",
+    "wire": [
+      {
+        "method": "POST",
+        "path": "/",
+        "request": "{\"method\":\"SendStreamingMessage\",\"params\":{\"message\":{\"messageId\":\"0876faa46cb2425899e03e8e27735097\",\"role\":\"ROLE_USER\",\"parts\":[{\"text\":\"translate bonjour\",\"metadata\":{}}],\"metadata\":{}},\"configuration\":{}},\"id\":\"3461d5d2-319c-4997-b8d0-04a670fb6881\",\"jsonrpc\":\"2.0\"}",
+        "response": "data: {\"result\": {\"task\": {\"id\": \"6be57b29-2c37-47ad-930b-79b0f93651e6\", \"contextId\": \"beadd8df-24f6-4e73-b083-a9fae06a355b\", \"status\": {\"state\": \"TASK_STATE_COMPLETED\"}, \"artifacts\": [{\"artifactId\": \"answer\", \"parts\": [{\"text\": \"translation: hello\"}]}]}}, \"id\": \"3461d5d2-319c-4997-b8d0-04a670fb6881\", \"jsonrpc\": \"2.0\"}\r\n\r\n",
+        "status": 200
+      }
+    ]
+  }
+}

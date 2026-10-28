@@ -1,0 +1,9 @@
+{
+  "attempted_at": "2026-10-28T08:34:50.387890+00:00",
+  "endpoint": "http://127.0.0.1:11434/api/tags",
+  "local_default_manifest_directory_exists": false,
+  "credentials_inspected": false,
+  "paid_calls": 0,
+  "status": "NO_CONFIRMED_AUTHORIZED_NO_NEW_CASH_MODEL",
+  "local_endpoint_probe": "URLError"
+}
