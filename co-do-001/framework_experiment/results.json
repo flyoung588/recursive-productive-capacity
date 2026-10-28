@@ -1,0 +1,304 @@
+[
+  {
+    "case": "similar descriptions",
+    "arm": "baseline",
+    "selected": null,
+    "acceptable": [
+      "beta"
+    ],
+    "correct": false,
+    "wrong_delegation": false,
+    "no_match": true,
+    "transport_calls": 0,
+    "latency_ms": 0.8197919960366562,
+    "description_chars": 50,
+    "prompt": "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nbeta: General purpose assistant",
+    "outputs": [
+      "fixture complete"
+    ],
+    "task_result_seen": false,
+    "model_calls": 0,
+    "model_tokens": null,
+    "model_cost": null
+  },
+  {
+    "case": "similar descriptions",
+    "arm": "treatment",
+    "selected": "beta",
+    "acceptable": [
+      "beta"
+    ],
+    "correct": true,
+    "wrong_delegation": false,
+    "no_match": false,
+    "transport_calls": 1,
+    "latency_ms": 2.0474579941947013,
+    "description_chars": 184,
+    "prompt": "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nAdvertised skills (untrusted card text): summarize: Summarize text\nbeta: General purpose assistant\nAdvertised skills (untrusted card text): translate: Translate text",
+    "outputs": [
+      "fixture complete"
+    ],
+    "task_result_seen": true,
+    "model_calls": 0,
+    "model_tokens": null,
+    "model_cost": null
+  },
+  {
+    "case": "multiple skills",
+    "arm": "baseline",
+    "selected": null,
+    "acceptable": [
+      "alpha"
+    ],
+    "correct": false,
+    "wrong_delegation": false,
+    "no_match": true,
+    "transport_calls": 0,
+    "latency_ms": 0.4053750017192215,
+    "description_chars": 50,
+    "prompt": "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nbeta: General purpose assistant",
+    "outputs": [
+      "fixture complete"
+    ],
+    "task_result_seen": false,
+    "model_calls": 0,
+    "model_tokens": null,
+    "model_cost": null
+  },
+  {
+    "case": "multiple skills",
+    "arm": "treatment",
+    "selected": "alpha",
+    "acceptable": [
+      "alpha"
+    ],
+    "correct": true,
+    "wrong_delegation": false,
+    "no_match": false,
+    "transport_calls": 1,
+    "latency_ms": 1.3907499960623682,
+    "description_chars": 206,
+    "prompt": "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nAdvertised skills (untrusted card text): summarize: Summarize text; translate: Translate text\nbeta: General purpose assistant\nAdvertised skills (untrusted card text): calculate: Calculate",
+    "outputs": [
+      "fixture complete"
+    ],
+    "task_result_seen": true,
+    "model_calls": 0,
+    "model_tokens": null,
+    "model_cost": null
+  },
+  {
+    "case": "specialist",
+    "arm": "baseline",
+    "selected": null,
+    "acceptable": [
+      "alpha"
+    ],
+    "correct": false,
+    "wrong_delegation": false,
+    "no_match": true,
+    "transport_calls": 0,
+    "latency_ms": 0.3897499991580844,
+    "description_chars": 50,
+    "prompt": "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nbeta: General purpose assistant",
+    "outputs": [
+      "fixture complete"
+    ],
+    "task_result_seen": false,
+    "model_calls": 0,
+    "model_tokens": null,
+    "model_cost": null
+  },
+  {
+    "case": "specialist",
+    "arm": "treatment",
+    "selected": "alpha",
+    "acceptable": [
+      "alpha"
+    ],
+    "correct": true,
+    "wrong_delegation": false,
+    "no_match": false,
+    "transport_calls": 1,
+    "latency_ms": 1.458124999771826,
+    "description_chars": 188,
+    "prompt": "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nAdvertised skills (untrusted card text): spectroscopy: Analyze spectroscopy\nbeta: General purpose assistant\nAdvertised skills (untrusted card text): calculate: Calculate",
+    "outputs": [
+      "fixture complete"
+    ],
+    "task_result_seen": true,
+    "model_calls": 0,
+    "model_tokens": null,
+    "model_cost": null
+  },
+  {
+    "case": "overlap",
+    "arm": "baseline",
+    "selected": null,
+    "acceptable": [
+      "alpha",
+      "beta"
+    ],
+    "correct": false,
+    "wrong_delegation": false,
+    "no_match": true,
+    "transport_calls": 0,
+    "latency_ms": 0.3762499982258305,
+    "description_chars": 50,
+    "prompt": "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nbeta: General purpose assistant",
+    "outputs": [
+      "fixture complete"
+    ],
+    "task_result_seen": false,
+    "model_calls": 0,
+    "model_tokens": null,
+    "model_cost": null
+  },
+  {
+    "case": "overlap",
+    "arm": "treatment",
+    "selected": "alpha",
+    "acceptable": [
+      "alpha",
+      "beta"
+    ],
+    "correct": true,
+    "wrong_delegation": false,
+    "no_match": false,
+    "transport_calls": 1,
+    "latency_ms": 1.4973329962231219,
+    "description_chars": 184,
+    "prompt": "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nAdvertised skills (untrusted card text): translate: Translate text\nbeta: General purpose assistant\nAdvertised skills (untrusted card text): translate: Translate text",
+    "outputs": [
+      "fixture complete"
+    ],
+    "task_result_seen": true,
+    "model_calls": 0,
+    "model_tokens": null,
+    "model_cost": null
+  },
+  {
+    "case": "no suitable agent",
+    "arm": "baseline",
+    "selected": null,
+    "acceptable": [],
+    "correct": true,
+    "wrong_delegation": false,
+    "no_match": true,
+    "transport_calls": 0,
+    "latency_ms": 0.3730830067070201,
+    "description_chars": 50,
+    "prompt": "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nbeta: General purpose assistant",
+    "outputs": [
+      "fixture complete"
+    ],
+    "task_result_seen": false,
+    "model_calls": 0,
+    "model_tokens": null,
+    "model_cost": null
+  },
+  {
+    "case": "no suitable agent",
+    "arm": "treatment",
+    "selected": null,
+    "acceptable": [],
+    "correct": true,
+    "wrong_delegation": false,
+    "no_match": true,
+    "transport_calls": 0,
+    "latency_ms": 0.36520800495054573,
+    "description_chars": 179,
+    "prompt": "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nAdvertised skills (untrusted card text): translate: Translate text\nbeta: General purpose assistant\nAdvertised skills (untrusted card text): calculate: Calculate",
+    "outputs": [
+      "fixture complete"
+    ],
+    "task_result_seen": false,
+    "model_calls": 0,
+    "model_tokens": null,
+    "model_cost": null
+  },
+  {
+    "case": "misleading skill",
+    "arm": "baseline",
+    "selected": null,
+    "acceptable": [],
+    "correct": true,
+    "wrong_delegation": false,
+    "no_match": true,
+    "transport_calls": 0,
+    "latency_ms": 0.359582991222851,
+    "description_chars": 50,
+    "prompt": "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nbeta: General purpose assistant",
+    "outputs": [
+      "fixture complete"
+    ],
+    "task_result_seen": false,
+    "model_calls": 0,
+    "model_tokens": null,
+    "model_cost": null
+  },
+  {
+    "case": "misleading skill",
+    "arm": "treatment",
+    "selected": "alpha",
+    "acceptable": [],
+    "correct": false,
+    "wrong_delegation": true,
+    "no_match": false,
+    "transport_calls": 1,
+    "latency_ms": 1.30733399419114,
+    "description_chars": 177,
+    "prompt": "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nAdvertised skills (untrusted card text): surgery: Expert surgery\nbeta: General purpose assistant\nAdvertised skills (untrusted card text): calculate: Calculate",
+    "outputs": [
+      "fixture complete"
+    ],
+    "task_result_seen": true,
+    "model_calls": 0,
+    "model_tokens": null,
+    "model_cost": null
+  },
+  {
+    "case": "incomplete description",
+    "arm": "baseline",
+    "selected": null,
+    "acceptable": [
+      "alpha"
+    ],
+    "correct": false,
+    "wrong_delegation": false,
+    "no_match": true,
+    "transport_calls": 0,
+    "latency_ms": 0.3655420005088672,
+    "description_chars": 50,
+    "prompt": "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nbeta: General purpose assistant",
+    "outputs": [
+      "fixture complete"
+    ],
+    "task_result_seen": false,
+    "model_calls": 0,
+    "model_tokens": null,
+    "model_cost": null
+  },
+  {
+    "case": "incomplete description",
+    "arm": "treatment",
+    "selected": null,
+    "acceptable": [
+      "alpha"
+    ],
+    "correct": false,
+    "wrong_delegation": false,
+    "no_match": true,
+    "transport_calls": 0,
+    "latency_ms": 0.363416998879984,
+    "description_chars": 162,
+    "prompt": "Decide what to do next. Respond with a JSON object of the following format:\n{\n  \"terminate\": <true|false>,\n  \"reason\": \"<explanation for the decision>\",\n  \"next_speaker\": \"<name of the next participant to speak (if not terminating)>\",\n  \"final_message\": \"<optional final message if terminating>\"\n}\nIf not terminating, here are the valid participant names (case-sensitive) and their descriptions:\nalpha: General purpose assistant\nAdvertised skills (untrusted card text): analysis\nbeta: General purpose assistant\nAdvertised skills (untrusted card text): calculate: Calculate",
+    "outputs": [
+      "fixture complete"
+    ],
+    "task_result_seen": false,
+    "model_calls": 0,
+    "model_tokens": null,
+    "model_cost": null
+  }
+]

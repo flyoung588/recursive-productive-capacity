@@ -1,0 +1,28 @@
+/workspace/co-do-parallel-001/track-a/venv/lib/python3.11/site-packages/pytest_asyncio/plugin.py:300: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
+The event loop scope for asynchronous fixtures will default to the "fixture" caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to "function" scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
+
+  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))
+============================= test session starts ==============================
+platform darwin -- Python 3.11.12, pytest-9.2.0, pluggy-1.7.0 -- /workspace/co-do-parallel-001/track-a/existing/co-do-001/framework_experiment/../../../venv/bin/python
+cachedir: .pytest_cache
+rootdir: /workspace
+configfile: pyproject.toml
+plugins: asyncio-1.4.1, anyio-4.15.1
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 13 items
+
+test_integration.py::test_framework_routes_and_declines PASSED           [  7%]
+test_integration.py::test_explicit_empty_override_survives_real_constructor PASSED [ 15%]
+test_integration.py::test_preview_bound_with_real_sdk_card PASSED        [ 23%]
+../test_capability_preview.py::SkillPreviewTests::test_card_content_collapsed_to_single_line PASSED [ 30%]
+../test_capability_preview.py::SkillPreviewTests::test_determinism PASSED [ 38%]
+../test_capability_preview.py::SkillPreviewTests::test_explicit_override_is_unchanged PASSED [ 46%]
+../test_capability_preview.py::SkillPreviewTests::test_invalid_limits_rejected PASSED [ 53%]
+../test_capability_preview.py::SkillPreviewTests::test_no_named_skills_does_not_fabricate_capabilities PASSED [ 61%]
+../test_capability_preview.py::SkillPreviewTests::test_no_skills_preserves_base_description PASSED [ 69%]
+../test_capability_preview.py::SkillPreviewTests::test_output_is_bounded PASSED [ 76%]
+../test_capability_preview.py::SkillPreviewTests::test_skill_limit_applies PASSED [ 84%]
+../test_capability_preview.py::SkillPreviewTests::test_skills_exposed_for_capability_selection PASSED [ 92%]
+../test_capability_preview.py::SkillPreviewTests::test_two_generic_agents_expose_distinct_skills PASSED [100%]
+
+============================== 13 passed in 0.14s ==============================

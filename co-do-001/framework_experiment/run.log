@@ -1,0 +1,3 @@
+baseline {"samples": 7, "correct": 2, "wrong_delegations": 0, "transport_calls": 0}
+treatment {"samples": 7, "correct": 5, "wrong_delegations": 1, "transport_calls": 5}
+PASS: 14 real GroupChat/A2AAgent executions; model efficacy UNTESTED
