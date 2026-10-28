@@ -1,0 +1,57 @@
+Collecting pytest-mock
+  Downloading pytest_mock-3.17.0-py3-none-any.whl.metadata (3.9 kB)
+Collecting dataclasses-json
+  Downloading dataclasses_json-0.6.7-py3-none-any.whl.metadata (25 kB)
+Collecting numpy
+  Using cached numpy-2.4.6-cp311-cp311-macosx_14_0_arm64.whl.metadata (6.6 kB)
+Collecting pandas
+  Using cached pandas-3.1.0-cp311-cp311-macosx_11_0_arm64.whl.metadata (18 kB)
+Collecting redis
+  Downloading redis-8.1.0-py3-none-any.whl.metadata (16 kB)
+Collecting pycryptodome
+  Downloading pycryptodome-4.2.0-cp39-abi3-macosx_10_9_universal2.whl.metadata (6.1 kB)
+Collecting ruff
+  Using cached ruff-0.17.3-py3-none-macosx_11_0_arm64.whl.metadata (20 kB)
+Collecting ty
+  Downloading ty-0.0.93-py3-none-macosx_11_0_arm64.whl.metadata (7.4 kB)
+Requirement already satisfied: pytest>=6.2.5 in ./co-do-parallel-001/track-c/venv/lib/python3.11/site-packages (from pytest-mock) (9.2.0)
+Collecting marshmallow<4.0.0,>=3.18.0 (from dataclasses-json)
+  Downloading marshmallow-3.26.2-py3-none-any.whl.metadata (7.3 kB)
+Collecting typing-inspect<1,>=0.4.0 (from dataclasses-json)
+  Downloading typing_inspect-0.9.0-py3-none-any.whl.metadata (1.5 kB)
+Collecting python-dateutil>=2.9.0 (from pandas)
+  Using cached python_dateutil-3.0.0-py2.py3-none-any.whl.metadata (8.2 kB)
+Requirement already satisfied: packaging>=17.0 in ./co-do-parallel-001/track-c/venv/lib/python3.11/site-packages (from marshmallow<4.0.0,>=3.18.0->dataclasses-json) (26.3)
+Requirement already satisfied: iniconfig>=2 in ./co-do-parallel-001/track-c/venv/lib/python3.11/site-packages (from pytest>=6.2.5->pytest-mock) (2.3.1)
+Requirement already satisfied: pluggy<2,>=1.6 in ./co-do-parallel-001/track-c/venv/lib/python3.11/site-packages (from pytest>=6.2.5->pytest-mock) (1.7.0)
+Requirement already satisfied: pygments>=2.15 in ./co-do-parallel-001/track-c/venv/lib/python3.11/site-packages (from pytest>=6.2.5->pytest-mock) (2.21.0)
+Collecting six>=1.6 (from python-dateutil>=2.9.0->pandas)
+  Using cached six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+Collecting tzdata (from python-dateutil>=2.9.0->pandas)
+  Using cached tzdata-2026.5-py2.py3-none-any.whl.metadata (1.4 kB)
+Collecting mypy-extensions>=0.3.0 (from typing-inspect<1,>=0.4.0->dataclasses-json)
+  Downloading mypy_extensions-1.1.0-py3-none-any.whl.metadata (1.1 kB)
+Requirement already satisfied: typing-extensions>=3.7.4 in ./co-do-parallel-001/track-c/venv/lib/python3.11/site-packages (from typing-inspect<1,>=0.4.0->dataclasses-json) (4.16.0)
+Downloading pytest_mock-3.17.0-py3-none-any.whl (11 kB)
+Downloading dataclasses_json-0.6.7-py3-none-any.whl (28 kB)
+Using cached numpy-2.4.6-cp311-cp311-macosx_14_0_arm64.whl (5.5 MB)
+Using cached pandas-3.1.0-cp311-cp311-macosx_11_0_arm64.whl (11.2 MB)
+Downloading redis-8.1.0-py3-none-any.whl (560 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 560.6/560.6 kB 1.7 MB/s eta 0:00:00
+Downloading pycryptodome-4.2.0-cp39-abi3-macosx_10_9_universal2.whl (1.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.7/1.7 MB 2.9 MB/s eta 0:00:00
+Using cached ruff-0.17.3-py3-none-macosx_11_0_arm64.whl (9.4 MB)
+Downloading ty-0.0.93-py3-none-macosx_11_0_arm64.whl (13.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 13.1/13.1 MB 6.6 MB/s eta 0:00:00
+Downloading marshmallow-3.26.2-py3-none-any.whl (50 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 51.0/51.0 kB 133.2 kB/s eta 0:00:00
+Using cached python_dateutil-3.0.0-py2.py3-none-any.whl (94 kB)
+Downloading typing_inspect-0.9.0-py3-none-any.whl (8.8 kB)
+Downloading mypy_extensions-1.1.0-py3-none-any.whl (5.0 kB)
+Using cached six-1.17.0-py2.py3-none-any.whl (11 kB)
+Using cached tzdata-2026.5-py2.py3-none-any.whl (347 kB)
+Installing collected packages: tzdata, ty, six, ruff, redis, pycryptodome, numpy, mypy-extensions, marshmallow, typing-inspect, python-dateutil, pytest-mock, pandas, dataclasses-json
+Successfully installed dataclasses-json-0.6.7 marshmallow-3.26.2 mypy-extensions-1.1.0 numpy-2.4.6 pandas-3.1.0 pycryptodome-4.2.0 pytest-mock-3.17.0 python-dateutil-3.0.0 redis-8.1.0 ruff-0.17.3 six-1.17.0 ty-0.0.93 typing-inspect-0.9.0 tzdata-2026.5
+
+[notice] A new release of pip is available: 24.0 -> 26.2.2
+[notice] To update, run: /Users/feiyang/.codex/.chatgpt-projects/g-p-6a8bc3896c108191b1914e9af9ac0262/co-do-parallel-001/track-c/venv/bin/python -m pip install --upgrade pip

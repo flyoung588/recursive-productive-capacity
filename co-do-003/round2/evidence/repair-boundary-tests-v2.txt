@@ -1,0 +1,20 @@
+.......F                                                                 [100%]
+=================================== FAILURES ===================================
+____________________ test_known_nested_custom_init_boundary ____________________
+
+    def test_known_nested_custom_init_boundary():
+        """Keep this failure visible: the prototype only repairs top-level aliases."""
+        obj = NestedAlias(inner=DefaultAlias(wireValue=42))
+        serde = JsonPlusSerializer(allowed_msgpack_modules=True)
+        restored = serde.loads_typed(serde.dumps_typed(obj))
+>       assert restored == obj
+E       assert NestedAlias(i...lias(value=1)) == NestedAlias(i...ias(value=42))
+E         
+E         Use -v to get more diff
+
+co-do-round2/track-c/test_alias_repair.py:54: AssertionError
+------------------------------ Captured log call -------------------------------
+WARNING  langgraph.checkpoint.serde.jsonplus:jsonplus.py:80 Deserializing unregistered type test_alias_repair.NestedAlias from checkpoint. This will be blocked in a future version. Set LANGGRAPH_STRICT_MSGPACK=true to block now, or add to allowed_msgpack_modules to allow explicitly: [('test_alias_repair', 'NestedAlias')]
+=========================== short test summary info ============================
+FAILED co-do-round2/track-c/test_alias_repair.py::test_known_nested_custom_init_boundary
+1 failed, 7 passed in 0.11s

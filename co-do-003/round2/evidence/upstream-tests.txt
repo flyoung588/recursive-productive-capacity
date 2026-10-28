@@ -1,0 +1,17 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.11.12, pytest-9.2.0, pluggy-1.7.0 -- /Users/feiyang/.codex/.chatgpt-projects/g-p-6a8bc3896c108191b1914e9af9ac0262/co-do-parallel-001/track-c/venv/bin/python
+cachedir: .pytest_cache
+rootdir: /Users/feiyang/.codex/.chatgpt-projects/g-p-6a8bc3896c108191b1914e9af9ac0262/co-do-round2/track-c/langgraph/libs/checkpoint
+configfile: pyproject.toml
+plugins: mock-3.17.0, anyio-4.15.1, langsmith-0.14.14
+collecting ... ERROR: Unknown config option: asyncio_mode
+
+
+collected 252 items / 1 error
+
+==================================== ERRORS ====================================
+__________________ ERROR collecting tests/test_redis_cache.py __________________
+'asyncio' not found in `markers` configuration option
+=========================== short test summary info ============================
+ERROR co-do-round2/track-c/langgraph/libs/checkpoint/tests/test_redis_cache.py
+============================== 1 error in 18.34s ===============================

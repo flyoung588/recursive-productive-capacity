@@ -1,0 +1,14 @@
+Collecting pytest-asyncio
+  Using cached pytest_asyncio-1.4.1-py3-none-any.whl.metadata (4.4 kB)
+Requirement already satisfied: pytest<10,>=8.4 in ./co-do-parallel-001/track-c/venv/lib/python3.11/site-packages (from pytest-asyncio) (9.2.0)
+Requirement already satisfied: typing-extensions>=4.12 in ./co-do-parallel-001/track-c/venv/lib/python3.11/site-packages (from pytest-asyncio) (4.16.0)
+Requirement already satisfied: iniconfig>=2 in ./co-do-parallel-001/track-c/venv/lib/python3.11/site-packages (from pytest<10,>=8.4->pytest-asyncio) (2.3.1)
+Requirement already satisfied: packaging>=24 in ./co-do-parallel-001/track-c/venv/lib/python3.11/site-packages (from pytest<10,>=8.4->pytest-asyncio) (26.3)
+Requirement already satisfied: pluggy<2,>=1.6 in ./co-do-parallel-001/track-c/venv/lib/python3.11/site-packages (from pytest<10,>=8.4->pytest-asyncio) (1.7.0)
+Requirement already satisfied: pygments>=2.15 in ./co-do-parallel-001/track-c/venv/lib/python3.11/site-packages (from pytest<10,>=8.4->pytest-asyncio) (2.21.0)
+Using cached pytest_asyncio-1.4.1-py3-none-any.whl (17 kB)
+Installing collected packages: pytest-asyncio
+Successfully installed pytest-asyncio-1.4.1
+
+[notice] A new release of pip is available: 24.0 -> 26.2.2
+[notice] To update, run: /Users/feiyang/.codex/.chatgpt-projects/g-p-6a8bc3896c108191b1914e9af9ac0262/co-do-parallel-001/track-c/venv/bin/python -m pip install --upgrade pip
