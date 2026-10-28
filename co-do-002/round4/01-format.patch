@@ -1,0 +1,128 @@
+diff --git a/src/components/features/chat/chat-interface.tsx b/src/components/features/chat/chat-interface.tsx
+index f1047f1..e230722 100644
+--- a/src/components/features/chat/chat-interface.tsx
++++ b/src/components/features/chat/chat-interface.tsx
+@@ -785,4 +785,4 @@ export function ChatInterface({
+       </ScrollProvider>
+     </WorkspaceFilesForChatProvider>
+   );
+-}
+\ No newline at end of file
++}
+diff --git a/src/components/features/chat/git-drift-banner.tsx b/src/components/features/chat/git-drift-banner.tsx
+index 3dfa73f..aa72e60 100644
+--- a/src/components/features/chat/git-drift-banner.tsx
++++ b/src/components/features/chat/git-drift-banner.tsx
+@@ -68,4 +68,4 @@ export function GitDriftBanner({
+       </button>
+     </div>
+   );
+-}
+\ No newline at end of file
++}
+diff --git a/src/hooks/use-git-resume-drift.ts b/src/hooks/use-git-resume-drift.ts
+index c012077..cf89326 100644
+--- a/src/hooks/use-git-resume-drift.ts
++++ b/src/hooks/use-git-resume-drift.ts
+@@ -98,54 +98,60 @@ export function useGitResumeDrift(agentState: AgentState | null): {
+   const conversationIdRef = useRef<string | null>(conversationId ?? null);
+ 
+   const workspacePath =
+-    conversation?.workspace?.working_dir ?? conversation?.selected_workspace ?? "";
++    conversation?.workspace?.working_dir ??
++    conversation?.selected_workspace ??
++    "";
+ 
+   /**
+    * Pull live git state from the runtime and return a fresh snapshot, or
+    * null when the runtime is missing / not a git repo / errors out.
+    */
+-  const fetchLiveSnapshot = useCallback(async (): Promise<GitSnapshot | null> => {
+-    if (!conversationId || !conversationUrl || !sessionApiKey) return null;
++  const fetchLiveSnapshot =
++    useCallback(async (): Promise<GitSnapshot | null> => {
++      if (!conversationId || !conversationUrl || !sessionApiKey) return null;
+ 
+-    try {
+-      const [commits, changes] = await Promise.all([
+-        AgentServerGitService.getGitCommits(
+-          conversationUrl,
+-          sessionApiKey,
+-          workspacePath || ".",
+-          1,
+-        ),
+-        AgentServerGitService.getGitChanges(
+-          conversationId,
+-          conversationUrl,
+-          sessionApiKey,
+-          workspacePath || ".",
+-        ),
+-      ]);
++      try {
++        const [commits, changes] = await Promise.all([
++          AgentServerGitService.getGitCommits(
++            conversationUrl,
++            sessionApiKey,
++            workspacePath || ".",
++            1,
++          ),
++          AgentServerGitService.getGitChanges(
++            conversationId,
++            conversationUrl,
++            sessionApiKey,
++            workspacePath || ".",
++          ),
++        ]);
+ 
+-      const headSha = commits?.commits?.[0]?.sha ?? null;
+-      const changeCount = Array.isArray(changes) ? changes.length : 0;
+-      if (!headSha && changeCount === 0) {
+-        // Not a git repo — baseline is meaningless here.
++        const headSha = commits?.commits?.[0]?.sha ?? null;
++        const changeCount = Array.isArray(changes) ? changes.length : 0;
++        if (!headSha && changeCount === 0) {
++          // Not a git repo — baseline is meaningless here.
++          return null;
++        }
++        return {
++          headSha,
++          changeCount,
++          worktreeKey: workspacePath || ".",
++          capturedAt: Date.now(),
++        };
++      } catch {
++        // Runtime unreachable, CORS, or non-git workspace. Treat as "no drift".
+         return null;
+       }
+-      return {
+-        headSha,
+-        changeCount,
+-        worktreeKey: workspacePath || ".",
+-        capturedAt: Date.now(),
+-      };
+-    } catch {
+-      // Runtime unreachable, CORS, or non-git workspace. Treat as "no drift".
+-      return null;
+-    }
+-  }, [conversationId, conversationUrl, sessionApiKey, workspacePath]);
++    }, [conversationId, conversationUrl, sessionApiKey, workspacePath]);
+ 
+   /**
+    * Compare a fresh live snapshot against the stored baseline.
+    */
+   const computeDrift = useCallback(
+-    (live: GitSnapshot | null, baseline: GitSnapshot | null): GitDriftResult => {
++    (
++      live: GitSnapshot | null,
++      baseline: GitSnapshot | null,
++    ): GitDriftResult => {
+       if (!live) {
+         // No runtime / not a git repo — nothing to warn about.
+         return {
+@@ -288,4 +294,4 @@ export function useGitResumeDrift(agentState: AgentState | null): {
+   }, [conversationId, fetchLiveSnapshot]);
+ 
+   return { drift, isChecking, refreshBaseline };
+-}
+\ No newline at end of file
++}

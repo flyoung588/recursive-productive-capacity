@@ -1,0 +1,6 @@
+src/components/features/chat/chat-interface.tsx matches tested HEAD 854e29f65fbe78278058e911425a8080ba7e1409d447d44e4b8d8aa458ccf7f1
+src/components/features/chat/git-drift-banner.tsx matches tested HEAD d8106c9fbfdcd25db5ae248b383103552237d6c09a99ce4d3118feb678364b00
+src/hooks/use-git-resume-drift.test.tsx matches tested HEAD 2e0ecdd924924105a810f19b518971e55171a2f81db62c34ff73aba41edd00e8
+src/hooks/use-git-resume-drift.ts matches tested HEAD 2afa0e1a9d4d7572bac215fb33b452093505ec6ba0f976fa722b4493052a38bf
+src/i18n/translation.json matches tested HEAD 5c8754c7c90474d69723af0a121570861925b8b7e4aad97b0356e5096fb57918
+Combined patch applies directly to exact PR-head file contents; all 5 resulting files byte-match tested code commit.

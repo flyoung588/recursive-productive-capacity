@@ -1,0 +1,6 @@
+[31mERROR: Missing translations detected[0m
+Found 2 translation keys with missing languages:
+- Key "CONVERSATION_PANEL$WAKE_ALL_AGENTS_NONE" is missing translations for: zh-TW, ko-KR, no, ar, de, fr, it, pt, es, ca, tr, uk, id
+- Key "CONVERSATION_PANEL$WAKE_ALL_AGENTS_SUCCESS" is missing translations for: zh-TW, ko-KR, no, ar, de, fr, it, pt, es, ca, tr, uk, id
+
+Please add the missing translations before committing.
