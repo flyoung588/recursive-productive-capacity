@@ -1,0 +1,100 @@
+From a61165f2f5bb26885fa4fc20e05bb2e5c603e73e Mon Sep 17 00:00:00 2001
+From: flyoung588 <flyoung588@gmail.com>
+Date: Wed, 28 Oct 2026 17:09:21 +0800
+Subject: [PATCH] test(checkpoint): extend ordinary Pydantic alias roundtrip
+ coverage
+
+---
+ .../tests/test_jsonplus_alias_scope.py        | 80 +++++++++++++++++++
+ 1 file changed, 80 insertions(+)
+ create mode 100644 libs/checkpoint/tests/test_jsonplus_alias_scope.py
+
+diff --git a/libs/checkpoint/tests/test_jsonplus_alias_scope.py b/libs/checkpoint/tests/test_jsonplus_alias_scope.py
+new file mode 100644
+index 00000000..f58d2c80
+--- /dev/null
++++ b/libs/checkpoint/tests/test_jsonplus_alias_scope.py
+@@ -0,0 +1,80 @@
++"""Regression coverage for aliased Pydantic checkpoint values."""
++
++from typing import Literal
++
++import pytest
++from pydantic import AliasChoices, AliasPath, BaseModel, ConfigDict, Field
++
++from langgraph.checkpoint.serde.jsonplus import JsonPlusSerializer
++
++
++class Ordinary(BaseModel):
++    value: int = Field(default=1, alias="wireValue")
++
++
++class NestedOrdinary(BaseModel):
++    values: list[Ordinary]
++
++
++class NumericOrdinary(BaseModel):
++    kind: Literal["number"] = "number"
++    value: int = Field(default=1, alias="wireValue")
++
++
++class TextOrdinary(BaseModel):
++    kind: Literal["text"] = "text"
++    text: str
++
++
++class UnionOrdinary(BaseModel):
++    item: NumericOrdinary | TextOrdinary = Field(discriminator="kind")
++
++
++class ChoiceOrdinary(BaseModel):
++    value: int = Field(
++        default=1, validation_alias=AliasChoices("wireValue", "legacyValue")
++    )
++
++
++class PathOrdinary(BaseModel):
++    value: int = Field(default=1, validation_alias=AliasPath("payload", "value"))
++
++
++class OptInCustom(BaseModel):
++    model_config = ConfigDict(populate_by_name=True)
++    value: int = Field(default=1, alias="wireValue")
++
++    def __init__(self, **data):
++        super().__init__(**data)
++
++
++class NestedOptIn(BaseModel):
++    inner: OptInCustom
++
++
++@pytest.mark.parametrize(
++    "obj",
++    [
++        Ordinary(wireValue=42),
++        NestedOrdinary(values=[Ordinary(wireValue=42)]),
++        UnionOrdinary(item=NumericOrdinary(wireValue=42)),
++        UnionOrdinary(item=TextOrdinary(text="retained")),
++        ChoiceOrdinary.model_validate({"legacyValue": 42}),
++        PathOrdinary.model_validate({"payload": {"value": 42}}),
++        OptInCustom(wireValue=42),
++        NestedOptIn(inner=OptInCustom(wireValue=42)),
++    ],
++    ids=[
++        "direct",
++        "nested-list",
++        "union-number",
++        "union-text-control",
++        "alias-choices",
++        "alias-path",
++        "populate-by-name",
++        "populate-by-name-nested",
++    ],
++)
++def test_msgpack_pydantic_alias_scope_roundtrip(obj: BaseModel) -> None:
++    serde = JsonPlusSerializer(allowed_msgpack_modules=True)
++    assert serde.loads_typed(serde.dumps_typed(obj)) == obj
+-- 
+2.39.5 (Apple Git-154)
+

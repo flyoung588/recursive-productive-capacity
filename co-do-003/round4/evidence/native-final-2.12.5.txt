@@ -1,0 +1,27 @@
+pydantic=2.12.5
+============================= test session starts ==============================
+platform darwin -- Python 3.11.12, pytest-9.2.0, pluggy-1.7.0 -- /Users/feiyang/.codex/.chatgpt-projects/g-p-6a8bc3896c108191b1914e9af9ac0262/co-do-parallel-001/track-c/venv/bin/python
+cachedir: .pytest_cache
+rootdir: /Users/feiyang/.codex/.chatgpt-projects/g-p-6a8bc3896c108191b1914e9af9ac0262/co-do-round4/track-c/langgraph/libs/checkpoint
+configfile: pyproject.toml
+plugins: asyncio-1.4.1, mock-3.17.0, anyio-4.15.1, langsmith-0.14.14
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 8 items
+
+co-do-round4/track-c/langgraph/libs/checkpoint/tests/test_jsonplus_alias_scope.py::test_msgpack_pydantic_alias_scope_roundtrip[direct] PASSED [ 12%]
+co-do-round4/track-c/langgraph/libs/checkpoint/tests/test_jsonplus_alias_scope.py::test_msgpack_pydantic_alias_scope_roundtrip[nested-list] PASSED [ 25%]
+co-do-round4/track-c/langgraph/libs/checkpoint/tests/test_jsonplus_alias_scope.py::test_msgpack_pydantic_alias_scope_roundtrip[union-number] PASSED [ 37%]
+co-do-round4/track-c/langgraph/libs/checkpoint/tests/test_jsonplus_alias_scope.py::test_msgpack_pydantic_alias_scope_roundtrip[union-text-control] PASSED [ 50%]
+co-do-round4/track-c/langgraph/libs/checkpoint/tests/test_jsonplus_alias_scope.py::test_msgpack_pydantic_alias_scope_roundtrip[alias-choices] PASSED [ 62%]
+co-do-round4/track-c/langgraph/libs/checkpoint/tests/test_jsonplus_alias_scope.py::test_msgpack_pydantic_alias_scope_roundtrip[alias-path] PASSED [ 75%]
+co-do-round4/track-c/langgraph/libs/checkpoint/tests/test_jsonplus_alias_scope.py::test_msgpack_pydantic_alias_scope_roundtrip[populate-by-name] PASSED [ 87%]
+co-do-round4/track-c/langgraph/libs/checkpoint/tests/test_jsonplus_alias_scope.py::test_msgpack_pydantic_alias_scope_roundtrip[populate-by-name-nested] PASSED [100%]
+
+============================= slowest 5 durations ==============================
+
+(5 durations < 0.005s hidden.  Use -vv to show these durations.)
+============================== 8 passed in 0.06s ===============================
+/Users/feiyang/.codex/.chatgpt-projects/g-p-6a8bc3896c108191b1914e9af9ac0262/co-do-parallel-001/track-c/venv/lib/python3.11/site-packages/pytest_asyncio/plugin.py:300: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
+The event loop scope for asynchronous fixtures will default to the "fixture" caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to "function" scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
+
+  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))

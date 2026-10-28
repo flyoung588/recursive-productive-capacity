@@ -1,0 +1,7 @@
+{
+  "2.11.10": 0,
+  "2.12.5": 0,
+  "2.14.1": 0,
+  "without-author-fix": 1,
+  "native-checkpoint-excluding-redis": 0
+}

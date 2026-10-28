@@ -1,0 +1,238 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.11.12, pytest-9.2.0, pluggy-1.7.0 -- /Users/feiyang/.codex/.chatgpt-projects/g-p-6a8bc3896c108191b1914e9af9ac0262/co-do-parallel-001/track-c/venv/bin/python
+cachedir: .pytest_cache
+rootdir: /Users/feiyang/.codex/.chatgpt-projects/g-p-6a8bc3896c108191b1914e9af9ac0262/co-do-round4/track-c/langgraph/libs/checkpoint
+configfile: pyproject.toml
+plugins: asyncio-1.4.1, mock-3.17.0, anyio-4.15.1, langsmith-0.14.14
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 8 items
+
+co-do-round4/track-c/langgraph/libs/checkpoint/tests/test_jsonplus_alias_scope.py::test_msgpack_pydantic_alias_scope_roundtrip[direct] FAILED [ 12%]
+co-do-round4/track-c/langgraph/libs/checkpoint/tests/test_jsonplus_alias_scope.py::test_msgpack_pydantic_alias_scope_roundtrip[nested-list] FAILED [ 25%]
+co-do-round4/track-c/langgraph/libs/checkpoint/tests/test_jsonplus_alias_scope.py::test_msgpack_pydantic_alias_scope_roundtrip[union-number] FAILED [ 37%]
+co-do-round4/track-c/langgraph/libs/checkpoint/tests/test_jsonplus_alias_scope.py::test_msgpack_pydantic_alias_scope_roundtrip[union-text-control] PASSED [ 50%]
+co-do-round4/track-c/langgraph/libs/checkpoint/tests/test_jsonplus_alias_scope.py::test_msgpack_pydantic_alias_scope_roundtrip[alias-choices] FAILED [ 62%]
+co-do-round4/track-c/langgraph/libs/checkpoint/tests/test_jsonplus_alias_scope.py::test_msgpack_pydantic_alias_scope_roundtrip[alias-path] FAILED [ 75%]
+co-do-round4/track-c/langgraph/libs/checkpoint/tests/test_jsonplus_alias_scope.py::test_msgpack_pydantic_alias_scope_roundtrip[populate-by-name] PASSED [ 87%]
+co-do-round4/track-c/langgraph/libs/checkpoint/tests/test_jsonplus_alias_scope.py::test_msgpack_pydantic_alias_scope_roundtrip[populate-by-name-nested] PASSED [100%]
+
+=================================== FAILURES ===================================
+_____________ test_msgpack_pydantic_alias_scope_roundtrip[direct] ______________
+
+obj = Ordinary(value=42)
+
+    @pytest.mark.parametrize(
+        "obj",
+        [
+            Ordinary(wireValue=42),
+            NestedOrdinary(values=[Ordinary(wireValue=42)]),
+            UnionOrdinary(item=NumericOrdinary(wireValue=42)),
+            UnionOrdinary(item=TextOrdinary(text="retained")),
+            ChoiceOrdinary.model_validate({"legacyValue": 42}),
+            PathOrdinary.model_validate({"payload": {"value": 42}}),
+            OptInCustom(wireValue=42),
+            NestedOptIn(inner=OptInCustom(wireValue=42)),
+        ],
+        ids=[
+            "direct",
+            "nested-list",
+            "union-number",
+            "union-text-control",
+            "alias-choices",
+            "alias-path",
+            "populate-by-name",
+            "populate-by-name-nested",
+        ],
+    )
+    def test_msgpack_pydantic_alias_scope_roundtrip(obj: BaseModel) -> None:
+        serde = JsonPlusSerializer(allowed_msgpack_modules=True)
+>       assert serde.loads_typed(serde.dumps_typed(obj)) == obj
+E       assert Ordinary(value=1) == Ordinary(value=42)
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E         - Ordinary(value=42)
+E         ?                ^^
+E         + Ordinary(value=1)
+E         ?                ^
+
+co-do-round4/track-c/langgraph/libs/checkpoint/tests/test_jsonplus_alias_scope.py:80: AssertionError
+------------------------------ Captured log call -------------------------------
+WARNING  langgraph.checkpoint.serde.jsonplus:jsonplus.py:80 Deserializing unregistered type tests.test_jsonplus_alias_scope.Ordinary from checkpoint. This will be blocked in a future version. Set LANGGRAPH_STRICT_MSGPACK=true to block now, or add to allowed_msgpack_modules to allow explicitly: [('tests.test_jsonplus_alias_scope', 'Ordinary')]
+___________ test_msgpack_pydantic_alias_scope_roundtrip[nested-list] ___________
+
+obj = NestedOrdinary(values=[Ordinary(value=42)])
+
+    @pytest.mark.parametrize(
+        "obj",
+        [
+            Ordinary(wireValue=42),
+            NestedOrdinary(values=[Ordinary(wireValue=42)]),
+            UnionOrdinary(item=NumericOrdinary(wireValue=42)),
+            UnionOrdinary(item=TextOrdinary(text="retained")),
+            ChoiceOrdinary.model_validate({"legacyValue": 42}),
+            PathOrdinary.model_validate({"payload": {"value": 42}}),
+            OptInCustom(wireValue=42),
+            NestedOptIn(inner=OptInCustom(wireValue=42)),
+        ],
+        ids=[
+            "direct",
+            "nested-list",
+            "union-number",
+            "union-text-control",
+            "alias-choices",
+            "alias-path",
+            "populate-by-name",
+            "populate-by-name-nested",
+        ],
+    )
+    def test_msgpack_pydantic_alias_scope_roundtrip(obj: BaseModel) -> None:
+        serde = JsonPlusSerializer(allowed_msgpack_modules=True)
+>       assert serde.loads_typed(serde.dumps_typed(obj)) == obj
+E       assert NestedOrdinar...ary(value=1)]) == NestedOrdinar...ry(value=42)])
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E         - NestedOrdinary(values=[Ordinary(value=42)])
+E         ?                                       ^^
+E         + NestedOrdinary(values=[Ordinary(value=1)])
+E         ?                                       ^
+
+co-do-round4/track-c/langgraph/libs/checkpoint/tests/test_jsonplus_alias_scope.py:80: AssertionError
+------------------------------ Captured log call -------------------------------
+WARNING  langgraph.checkpoint.serde.jsonplus:jsonplus.py:80 Deserializing unregistered type tests.test_jsonplus_alias_scope.NestedOrdinary from checkpoint. This will be blocked in a future version. Set LANGGRAPH_STRICT_MSGPACK=true to block now, or add to allowed_msgpack_modules to allow explicitly: [('tests.test_jsonplus_alias_scope', 'NestedOrdinary')]
+__________ test_msgpack_pydantic_alias_scope_roundtrip[union-number] ___________
+
+obj = UnionOrdinary(item=NumericOrdinary(kind='number', value=42))
+
+    @pytest.mark.parametrize(
+        "obj",
+        [
+            Ordinary(wireValue=42),
+            NestedOrdinary(values=[Ordinary(wireValue=42)]),
+            UnionOrdinary(item=NumericOrdinary(wireValue=42)),
+            UnionOrdinary(item=TextOrdinary(text="retained")),
+            ChoiceOrdinary.model_validate({"legacyValue": 42}),
+            PathOrdinary.model_validate({"payload": {"value": 42}}),
+            OptInCustom(wireValue=42),
+            NestedOptIn(inner=OptInCustom(wireValue=42)),
+        ],
+        ids=[
+            "direct",
+            "nested-list",
+            "union-number",
+            "union-text-control",
+            "alias-choices",
+            "alias-path",
+            "populate-by-name",
+            "populate-by-name-nested",
+        ],
+    )
+    def test_msgpack_pydantic_alias_scope_roundtrip(obj: BaseModel) -> None:
+        serde = JsonPlusSerializer(allowed_msgpack_modules=True)
+>       assert serde.loads_typed(serde.dumps_typed(obj)) == obj
+E       AssertionError: assert UnionOrdinary...er', value=1)) == UnionOrdinary...r', value=42))
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E         - UnionOrdinary(item=NumericOrdinary(kind='number', value=42))
+E         ?                                                         ^^
+E         + UnionOrdinary(item=NumericOrdinary(kind='number', value=1))
+E         ?                                                         ^
+
+co-do-round4/track-c/langgraph/libs/checkpoint/tests/test_jsonplus_alias_scope.py:80: AssertionError
+------------------------------ Captured log call -------------------------------
+WARNING  langgraph.checkpoint.serde.jsonplus:jsonplus.py:80 Deserializing unregistered type tests.test_jsonplus_alias_scope.UnionOrdinary from checkpoint. This will be blocked in a future version. Set LANGGRAPH_STRICT_MSGPACK=true to block now, or add to allowed_msgpack_modules to allow explicitly: [('tests.test_jsonplus_alias_scope', 'UnionOrdinary')]
+__________ test_msgpack_pydantic_alias_scope_roundtrip[alias-choices] __________
+
+obj = ChoiceOrdinary(value=42)
+
+    @pytest.mark.parametrize(
+        "obj",
+        [
+            Ordinary(wireValue=42),
+            NestedOrdinary(values=[Ordinary(wireValue=42)]),
+            UnionOrdinary(item=NumericOrdinary(wireValue=42)),
+            UnionOrdinary(item=TextOrdinary(text="retained")),
+            ChoiceOrdinary.model_validate({"legacyValue": 42}),
+            PathOrdinary.model_validate({"payload": {"value": 42}}),
+            OptInCustom(wireValue=42),
+            NestedOptIn(inner=OptInCustom(wireValue=42)),
+        ],
+        ids=[
+            "direct",
+            "nested-list",
+            "union-number",
+            "union-text-control",
+            "alias-choices",
+            "alias-path",
+            "populate-by-name",
+            "populate-by-name-nested",
+        ],
+    )
+    def test_msgpack_pydantic_alias_scope_roundtrip(obj: BaseModel) -> None:
+        serde = JsonPlusSerializer(allowed_msgpack_modules=True)
+>       assert serde.loads_typed(serde.dumps_typed(obj)) == obj
+E       assert ChoiceOrdinary(value=1) == ChoiceOrdinary(value=42)
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E         - ChoiceOrdinary(value=42)
+E         ?                      ^^
+E         + ChoiceOrdinary(value=1)
+E         ?                      ^
+
+co-do-round4/track-c/langgraph/libs/checkpoint/tests/test_jsonplus_alias_scope.py:80: AssertionError
+------------------------------ Captured log call -------------------------------
+WARNING  langgraph.checkpoint.serde.jsonplus:jsonplus.py:80 Deserializing unregistered type tests.test_jsonplus_alias_scope.ChoiceOrdinary from checkpoint. This will be blocked in a future version. Set LANGGRAPH_STRICT_MSGPACK=true to block now, or add to allowed_msgpack_modules to allow explicitly: [('tests.test_jsonplus_alias_scope', 'ChoiceOrdinary')]
+___________ test_msgpack_pydantic_alias_scope_roundtrip[alias-path] ____________
+
+obj = PathOrdinary(value=42)
+
+    @pytest.mark.parametrize(
+        "obj",
+        [
+            Ordinary(wireValue=42),
+            NestedOrdinary(values=[Ordinary(wireValue=42)]),
+            UnionOrdinary(item=NumericOrdinary(wireValue=42)),
+            UnionOrdinary(item=TextOrdinary(text="retained")),
+            ChoiceOrdinary.model_validate({"legacyValue": 42}),
+            PathOrdinary.model_validate({"payload": {"value": 42}}),
+            OptInCustom(wireValue=42),
+            NestedOptIn(inner=OptInCustom(wireValue=42)),
+        ],
+        ids=[
+            "direct",
+            "nested-list",
+            "union-number",
+            "union-text-control",
+            "alias-choices",
+            "alias-path",
+            "populate-by-name",
+            "populate-by-name-nested",
+        ],
+    )
+    def test_msgpack_pydantic_alias_scope_roundtrip(obj: BaseModel) -> None:
+        serde = JsonPlusSerializer(allowed_msgpack_modules=True)
+>       assert serde.loads_typed(serde.dumps_typed(obj)) == obj
+E       assert PathOrdinary(value=1) == PathOrdinary(value=42)
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E         - PathOrdinary(value=42)
+E         ?                    ^^
+E         + PathOrdinary(value=1)
+E         ?                    ^
+
+co-do-round4/track-c/langgraph/libs/checkpoint/tests/test_jsonplus_alias_scope.py:80: AssertionError
+------------------------------ Captured log call -------------------------------
+WARNING  langgraph.checkpoint.serde.jsonplus:jsonplus.py:80 Deserializing unregistered type tests.test_jsonplus_alias_scope.PathOrdinary from checkpoint. This will be blocked in a future version. Set LANGGRAPH_STRICT_MSGPACK=true to block now, or add to allowed_msgpack_modules to allow explicitly: [('tests.test_jsonplus_alias_scope', 'PathOrdinary')]
+============================= slowest 5 durations ==============================
+
+(5 durations < 0.005s hidden.  Use -vv to show these durations.)
+=========================== short test summary info ============================
+FAILED co-do-round4/track-c/langgraph/libs/checkpoint/tests/test_jsonplus_alias_scope.py::test_msgpack_pydantic_alias_scope_roundtrip[direct]
+FAILED co-do-round4/track-c/langgraph/libs/checkpoint/tests/test_jsonplus_alias_scope.py::test_msgpack_pydantic_alias_scope_roundtrip[nested-list]
+FAILED co-do-round4/track-c/langgraph/libs/checkpoint/tests/test_jsonplus_alias_scope.py::test_msgpack_pydantic_alias_scope_roundtrip[union-number]
+FAILED co-do-round4/track-c/langgraph/libs/checkpoint/tests/test_jsonplus_alias_scope.py::test_msgpack_pydantic_alias_scope_roundtrip[alias-choices]
+FAILED co-do-round4/track-c/langgraph/libs/checkpoint/tests/test_jsonplus_alias_scope.py::test_msgpack_pydantic_alias_scope_roundtrip[alias-path]
+========================= 5 failed, 3 passed in 0.12s ==========================
+/Users/feiyang/.codex/.chatgpt-projects/g-p-6a8bc3896c108191b1914e9af9ac0262/co-do-parallel-001/track-c/venv/lib/python3.11/site-packages/pytest_asyncio/plugin.py:300: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
+The event loop scope for asynchronous fixtures will default to the "fixture" caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to "function" scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
+
+  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))
