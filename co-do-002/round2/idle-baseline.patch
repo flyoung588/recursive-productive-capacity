@@ -1,0 +1,34 @@
+diff --git a/src/hooks/use-git-resume-drift.ts b/src/hooks/use-git-resume-drift.ts
+index 53b2e97..09eaa0e 100644
+--- a/src/hooks/use-git-resume-drift.ts
++++ b/src/hooks/use-git-resume-drift.ts
+@@ -96,6 +96,7 @@ export function useGitResumeDrift(agentState: AgentState | null): {
+   // Guards against stale runtime responses racing a conversation switch.
+   const requestSeqRef = useRef(0);
+   const conversationIdRef = useRef<string | null>(conversationId ?? null);
++  const observedRunningConversationRef = useRef<string | null>(null);
+ 
+   const workspacePath =
+     conversation?.workspace?.working_dir ??
+@@ -251,6 +252,10 @@ export function useGitResumeDrift(agentState: AgentState | null): {
+   // don't flag as drift the next time it resumes.
+   useEffect(() => {
+     if (!conversationId) return;
++    if (agentState === AgentState.RUNNING) {
++      observedRunningConversationRef.current = conversationId;
++      return;
++    }
+     const idleStates: AgentState[] = [
+       AgentState.STOPPED,
+       AgentState.PAUSED,
+@@ -259,6 +264,10 @@ export function useGitResumeDrift(agentState: AgentState | null): {
+       AgentState.ERROR,
+     ];
+     if (!agentState || !idleStates.includes(agentState)) return;
++    // Reopening an already-idle conversation is not a completed turn. Keep
++    // its durable baseline until a run observed by this hook actually ends.
++    if (observedRunningConversationRef.current !== conversationId) return;
++    observedRunningConversationRef.current = null;
+ 
+     void (async () => {
+       const live = await fetchLiveSnapshot();

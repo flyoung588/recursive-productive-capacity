@@ -1,0 +1,21 @@
+test_detached_head (test_workspace_drift.GitDriftTests.test_detached_head) ... ok
+test_dirty_staged_file_modified_again (test_workspace_drift.GitDriftTests.test_dirty_staged_file_modified_again) ... ok
+test_dirty_tracked_file_modified_again (test_workspace_drift.GitDriftTests.test_dirty_tracked_file_modified_again) ... ok
+test_ignored_files_not_reported (test_workspace_drift.GitDriftTests.test_ignored_files_not_reported) ... ok
+test_linked_worktree_changes_do_not_change_main_snapshot (test_workspace_drift.GitDriftTests.test_linked_worktree_changes_do_not_change_main_snapshot) ... ok
+test_new_commit_same_branch (test_workspace_drift.GitDriftTests.test_new_commit_same_branch) ... ok
+test_non_git_directory_rejected (test_workspace_drift.GitDriftTests.test_non_git_directory_rejected) ... ok
+test_read_only_snapshot (test_workspace_drift.GitDriftTests.test_read_only_snapshot) ... ok
+test_staged_change (test_workspace_drift.GitDriftTests.test_staged_change) ... ok
+test_switch_branch (test_workspace_drift.GitDriftTests.test_switch_branch) ... ok
+test_unborn_repository_rejected (test_workspace_drift.GitDriftTests.test_unborn_repository_rejected) ... ok
+test_unchanged (test_workspace_drift.GitDriftTests.test_unchanged) ... ok
+test_unstaged_change (test_workspace_drift.GitDriftTests.test_unstaged_change) ... ok
+test_untracked_added (test_workspace_drift.GitDriftTests.test_untracked_added) ... ok
+test_untracked_deleted (test_workspace_drift.GitDriftTests.test_untracked_deleted) ... ok
+test_untracked_edited_without_filename_change (test_workspace_drift.GitDriftTests.test_untracked_edited_without_filename_change) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 3.860s
+
+OK
