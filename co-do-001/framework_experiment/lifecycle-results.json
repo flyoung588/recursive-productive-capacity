@@ -1,0 +1,142 @@
+{
+  "input_required": {
+    "calls": [
+      {
+        "text": "Start",
+        "task_id": "e4cde487-e553-4085-b8d8-2757582973ed",
+        "context_id": "efa27734-82ec-44e1-a198-8f7a1a58c91b",
+        "incoming_task_id": "e4cde487-e553-4085-b8d8-2757582973ed"
+      },
+      {
+        "text": "Alice",
+        "task_id": "e4cde487-e553-4085-b8d8-2757582973ed",
+        "context_id": "efa27734-82ec-44e1-a198-8f7a1a58c91b",
+        "incoming_task_id": "e4cde487-e553-4085-b8d8-2757582973ed"
+      }
+    ],
+    "prompt": {
+      "type": "text",
+      "text": "What is your name?",
+      "user_input_request": true,
+      "id": "a2a-input-c2d477d6-e079-5a63-86f2-0b0733e4065f",
+      "additional_properties": {
+        "a2a_input_required_message": {
+          "messageId": "request-name",
+          "role": "ROLE_AGENT",
+          "parts": [
+            {
+              "text": "What is your name?"
+            }
+          ]
+        }
+      }
+    },
+    "response": "Thanks, AliceThe group chat has reached the maximum number of rounds.",
+    "wire": [
+      {
+        "method": "GET",
+        "path": "/.well-known/agent-card.json",
+        "request": "",
+        "response": "{\"name\":\"remote\",\"description\":\"General purpose assistant\",\"supportedInterfaces\":[{\"url\":\"http://127.0.0.1:62646/\",\"protocolBinding\":\"JSONRPC\",\"protocolVersion\":\"1.0\"}],\"version\":\"1.0.0\",\"capabilities\":{\"streaming\":true,\"extendedAgentCard\":true},\"defaultInputModes\":[\"text/plain\"],\"defaultOutputModes\":[\"text/plain\"],\"skills\":[{\"id\":\"conversation\",\"name\":\"conversation\",\"description\":\"Ask for a name\",\"tags\":[\"fixture\"]}]}",
+        "status": 200
+      },
+      {
+        "method": "POST",
+        "path": "/",
+        "request": "{\"method\":\"SendMessage\",\"params\":{\"message\":{\"messageId\":\"3ba5170876504620aec3baa767602201\",\"role\":\"ROLE_USER\",\"parts\":[{\"text\":\"Start\",\"metadata\":{}}],\"metadata\":{}},\"configuration\":{}},\"id\":\"f1ab7ddb-6b0d-497e-8afc-1519a08a7d84\",\"jsonrpc\":\"2.0\"}",
+        "response": "{\"result\":{\"task\":{\"id\":\"e4cde487-e553-4085-b8d8-2757582973ed\",\"contextId\":\"efa27734-82ec-44e1-a198-8f7a1a58c91b\",\"status\":{\"state\":\"TASK_STATE_INPUT_REQUIRED\",\"message\":{\"messageId\":\"request-name\",\"role\":\"ROLE_AGENT\",\"parts\":[{\"text\":\"What is your name?\"}]}}}},\"id\":\"f1ab7ddb-6b0d-497e-8afc-1519a08a7d84\",\"jsonrpc\":\"2.0\"}",
+        "status": 200
+      },
+      {
+        "method": "POST",
+        "path": "/",
+        "request": "{\"method\":\"SendMessage\",\"params\":{\"message\":{\"messageId\":\"6ffccc8f6c50436587c0432c861d4a5b\",\"contextId\":\"efa27734-82ec-44e1-a198-8f7a1a58c91b\",\"taskId\":\"e4cde487-e553-4085-b8d8-2757582973ed\",\"role\":\"ROLE_USER\",\"parts\":[{\"text\":\"Alice\",\"metadata\":{}}],\"metadata\":{}},\"configuration\":{}},\"id\":\"661cccb8-a3f7-4da4-aa68-509e78b4c79d\",\"jsonrpc\":\"2.0\"}",
+        "response": "{\"result\":{\"task\":{\"id\":\"e4cde487-e553-4085-b8d8-2757582973ed\",\"contextId\":\"efa27734-82ec-44e1-a198-8f7a1a58c91b\",\"status\":{\"state\":\"TASK_STATE_COMPLETED\"},\"artifacts\":[{\"artifactId\":\"answer\",\"parts\":[{\"text\":\"Thanks, Alice\"}]}],\"history\":[{\"messageId\":\"request-name\",\"role\":\"ROLE_AGENT\",\"parts\":[{\"text\":\"What is your name?\"}]},{\"messageId\":\"6ffccc8f6c50436587c0432c861d4a5b\",\"contextId\":\"efa27734-82ec-44e1-a198-8f7a1a58c91b\",\"taskId\":\"e4cde487-e553-4085-b8d8-2757582973ed\",\"role\":\"ROLE_USER\",\"parts\":[{\"text\":\"Alice\",\"metadata\":{}}],\"metadata\":{}}]}},\"id\":\"661cccb8-a3f7-4da4-aa68-509e78b4c79d\",\"jsonrpc\":\"2.0\"}",
+        "status": 200
+      }
+    ]
+  },
+  "cancellation": {
+    "task_id": "965d11b2-a3f7-4cd7-b028-1e932b777efa",
+    "cancel_called": true,
+    "execution_interrupted": true,
+    "stored": {
+      "id": "965d11b2-a3f7-4cd7-b028-1e932b777efa",
+      "contextId": "b3c44d09-05e2-45ae-b65a-98ec37e070e2",
+      "status": {
+        "state": "TASK_STATE_CANCELED"
+      }
+    },
+    "updates": [],
+    "wire": [
+      {
+        "method": "GET",
+        "path": "/.well-known/agent-card.json",
+        "request": "",
+        "response": "{\"name\":\"remote\",\"description\":\"General purpose assistant\",\"supportedInterfaces\":[{\"url\":\"http://127.0.0.1:62653/\",\"protocolBinding\":\"JSONRPC\",\"protocolVersion\":\"1.0\"}],\"version\":\"1.0.0\",\"capabilities\":{\"streaming\":true,\"extendedAgentCard\":true},\"defaultInputModes\":[\"text/plain\"],\"defaultOutputModes\":[\"text/plain\"],\"skills\":[{\"id\":\"long-operation\",\"name\":\"long-operation\",\"description\":\"Cancelable operation\",\"tags\":[\"fixture\"]}]}",
+        "status": 200
+      },
+      {
+        "method": "POST",
+        "path": "/",
+        "request": "{\"method\":\"SendStreamingMessage\",\"params\":{\"message\":{\"messageId\":\"e56f45129d324f25b14ebd29548b9414\",\"role\":\"ROLE_USER\",\"parts\":[{\"text\":\"Long operation\",\"metadata\":{}}],\"metadata\":{}},\"configuration\":{}},\"id\":\"cbb5885d-cbcd-4bcc-8f29-f10e39540bf8\",\"jsonrpc\":\"2.0\"}",
+        "response": "data: {\"result\": {\"task\": {\"id\": \"965d11b2-a3f7-4cd7-b028-1e932b777efa\", \"contextId\": \"b3c44d09-05e2-45ae-b65a-98ec37e070e2\", \"status\": {\"state\": \"TASK_STATE_WORKING\"}}}, \"id\": \"cbb5885d-cbcd-4bcc-8f29-f10e39540bf8\", \"jsonrpc\": \"2.0\"}\r\n\r\ndata: {\"result\": {\"statusUpdate\": {\"taskId\": \"965d11b2-a3f7-4cd7-b028-1e932b777efa\", \"contextId\": \"b3c44d09-05e2-45ae-b65a-98ec37e070e2\", \"status\": {\"state\": \"TASK_STATE_CANCELED\"}}}, \"id\": \"cbb5885d-cbcd-4bcc-8f29-f10e39540bf8\", \"jsonrpc\": \"2.0\"}\r\n\r\n",
+        "status": 200
+      },
+      {
+        "method": "POST",
+        "path": "/",
+        "request": "{\"method\":\"GetTask\",\"params\":{\"id\":\"965d11b2-a3f7-4cd7-b028-1e932b777efa\"},\"id\":\"9cf21287-25e3-421f-8815-eeda017d7ab3\",\"jsonrpc\":\"2.0\"}",
+        "response": "{\"result\":{\"id\":\"965d11b2-a3f7-4cd7-b028-1e932b777efa\",\"contextId\":\"b3c44d09-05e2-45ae-b65a-98ec37e070e2\",\"status\":{\"state\":\"TASK_STATE_WORKING\"}},\"id\":\"9cf21287-25e3-421f-8815-eeda017d7ab3\",\"jsonrpc\":\"2.0\"}",
+        "status": 200
+      },
+      {
+        "method": "POST",
+        "path": "/",
+        "request": "{\"method\":\"CancelTask\",\"params\":{\"id\":\"965d11b2-a3f7-4cd7-b028-1e932b777efa\"},\"id\":\"3ead2450-92a2-4395-8be4-e10ca99bda3d\",\"jsonrpc\":\"2.0\"}",
+        "response": "{\"result\":{\"id\":\"965d11b2-a3f7-4cd7-b028-1e932b777efa\",\"contextId\":\"b3c44d09-05e2-45ae-b65a-98ec37e070e2\",\"status\":{\"state\":\"TASK_STATE_CANCELED\"}},\"id\":\"3ead2450-92a2-4395-8be4-e10ca99bda3d\",\"jsonrpc\":\"2.0\"}",
+        "status": 200
+      },
+      {
+        "method": "POST",
+        "path": "/",
+        "request": "{\"method\":\"GetTask\",\"params\":{\"id\":\"965d11b2-a3f7-4cd7-b028-1e932b777efa\"},\"id\":\"ca220d44-d8d4-43d7-84d5-c3512d99bb5d\",\"jsonrpc\":\"2.0\"}",
+        "response": "{\"result\":{\"id\":\"965d11b2-a3f7-4cd7-b028-1e932b777efa\",\"contextId\":\"b3c44d09-05e2-45ae-b65a-98ec37e070e2\",\"status\":{\"state\":\"TASK_STATE_CANCELED\"}},\"id\":\"ca220d44-d8d4-43d7-84d5-c3512d99bb5d\",\"jsonrpc\":\"2.0\"}",
+        "status": 200
+      }
+    ]
+  },
+  "errors": {
+    "missing_task_error": {
+      "type": "TaskNotFoundError",
+      "message": "Task not found"
+    },
+    "crash": {
+      "exception_type": "InternalError",
+      "message": "bounded lifecycle executor failure"
+    },
+    "wire": [
+      {
+        "method": "GET",
+        "path": "/.well-known/agent-card.json",
+        "request": "",
+        "response": "{\"name\":\"remote\",\"description\":\"General purpose assistant\",\"supportedInterfaces\":[{\"url\":\"http://127.0.0.1:62656/\",\"protocolBinding\":\"JSONRPC\",\"protocolVersion\":\"1.0\"}],\"version\":\"1.0.0\",\"capabilities\":{\"streaming\":true,\"extendedAgentCard\":true},\"defaultInputModes\":[\"text/plain\"],\"defaultOutputModes\":[\"text/plain\"],\"skills\":[{\"id\":\"failure\",\"name\":\"failure\",\"description\":\"Bounded failure probe\",\"tags\":[\"fixture\"]}]}",
+        "status": 200
+      },
+      {
+        "method": "POST",
+        "path": "/",
+        "request": "{\"method\":\"GetTask\",\"params\":{\"id\":\"nonexistent-lifecycle-task\"},\"id\":\"98bdaed4-05a6-4f4b-876f-40a7373353aa\",\"jsonrpc\":\"2.0\"}",
+        "response": "{\"error\":{\"code\":-32001,\"message\":\"Task not found\",\"data\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"TASK_NOT_FOUND\",\"domain\":\"a2a-protocol.org\",\"metadata\":{}}]},\"id\":\"98bdaed4-05a6-4f4b-876f-40a7373353aa\",\"jsonrpc\":\"2.0\"}",
+        "status": 200
+      },
+      {
+        "method": "POST",
+        "path": "/",
+        "request": "{\"method\":\"SendMessage\",\"params\":{\"message\":{\"messageId\":\"7114e80a9c1d476ab8f235587f8d6fce\",\"role\":\"ROLE_USER\",\"parts\":[{\"text\":\"Crash\",\"metadata\":{}}],\"metadata\":{}},\"configuration\":{}},\"id\":\"e5674b4d-d08d-4966-b5ed-b7bbb60c05b0\",\"jsonrpc\":\"2.0\"}",
+        "response": "{\"error\":{\"code\":-32603,\"message\":\"bounded lifecycle executor failure\"},\"id\":\"e5674b4d-d08d-4966-b5ed-b7bbb60c05b0\",\"jsonrpc\":\"2.0\"}",
+        "status": 200
+      }
+    ]
+  }
+}

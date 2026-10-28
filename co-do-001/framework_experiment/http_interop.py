@@ -101,7 +101,7 @@ class WireRecorder:
 
 
 @asynccontextmanager
-async def server(name, skills):
+async def server(name, skills, executor=None):
     sock = socket.socket()
     sock.bind(("127.0.0.1", 0))
     base = f"http://127.0.0.1:{sock.getsockname()[1]}"
@@ -118,7 +118,8 @@ async def server(name, skills):
     card.skills.extend(
         [AgentSkill(id=n, name=n, description=d, tags=["fixture"]) for n, d in skills]
     )
-    executor, wire = LocalMultiSkillExecutor(name), []
+    executor = executor if executor is not None else LocalMultiSkillExecutor(name)
+    wire = []
     handler = DefaultRequestHandler(executor, InMemoryTaskStore(), card)
     app = WireRecorder(
         Starlette(
@@ -142,6 +143,7 @@ async def server(name, skills):
         assert running.started
         yield base, executor, wire
     finally:
+        await handler.aclose()
         running.should_exit = True
         await task
         sock.close()

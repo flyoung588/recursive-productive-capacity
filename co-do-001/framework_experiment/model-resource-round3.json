@@ -1,0 +1,9 @@
+{
+  "attempted_at": "2026-10-28T08:51:01.814549+00:00",
+  "local_endpoint": "http://127.0.0.1:11434/api/tags",
+  "default_model_manifest_directory_exists": false,
+  "credentials_inspected": false,
+  "paid_calls": 0,
+  "model_source": null,
+  "local_probe_error": "URLError"
+}

@@ -1,0 +1,68 @@
+GroupChatOrchestrator reached max_rounds=1; forcing completion.
+Producer[9128db0a-1041-4626-9ffa-bc05f35ab750]: Execution failed
+Traceback (most recent call last):
+  File "/workspace/co-do-parallel-001/track-a/venv/lib/python3.11/site-packages/a2a/server/agent_execution/active_task.py", line 690, in _run_producer
+    await sender_context.run(
+  File "/workspace/co-do-parallel-001/track-a/existing/co-do-001/framework_experiment/http_lifecycle.py", line 80, in execute
+    raise RuntimeError("bounded lifecycle executor failure")
+RuntimeError: bounded lifecycle executor failure
+Consumer[9128db0a-1041-4626-9ffa-bc05f35ab750]: Failed
+Traceback (most recent call last):
+  File "/workspace/co-do-parallel-001/track-a/venv/lib/python3.11/site-packages/a2a/server/agent_execution/active_task.py", line 141, in run
+    await self._process_event(event)
+  File "/workspace/co-do-parallel-001/track-a/venv/lib/python3.11/site-packages/a2a/server/agent_execution/active_task.py", line 213, in _process_event
+    await self._process_event_inner(event)
+  File "/workspace/co-do-parallel-001/track-a/venv/lib/python3.11/site-packages/a2a/server/agent_execution/active_task.py", line 258, in _process_event_inner
+    raise event
+  File "/workspace/co-do-parallel-001/track-a/venv/lib/python3.11/site-packages/a2a/server/agent_execution/active_task.py", line 690, in _run_producer
+    await sender_context.run(
+  File "/workspace/co-do-parallel-001/track-a/existing/co-do-001/framework_experiment/http_lifecycle.py", line 80, in execute
+    raise RuntimeError("bounded lifecycle executor failure")
+RuntimeError: bounded lifecycle executor failure
+Unhandled exception
+Traceback (most recent call last):
+  File "/workspace/co-do-parallel-001/track-a/venv/lib/python3.11/site-packages/a2a/server/routes/jsonrpc_dispatcher.py", line 334, in handle_requests
+    raw_result = await self._process_non_streaming_request(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/co-do-parallel-001/track-a/venv/lib/python3.11/site-packages/a2a/utils/telemetry.py", line 250, in async_wrapper
+    result = await func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/co-do-parallel-001/track-a/venv/lib/python3.11/site-packages/a2a/utils/version_validator.py", line 126, in async_wrapper
+    return await func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/co-do-parallel-001/track-a/venv/lib/python3.11/site-packages/a2a/server/routes/jsonrpc_dispatcher.py", line 531, in _process_non_streaming_request
+    return await self._handle_send_message(request_obj, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/co-do-parallel-001/track-a/venv/lib/python3.11/site-packages/a2a/utils/telemetry.py", line 250, in async_wrapper
+    result = await func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/co-do-parallel-001/track-a/venv/lib/python3.11/site-packages/a2a/server/routes/jsonrpc_dispatcher.py", line 423, in _handle_send_message
+    task_or_message = await self.request_handler.on_message_send(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/co-do-parallel-001/track-a/venv/lib/python3.11/site-packages/a2a/utils/telemetry.py", line 250, in async_wrapper
+    result = await func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/co-do-parallel-001/track-a/venv/lib/python3.11/site-packages/a2a/server/request_handlers/request_handler.py", line 285, in async_wrapper
+    return await method(self, params, context, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/co-do-parallel-001/track-a/venv/lib/python3.11/site-packages/a2a/server/request_handlers/default_request_handler_v2.py", line 424, in on_message_send
+    async for raw_event in active_task.subscribe(
+  File "/workspace/co-do-parallel-001/track-a/venv/lib/python3.11/site-packages/a2a/server/agent_execution/active_task.py", line 816, in subscribe
+    raise event
+  File "/workspace/co-do-parallel-001/track-a/venv/lib/python3.11/site-packages/a2a/server/agent_execution/active_task.py", line 141, in run
+    await self._process_event(event)
+  File "/workspace/co-do-parallel-001/track-a/venv/lib/python3.11/site-packages/a2a/server/agent_execution/active_task.py", line 213, in _process_event
+    await self._process_event_inner(event)
+  File "/workspace/co-do-parallel-001/track-a/venv/lib/python3.11/site-packages/a2a/server/agent_execution/active_task.py", line 258, in _process_event_inner
+    raise event
+  File "/workspace/co-do-parallel-001/track-a/venv/lib/python3.11/site-packages/a2a/server/agent_execution/active_task.py", line 690, in _run_producer
+    await sender_context.run(
+  File "/workspace/co-do-parallel-001/track-a/existing/co-do-001/framework_experiment/http_lifecycle.py", line 80, in execute
+    raise RuntimeError("bounded lifecycle executor failure")
+RuntimeError: bounded lifecycle executor failure
+Request Error (ID: e5674b4d-d08d-4966-b5ed-b7bbb60c05b0): Code=-32603, Message='bounded lifecycle executor failure'
+Dispatcher task was cancelled or finished. Events may be lost.
+PASS input-required: real HTTP group-chat pause/resume, same remote task
+PASS cancellation: HTTP CancelTask, SSE closure, interrupted executor, persisted CANCELED
+PASS errors: nonexistent task and executor failure remain errors on wire
+No model or selection experiment performed
