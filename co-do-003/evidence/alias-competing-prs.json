@@ -1,0 +1,1 @@
+[{"html_url":"https://github.com/langchain-ai/langgraph/pull/9352","number":9352,"state":"closed","title":"fix(checkpoint): preserve aliased Pydantic v2 fields on checkpoint roundtrip"}]

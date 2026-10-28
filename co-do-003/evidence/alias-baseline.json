@@ -1,0 +1,52 @@
+[
+  {
+    "case": "PlainAlias",
+    "before": {
+      "value": 42
+    },
+    "after": {
+      "value": 1
+    },
+    "preserved": false
+  },
+  {
+    "case": "CustomInitAlias",
+    "before": {
+      "value": 42
+    },
+    "after": {
+      "value": 1
+    },
+    "preserved": false
+  },
+  {
+    "case": "ChoicesAlias",
+    "before": {
+      "value": 42
+    },
+    "after": {
+      "value": 1
+    },
+    "preserved": false
+  },
+  {
+    "case": "PathAlias",
+    "before": {
+      "value": 42
+    },
+    "after": {
+      "value": 1
+    },
+    "preserved": false
+  },
+  {
+    "case": "CustomRequiredAlias",
+    "before": {
+      "value": 42
+    },
+    "after": {
+      "value": 42
+    },
+    "preserved": true
+  }
+]

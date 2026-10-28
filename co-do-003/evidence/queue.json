@@ -1,0 +1,74 @@
+{
+  "search_rows": 50,
+  "full_issue_comment_reviews": 11,
+  "prior_top20_recovered": false,
+  "issues": [
+    {
+      "repository": "modelcontextprotocol/python-sdk",
+      "issue": 3747,
+      "decision": "defer",
+      "reason": "Existing fixes/contributors; repository policy excludes autonomous submissions without human review."
+    },
+    {
+      "repository": "modelcontextprotocol/python-sdk",
+      "issue": 3736,
+      "decision": "defer",
+      "reason": "Existing fixes/contributors; repository policy excludes autonomous submissions without human review."
+    },
+    {
+      "repository": "modelcontextprotocol/python-sdk",
+      "issue": 3767,
+      "decision": "defer",
+      "reason": "Existing fixes/contributors; repository policy excludes autonomous submissions without human review."
+    },
+    {
+      "repository": "modelcontextprotocol/python-sdk",
+      "issue": 3760,
+      "decision": "defer",
+      "reason": "Existing fixes/contributors; repository policy excludes autonomous submissions without human review."
+    },
+    {
+      "repository": "google/adk-python",
+      "issue": 7248,
+      "decision": "defer",
+      "reason": "Assigned contributor and existing PR; avoid duplicate implementation."
+    },
+    {
+      "repository": "google/adk-python",
+      "issue": 7255,
+      "decision": "defer",
+      "reason": "Assigned contributor and existing PR; avoid duplicate implementation."
+    },
+    {
+      "repository": "langchain-ai/langgraph",
+      "issue": 9267,
+      "decision": "defer",
+      "reason": "Existing prepared fixes and competing PRs; no incremental claim."
+    },
+    {
+      "repository": "langchain-ai/langgraph",
+      "issue": 9086,
+      "decision": "defer",
+      "reason": "Existing prepared fixes and competing PRs; no incremental claim."
+    },
+    {
+      "repository": "langchain-ai/deepagents",
+      "issue": 5955,
+      "decision": "defer",
+      "reason": "Existing owners and prepared fixes; no duplicate submission."
+    },
+    {
+      "repository": "langchain-ai/deepagents",
+      "issue": 6863,
+      "decision": "defer",
+      "reason": "Existing owners and prepared fixes; no duplicate submission."
+    },
+    {
+      "repository": "langchain-ai/langgraph",
+      "issue": 9343,
+      "decision": "additional regression evidence",
+      "existing_pr": 9352,
+      "reason": "Defaulted alias plus custom init remains silently corrupted after candidate serializer fix; tested on actual source."
+    }
+  ]
+}

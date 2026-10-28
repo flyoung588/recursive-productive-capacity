@@ -1,0 +1,108 @@
+FFFF.                                                                    [100%]
+=================================== FAILURES ===================================
+____________________ test_preserves_value[PlainAlias-data0] ____________________
+
+model = <class 'alias_probe.PlainAlias'>, data = {'wireValue': 42}
+
+    @pytest.mark.parametrize("model,data", [
+        (PlainAlias, {"wireValue": 42}),
+        (CustomInitAlias, {"wireValue": 42}),
+        (ChoicesAlias, {"legacyValue": 42}),
+        (PathAlias, {"payload": {"value": 42}}),
+        (CustomRequiredAlias, {"wireValue": 42}),
+    ])
+    def test_preserves_value(model, data):
+        serde = JsonPlusSerializer(allowed_msgpack_modules=True)
+        original = model(**data)
+        restored = serde.loads_typed(serde.dumps_typed(original))
+>       assert restored.model_dump() == original.model_dump()
+E       AssertionError: assert {'value': 1} == {'value': 42}
+E         
+E         Differing items:
+E         {'value': 1} != {'value': 42}
+E         Use -v to get more diff
+
+co-do-parallel-001/track-c/alias_probe.py:61: AssertionError
+------------------------------ Captured log call -------------------------------
+WARNING  langgraph.checkpoint.serde.jsonplus:jsonplus.py:80 Deserializing unregistered type alias_probe.PlainAlias from checkpoint. This will be blocked in a future version. Set LANGGRAPH_STRICT_MSGPACK=true to block now, or add to allowed_msgpack_modules to allow explicitly: [('alias_probe', 'PlainAlias')]
+_________________ test_preserves_value[CustomInitAlias-data1] __________________
+
+model = <class 'alias_probe.CustomInitAlias'>, data = {'wireValue': 42}
+
+    @pytest.mark.parametrize("model,data", [
+        (PlainAlias, {"wireValue": 42}),
+        (CustomInitAlias, {"wireValue": 42}),
+        (ChoicesAlias, {"legacyValue": 42}),
+        (PathAlias, {"payload": {"value": 42}}),
+        (CustomRequiredAlias, {"wireValue": 42}),
+    ])
+    def test_preserves_value(model, data):
+        serde = JsonPlusSerializer(allowed_msgpack_modules=True)
+        original = model(**data)
+        restored = serde.loads_typed(serde.dumps_typed(original))
+>       assert restored.model_dump() == original.model_dump()
+E       AssertionError: assert {'value': 1} == {'value': 42}
+E         
+E         Differing items:
+E         {'value': 1} != {'value': 42}
+E         Use -v to get more diff
+
+co-do-parallel-001/track-c/alias_probe.py:61: AssertionError
+------------------------------ Captured log call -------------------------------
+WARNING  langgraph.checkpoint.serde.jsonplus:jsonplus.py:80 Deserializing unregistered type alias_probe.CustomInitAlias from checkpoint. This will be blocked in a future version. Set LANGGRAPH_STRICT_MSGPACK=true to block now, or add to allowed_msgpack_modules to allow explicitly: [('alias_probe', 'CustomInitAlias')]
+___________________ test_preserves_value[ChoicesAlias-data2] ___________________
+
+model = <class 'alias_probe.ChoicesAlias'>, data = {'legacyValue': 42}
+
+    @pytest.mark.parametrize("model,data", [
+        (PlainAlias, {"wireValue": 42}),
+        (CustomInitAlias, {"wireValue": 42}),
+        (ChoicesAlias, {"legacyValue": 42}),
+        (PathAlias, {"payload": {"value": 42}}),
+        (CustomRequiredAlias, {"wireValue": 42}),
+    ])
+    def test_preserves_value(model, data):
+        serde = JsonPlusSerializer(allowed_msgpack_modules=True)
+        original = model(**data)
+        restored = serde.loads_typed(serde.dumps_typed(original))
+>       assert restored.model_dump() == original.model_dump()
+E       AssertionError: assert {'value': 1} == {'value': 42}
+E         
+E         Differing items:
+E         {'value': 1} != {'value': 42}
+E         Use -v to get more diff
+
+co-do-parallel-001/track-c/alias_probe.py:61: AssertionError
+------------------------------ Captured log call -------------------------------
+WARNING  langgraph.checkpoint.serde.jsonplus:jsonplus.py:80 Deserializing unregistered type alias_probe.ChoicesAlias from checkpoint. This will be blocked in a future version. Set LANGGRAPH_STRICT_MSGPACK=true to block now, or add to allowed_msgpack_modules to allow explicitly: [('alias_probe', 'ChoicesAlias')]
+____________________ test_preserves_value[PathAlias-data3] _____________________
+
+model = <class 'alias_probe.PathAlias'>, data = {'payload': {'value': 42}}
+
+    @pytest.mark.parametrize("model,data", [
+        (PlainAlias, {"wireValue": 42}),
+        (CustomInitAlias, {"wireValue": 42}),
+        (ChoicesAlias, {"legacyValue": 42}),
+        (PathAlias, {"payload": {"value": 42}}),
+        (CustomRequiredAlias, {"wireValue": 42}),
+    ])
+    def test_preserves_value(model, data):
+        serde = JsonPlusSerializer(allowed_msgpack_modules=True)
+        original = model(**data)
+        restored = serde.loads_typed(serde.dumps_typed(original))
+>       assert restored.model_dump() == original.model_dump()
+E       AssertionError: assert {'value': 1} == {'value': 42}
+E         
+E         Differing items:
+E         {'value': 1} != {'value': 42}
+E         Use -v to get more diff
+
+co-do-parallel-001/track-c/alias_probe.py:61: AssertionError
+------------------------------ Captured log call -------------------------------
+WARNING  langgraph.checkpoint.serde.jsonplus:jsonplus.py:80 Deserializing unregistered type alias_probe.PathAlias from checkpoint. This will be blocked in a future version. Set LANGGRAPH_STRICT_MSGPACK=true to block now, or add to allowed_msgpack_modules to allow explicitly: [('alias_probe', 'PathAlias')]
+=========================== short test summary info ============================
+FAILED co-do-parallel-001/track-c/alias_probe.py::test_preserves_value[PlainAlias-data0]
+FAILED co-do-parallel-001/track-c/alias_probe.py::test_preserves_value[CustomInitAlias-data1]
+FAILED co-do-parallel-001/track-c/alias_probe.py::test_preserves_value[ChoicesAlias-data2]
+FAILED co-do-parallel-001/track-c/alias_probe.py::test_preserves_value[PathAlias-data3]
+4 failed, 1 passed in 0.14s
