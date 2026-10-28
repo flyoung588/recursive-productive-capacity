@@ -1,0 +1,5 @@
+Related to OpenHands #18981, I built a small standard-library Git workspace-drift detector with 13 passing real-Git tests (temporary repos, no network). It records branch, HEAD, hashes of staged/unstaged diffs, and a fingerprint of untracked files. On resume, it returns descriptive drift categories without modifying or resetting the workspace. The test matrix includes detached HEAD, changed commits on the same branch, and changes to already-dirty files.
+
+The implementation is deliberately standalone; I have **not** tested an OpenHands integration or confirmed its UI/session contract. If this would be useful, what is the preferred hook for saving a snapshot after a completed turn and showing a non-blocking notice before resume? I can adapt it to that seam once confirmed.
+
+Known limitations: ignored files are excluded, and hashing large untracked files would need caching/limits in production. This is not a claim that the original issue is fixed.
