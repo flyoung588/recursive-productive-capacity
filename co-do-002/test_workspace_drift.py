@@ -79,6 +79,31 @@ class GitDriftTests(unittest.TestCase):
         p.write_text("beta")
         self.assertEqual(compare(prev, snapshot(self.root)), ["unstaged_changes_changed"])
 
+    def test_dirty_staged_file_modified_again(self):
+        p = self.root / "tracked.txt"
+        p.write_text("alpha")
+        self.git("add", "tracked.txt")
+        prev = snapshot(self.root)
+        p.write_text("beta")
+        self.git("add", "tracked.txt")
+        self.assertEqual(compare(prev, snapshot(self.root)), ["staged_changes_changed"])
+
+    def test_linked_worktree_changes_do_not_change_main_snapshot(self):
+        with tempfile.TemporaryDirectory() as temp:
+            linked = Path(temp) / "linked"
+            self.git("worktree", "add", "-b", "linked", str(linked))
+            linked_before = snapshot(linked)
+            (linked / "tracked.txt").write_text("linked edit")
+            self.assertEqual(compare(self.base, snapshot(self.root)), [])
+            self.assertEqual(compare(linked_before, snapshot(linked)),
+                             ["unstaged_changes_changed"])
+
+    def test_unborn_repository_rejected(self):
+        with tempfile.TemporaryDirectory() as temp:
+            subprocess.run(["git", "init", "-q", temp], check=True)
+            with self.assertRaises(RuntimeError):
+                snapshot(temp)
+
     def test_ignored_files_not_reported(self):
         (self.root / ".gitignore").write_text("secret.tmp\n")
         self.git("add", ".gitignore")
