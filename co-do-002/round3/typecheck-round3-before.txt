@@ -1,0 +1,6 @@
+
+> @openhands/agent-canvas@1.34.0 typecheck
+> react-router typegen && tsc
+
+src/components/features/conversation-panel/conversation-card/conversation-card-context-menu.tsx(186,33): error TS2339: Property 'CONVERSATION$NEW_IN_SANDBOX' does not exist on type 'typeof I18nKey'.
+src/components/features/conversation/conversation-name-context-menu.tsx(182,17): error TS2339: Property 'CONVERSATION$SHARE_WITH_ORG_USERS' does not exist on type 'typeof I18nKey'.

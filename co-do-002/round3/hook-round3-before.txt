@@ -1,0 +1,34 @@
+
+ RUN  v5.0.0 /Users/feiyang/.codex/.chatgpt-projects/g-p-6a8bc3896c108191b1914e9af9ac0262/co-do-parallel-001/track-b/openhands
+
+ ❯ |jsdom| src/hooks/use-git-resume-drift.test.tsx (3 tests | 1 failed) 231ms
+   ❯ persisted Git baseline on reopened conversation (3)
+     × keeps the last completed-turn baseline when an idle conversation is reopened 65ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |jsdom| src/hooks/use-git-resume-drift.test.tsx > persisted Git baseline on reopened conversation > keeps the last completed-turn baseline when an idle conversation is reopened
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/hooks/use-git-resume-drift.test.tsx:65:44
+     63|     rerender({ state: AgentState.RUNNING });
+     64|     await waitFor(() => expect(result.current.isChecking).toBe(false));
+     65|     expect(result.current.drift?.detected).toBe(true);
+       |                                            ^
+     66|     expect(result.current.drift?.previousHead).toBe(originalHead);
+     67|     expect(result.current.drift?.currentHead).toBe(externalHead);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 4 passed (5)
+   Start at  16:49:23
+   Duration  1.28s (environment 54%, setup 21%, transform 14%, tests 11%, import 1%)
+
