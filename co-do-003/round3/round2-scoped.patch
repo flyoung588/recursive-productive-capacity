@@ -1,0 +1,44 @@
+diff --git a/libs/checkpoint/langgraph/checkpoint/serde/jsonplus.py b/libs/checkpoint/langgraph/checkpoint/serde/jsonplus.py
+index b01b561..dbc6fb0 100644
+--- a/libs/checkpoint/langgraph/checkpoint/serde/jsonplus.py
++++ b/libs/checkpoint/langgraph/checkpoint/serde/jsonplus.py
+@@ -744,9 +744,37 @@ def _create_msgpack_ext_hook(
+                 # module, name, kwargs, method
+                 cls = getattr(importlib.import_module(tup[0]), tup[1])
+                 try:
+-                    return cls(**tup[2])
++                    kwargs = tup[2]
++                    if (
++                        getattr(cls, "__pydantic_custom_init__", False)
++                        and cls.model_config.get("validate_by_alias", True)
++                        and not cls.model_config.get("validate_by_name", False)
++                        and not cls.model_config.get("populate_by_name", False)
++                    ):
++                        # Custom initializers re-enter validation without by_name.
++                        # Re-key simple validation aliases simultaneously; retain
++                        # the original payload for the existing fallback paths.
++                        aliases = {
++                            name: field.validation_alias
++                            for name, field in cls.model_fields.items()
++                            if isinstance(field.validation_alias, str)
++                        }
++                        targets = [aliases.get(key, key) for key in kwargs]
++                        if len(set(targets)) != len(targets):
++                            raise ValueError("Ambiguous checkpoint alias keys")
++                        kwargs = {
++                            aliases.get(key, key): value
++                            for key, value in kwargs.items()
++                        }
++                    try:
++                        return cls.model_validate(kwargs, by_name=True)
++                    except TypeError:
++                        return cls.model_validate(kwargs)
+                 except Exception:
+-                    return cls.model_construct(**tup[2])
++                    try:
++                        return cls(**tup[2])
++                    except Exception:
++                        return cls.model_construct(**tup[2])
+             except Exception:
+                 # for pydantic objects we can't find/reconstruct
+                 # let's return the kwargs dict instead

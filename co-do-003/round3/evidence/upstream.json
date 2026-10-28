@@ -1,0 +1,114 @@
+[
+  {
+    "case": "direct_alias",
+    "before": {
+      "value": 42
+    },
+    "after": {
+      "value": 1
+    },
+    "value_preserved": false,
+    "constructor_attempts_during_restore": null,
+    "successful_custom_inits_during_restore": null
+  },
+  {
+    "case": "nested_alias",
+    "before": {
+      "inner": {
+        "value": 42
+      }
+    },
+    "after": {
+      "inner": {
+        "value": 1
+      }
+    },
+    "value_preserved": false,
+    "constructor_attempts_during_restore": null,
+    "successful_custom_inits_during_restore": null
+  },
+  {
+    "case": "discriminated_union",
+    "before": {
+      "item": {
+        "kind": "number",
+        "value": 42
+      }
+    },
+    "after": {
+      "item": {
+        "kind": "number",
+        "value": 1
+      }
+    },
+    "value_preserved": false,
+    "constructor_attempts_during_restore": null,
+    "successful_custom_inits_during_restore": null
+  },
+  {
+    "case": "union_text_control",
+    "before": {
+      "item": {
+        "kind": "text",
+        "text": "retained"
+      }
+    },
+    "after": {
+      "item": {
+        "kind": "text",
+        "text": "retained"
+      }
+    },
+    "value_preserved": true,
+    "constructor_attempts_during_restore": null,
+    "successful_custom_inits_during_restore": null
+  },
+  {
+    "case": "validation_alias_choices",
+    "before": {
+      "value": 42
+    },
+    "after": {
+      "value": 1
+    },
+    "value_preserved": false,
+    "constructor_attempts_during_restore": null,
+    "successful_custom_inits_during_restore": null
+  },
+  {
+    "case": "validation_alias_path",
+    "before": {
+      "value": 42
+    },
+    "after": {
+      "value": 1
+    },
+    "value_preserved": false,
+    "constructor_attempts_during_restore": null,
+    "successful_custom_inits_during_restore": null
+  },
+  {
+    "case": "non_idempotent_constructor",
+    "before": {
+      "value": 42
+    },
+    "after": {
+      "value": 84
+    },
+    "value_preserved": false,
+    "constructor_attempts_during_restore": null,
+    "successful_custom_inits_during_restore": 1
+  },
+  {
+    "case": "constructor_exception",
+    "before": {
+      "value": 42
+    },
+    "after": {
+      "value": 42
+    },
+    "value_preserved": true,
+    "constructor_attempts_during_restore": 1,
+    "successful_custom_inits_during_restore": 0
+  }
+]
