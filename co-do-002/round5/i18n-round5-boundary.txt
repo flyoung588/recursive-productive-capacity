@@ -1,0 +1,9 @@
+baseline {"missingTranslations":{"CONVERSATION_PANEL$WAKE_ALL_AGENTS_NONE":["zh-TW","ko-KR","no","ar","de","fr","it","pt","es","ca","tr","uk","id"],"CONVERSATION_PANEL$WAKE_ALL_AGENTS_SUCCESS":["zh-TW","ko-KR","no","ar","de","fr","it","pt","es","ca","tr","uk","id"]},"extraLanguages":{},"untranslatedKeys":{}}
+patched {"missingTranslations":{"CONVERSATION_PANEL$WAKE_ALL_AGENTS_NONE":["zh-TW","ko-KR","no","ar","de","fr","it","pt","es","ca","tr","uk","id"],"CONVERSATION_PANEL$WAKE_ALL_AGENTS_SUCCESS":["zh-TW","ko-KR","no","ar","de","fr","it","pt","es","ca","tr","uk","id"]},"extraLanguages":{},"untranslatedKeys":{}}
+added {"missingTranslations":{},"extraLanguages":{},"untranslatedKeys":{}}
+addedKeys [
+  'CONVERSATION$GIT_DRIFT_TITLE',
+  'CONVERSATION$GIT_DRIFT_PREVIOUS',
+  'CONVERSATION$GIT_DRIFT_CURRENT',
+  'CONVERSATION$GIT_DRIFT_ACKNOWLEDGE'
+] locales 16

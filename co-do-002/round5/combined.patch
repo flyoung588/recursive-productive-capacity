@@ -1,0 +1,281 @@
+diff --git a/src/components/features/chat/git-drift-banner.tsx b/src/components/features/chat/git-drift-banner.tsx
+index aa72e60..00dadf5 100644
+--- a/src/components/features/chat/git-drift-banner.tsx
++++ b/src/components/features/chat/git-drift-banner.tsx
+@@ -1,4 +1,6 @@
+ import { RefreshCw, GitFork, X } from "lucide-react";
++import { useTranslation } from "react-i18next";
++import { I18nKey } from "#/i18n/declaration";
+ 
+ interface GitDriftBannerProps {
+   summary: string;
+@@ -28,6 +30,7 @@ export function GitDriftBanner({
+   onRefreshBaseline,
+   onDismiss,
+ }: GitDriftBannerProps) {
++  const { t } = useTranslation("openhands");
+   return (
+     <div
+       data-testid="git-drift-banner"
+@@ -37,14 +40,26 @@ export function GitDriftBanner({
+       <GitFork className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
+       <div className="min-w-0 flex-1">
+         <div className="font-medium text-amber-100">
+-          Workspace changed since the agent last worked here
++          {t(I18nKey.CONVERSATION$GIT_DRIFT_TITLE)}
+         </div>
+         <div className="mt-0.5 truncate opacity-90">{summary}</div>
+         {(previousHead || currentHead) && (
+           <div className="mt-0.5 font-mono text-[10px] text-amber-300/70">
+-            {previousHead && <span>prev {previousHead.slice(0, 8)}</span>}
++            {previousHead && (
++              <span>
++                {t(I18nKey.CONVERSATION$GIT_DRIFT_PREVIOUS, {
++                  revision: previousHead.slice(0, 8),
++                })}
++              </span>
++            )}
+             {previousHead && currentHead && <span className="mx-1">→</span>}
+-            {currentHead && <span>now {currentHead.slice(0, 8)}</span>}
++            {currentHead && (
++              <span>
++                {t(I18nKey.CONVERSATION$GIT_DRIFT_CURRENT, {
++                  revision: currentHead.slice(0, 8),
++                })}
++              </span>
++            )}
+           </div>
+         )}
+         <div className="mt-1 flex gap-2">
+@@ -54,13 +69,13 @@ export function GitDriftBanner({
+             className="inline-flex items-center gap-1 rounded border border-amber-500/40 px-2 py-0.5 text-[11px] font-medium text-amber-100 transition-colors hover:bg-amber-500/20"
+           >
+             <RefreshCw className="h-3 w-3" aria-hidden />
+-            Acknowledge
++            {t(I18nKey.CONVERSATION$GIT_DRIFT_ACKNOWLEDGE)}
+           </button>
+         </div>
+       </div>
+       <button
+         type="button"
+-        aria-label="Dismiss git drift warning"
++        aria-label={t(I18nKey.CHAT_INTERFACE$MESSAGE_DISMISS)}
+         onClick={onDismiss}
+         className="shrink-0 rounded p-0.5 text-amber-200/60 transition-colors hover:bg-amber-500/20 hover:text-amber-100"
+       >
+diff --git a/src/hooks/use-git-resume-drift.test.tsx b/src/hooks/use-git-resume-drift.test.tsx
+new file mode 100644
+index 0000000..f3c7d07
+--- /dev/null
++++ b/src/hooks/use-git-resume-drift.test.tsx
+@@ -0,0 +1,94 @@
++import { act, cleanup, renderHook, waitFor } from "@testing-library/react";
++import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
++import { AgentState } from "#/types/agent-state";
++import { useGitResumeDrift } from "./use-git-resume-drift";
++
++const services = vi.hoisted(() => ({
++  getGitCommits: vi.fn(),
++  getGitChanges: vi.fn(),
++}));
++vi.mock("#/api/git-service/agent-server-git-service.api", () => ({
++  default: services,
++}));
++vi.mock("#/hooks/query/use-active-conversation", () => ({
++  useActiveConversation: () => ({
++    data: {
++      id: "resume-test",
++      conversation_url: "http://localhost:8000",
++      session_api_key: "test-only",
++      workspace: { working_dir: "/workspace/project" },
++    },
++  }),
++}));
++const storageKey = "openhands:git-snapshot:resume-test";
++const originalHead = "a".repeat(40);
++const externalHead = "b".repeat(40);
++
++function storedHead() {
++  return JSON.parse(localStorage.getItem(storageKey)!).headSha;
++}
++
++async function flushRequests() {
++  await act(async () => {
++    await new Promise((resolve) => setTimeout(resolve, 0));
++  });
++}
++
++describe("persisted Git baseline on reopened conversation", () => {
++  beforeEach(() => {
++    localStorage.clear();
++    vi.clearAllMocks();
++    localStorage.setItem(
++      storageKey,
++      JSON.stringify({
++        headSha: originalHead,
++        changeCount: 0,
++        worktreeKey: "/workspace/project",
++        capturedAt: 1,
++      }),
++    );
++    services.getGitCommits.mockResolvedValue({
++      commits: [{ sha: externalHead }],
++    });
++    services.getGitChanges.mockResolvedValue([]);
++  });
++  afterEach(cleanup);
++
++  it("keeps the last completed-turn baseline when an idle conversation is reopened", async () => {
++    const { result, rerender } = renderHook(
++      ({ state }) => useGitResumeDrift(state),
++      { initialProps: { state: AgentState.STOPPED } },
++    );
++    await flushRequests();
++    rerender({ state: AgentState.RUNNING });
++    await waitFor(() => expect(result.current.isChecking).toBe(false));
++    expect(result.current.drift?.detected).toBe(true);
++    expect(result.current.drift?.previousHead).toBe(originalHead);
++    expect(result.current.drift?.currentHead).toBe(externalHead);
++  });
++
++  it("does not warn when a reopened conversation has an unchanged HEAD", async () => {
++    services.getGitCommits.mockResolvedValue({
++      commits: [{ sha: originalHead }],
++    });
++    const { result, rerender } = renderHook(
++      ({ state }) => useGitResumeDrift(state),
++      { initialProps: { state: AgentState.STOPPED } },
++    );
++    await flushRequests();
++    rerender({ state: AgentState.RUNNING });
++    await waitFor(() => expect(result.current.isChecking).toBe(false));
++    expect(result.current.drift?.detected).toBe(false);
++  });
++
++  it("refreshes the baseline after an observed running turn ends", async () => {
++    const { result, rerender } = renderHook(
++      ({ state }) => useGitResumeDrift(state),
++      { initialProps: { state: AgentState.RUNNING } },
++    );
++    await waitFor(() => expect(result.current.isChecking).toBe(false));
++    expect(result.current.drift?.detected).toBe(true);
++    rerender({ state: AgentState.STOPPED });
++    await waitFor(() => expect(storedHead()).toBe(externalHead));
++  });
++});
+diff --git a/src/hooks/use-git-resume-drift.ts b/src/hooks/use-git-resume-drift.ts
+index cf89326..44aebe2 100644
+--- a/src/hooks/use-git-resume-drift.ts
++++ b/src/hooks/use-git-resume-drift.ts
+@@ -96,6 +96,7 @@ export function useGitResumeDrift(agentState: AgentState | null): {
+   // Guards against stale runtime responses racing a conversation switch.
+   const requestSeqRef = useRef(0);
+   const conversationIdRef = useRef<string | null>(conversationId ?? null);
++  const observedRunningConversationRef = useRef<string | null>(null);
+ 
+   const workspacePath =
+     conversation?.workspace?.working_dir ??
+@@ -251,6 +252,10 @@ export function useGitResumeDrift(agentState: AgentState | null): {
+   // don't flag as drift the next time it resumes.
+   useEffect(() => {
+     if (!conversationId) return;
++    if (agentState === AgentState.RUNNING) {
++      observedRunningConversationRef.current = conversationId;
++      return;
++    }
+     const idleStates: AgentState[] = [
+       AgentState.STOPPED,
+       AgentState.PAUSED,
+@@ -259,6 +264,10 @@ export function useGitResumeDrift(agentState: AgentState | null): {
+       AgentState.ERROR,
+     ];
+     if (!agentState || !idleStates.includes(agentState)) return;
++    // Reopening an already-idle conversation is not a completed turn. Keep
++    // its durable baseline until a run observed by this hook actually ends.
++    if (observedRunningConversationRef.current !== conversationId) return;
++    observedRunningConversationRef.current = null;
+ 
+     void (async () => {
+       const live = await fetchLiveSnapshot();
+diff --git a/src/i18n/translation.json b/src/i18n/translation.json
+index a5f1f51..b04be78 100644
+--- a/src/i18n/translation.json
++++ b/src/i18n/translation.json
+@@ -39608,5 +39608,77 @@
+     "en": "{count, plural, one {# agent woke up} other {# agents woke up}}",
+     "ja": "{count}つのエージェントを起動しました",
+     "zh-CN": "已唤醒 {count} 个智能体"
++  },
++  "CONVERSATION$GIT_DRIFT_TITLE": {
++    "en": "Workspace changed since the agent last worked here",
++    "ja": "エージェントの前回の作業以降にワークスペースが変更されました",
++    "zh-CN": "工作区自智能体上次工作后发生了变化",
++    "zh-TW": "工作區自代理程式上次工作後發生了變更",
++    "ko-KR": "에이전트가 마지막으로 작업한 이후 작업 공간이 변경되었습니다",
++    "no": "Arbeidsområdet er endret siden agenten sist arbeidet her",
++    "it": "Lo spazio di lavoro è cambiato dall’ultima attività dell’agente",
++    "pt": "O espaço de trabalho mudou desde a última atividade do agente",
++    "es": "El espacio de trabajo cambió desde la última actividad del agente",
++    "ar": "تغيرت مساحة العمل منذ آخر عمل للوكيل هنا",
++    "fr": "L’espace de travail a changé depuis la dernière activité de l’agent",
++    "tr": "Çalışma alanı, aracının son çalışmasından bu yana değişti",
++    "de": "Der Arbeitsbereich hat sich seit der letzten Arbeit des Agenten geändert",
++    "uk": "Робоча область змінилася з часу останньої роботи агента",
++    "ca": "L’espai de treball ha canviat des de l’última activitat de l’agent",
++    "id": "Ruang kerja berubah sejak agen terakhir bekerja di sini"
++  },
++  "CONVERSATION$GIT_DRIFT_PREVIOUS": {
++    "en": "Previous {{revision}}",
++    "ja": "以前 {{revision}}",
++    "zh-CN": "之前 {{revision}}",
++    "zh-TW": "先前 {{revision}}",
++    "ko-KR": "이전 {{revision}}",
++    "no": "Forrige {{revision}}",
++    "it": "Precedente {{revision}}",
++    "pt": "Anterior {{revision}}",
++    "es": "Anterior {{revision}}",
++    "ar": "السابق {{revision}}",
++    "fr": "Précédente {{revision}}",
++    "tr": "Önceki {{revision}}",
++    "de": "Vorherige {{revision}}",
++    "uk": "Попередня {{revision}}",
++    "ca": "Anterior {{revision}}",
++    "id": "Sebelumnya {{revision}}"
++  },
++  "CONVERSATION$GIT_DRIFT_CURRENT": {
++    "en": "Current {{revision}}",
++    "ja": "現在 {{revision}}",
++    "zh-CN": "当前 {{revision}}",
++    "zh-TW": "目前 {{revision}}",
++    "ko-KR": "현재 {{revision}}",
++    "no": "Nåværende {{revision}}",
++    "it": "Attuale {{revision}}",
++    "pt": "Atual {{revision}}",
++    "es": "Actual {{revision}}",
++    "ar": "الحالي {{revision}}",
++    "fr": "Actuelle {{revision}}",
++    "tr": "Geçerli {{revision}}",
++    "de": "Aktuelle {{revision}}",
++    "uk": "Поточна {{revision}}",
++    "ca": "Actual {{revision}}",
++    "id": "Saat ini {{revision}}"
++  },
++  "CONVERSATION$GIT_DRIFT_ACKNOWLEDGE": {
++    "en": "Acknowledge",
++    "ja": "確認",
++    "zh-CN": "确认",
++    "zh-TW": "確認",
++    "ko-KR": "확인",
++    "no": "Bekreft",
++    "it": "Conferma",
++    "pt": "Confirmar",
++    "es": "Confirmar",
++    "ar": "تأكيد",
++    "fr": "Confirmer",
++    "tr": "Onayla",
++    "de": "Bestätigen",
++    "uk": "Підтвердити",
++    "ca": "Confirma",
++    "id": "Konfirmasi"
+   }
+ }
