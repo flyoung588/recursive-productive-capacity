@@ -1,0 +1,148 @@
+/Users/feiyang/.codex/.chatgpt-projects/g-p-6a8bc3896c108191b1914e9af9ac0262/co-do-parallel-001/track-c/venv/lib/python3.11/site-packages/pytest_asyncio/plugin.py:300: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
+The event loop scope for asynchronous fixtures will default to the "fixture" caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to "function" scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
+
+  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))
+FFF.FF..                                                                 [100%]
+=================================== FAILURES ===================================
+______________________ test_author_scoped_roundtrip[obj0] ______________________
+
+obj = Ordinary(value=42)
+
+    @pytest.mark.parametrize(
+        "obj",
+        [
+            Ordinary(wireValue=42),
+            NestedOrdinary(values=[Ordinary(wireValue=42)]),
+            UnionOrdinary(item=NumericOrdinary(wireValue=42)),
+            UnionOrdinary(item=TextOrdinary(text="retained")),
+            ChoiceOrdinary(legacyValue=42),
+            PathOrdinary(payload={"value": 42}),
+            OptInCustom(wireValue=42),
+            NestedOptIn(inner=OptInCustom(wireValue=42)),
+        ],
+    )
+    def test_author_scoped_roundtrip(obj):
+        serde = JsonPlusSerializer(allowed_msgpack_modules=True)
+>       assert serde.loads_typed(serde.dumps_typed(obj)) == obj
+E       assert Ordinary(value=1) == Ordinary(value=42)
+E         
+E         Use -v to get more diff
+
+co-do-round3/track-c/test_author_scope.py:69: AssertionError
+------------------------------ Captured log call -------------------------------
+WARNING  langgraph.checkpoint.serde.jsonplus:jsonplus.py:80 Deserializing unregistered type test_author_scope.Ordinary from checkpoint. This will be blocked in a future version. Set LANGGRAPH_STRICT_MSGPACK=true to block now, or add to allowed_msgpack_modules to allow explicitly: [('test_author_scope', 'Ordinary')]
+______________________ test_author_scoped_roundtrip[obj1] ______________________
+
+obj = NestedOrdinary(values=[Ordinary(value=42)])
+
+    @pytest.mark.parametrize(
+        "obj",
+        [
+            Ordinary(wireValue=42),
+            NestedOrdinary(values=[Ordinary(wireValue=42)]),
+            UnionOrdinary(item=NumericOrdinary(wireValue=42)),
+            UnionOrdinary(item=TextOrdinary(text="retained")),
+            ChoiceOrdinary(legacyValue=42),
+            PathOrdinary(payload={"value": 42}),
+            OptInCustom(wireValue=42),
+            NestedOptIn(inner=OptInCustom(wireValue=42)),
+        ],
+    )
+    def test_author_scoped_roundtrip(obj):
+        serde = JsonPlusSerializer(allowed_msgpack_modules=True)
+>       assert serde.loads_typed(serde.dumps_typed(obj)) == obj
+E       assert NestedOrdinar...ary(value=1)]) == NestedOrdinar...ry(value=42)])
+E         
+E         Use -v to get more diff
+
+co-do-round3/track-c/test_author_scope.py:69: AssertionError
+------------------------------ Captured log call -------------------------------
+WARNING  langgraph.checkpoint.serde.jsonplus:jsonplus.py:80 Deserializing unregistered type test_author_scope.NestedOrdinary from checkpoint. This will be blocked in a future version. Set LANGGRAPH_STRICT_MSGPACK=true to block now, or add to allowed_msgpack_modules to allow explicitly: [('test_author_scope', 'NestedOrdinary')]
+______________________ test_author_scoped_roundtrip[obj2] ______________________
+
+obj = UnionOrdinary(item=NumericOrdinary(kind='number', value=42))
+
+    @pytest.mark.parametrize(
+        "obj",
+        [
+            Ordinary(wireValue=42),
+            NestedOrdinary(values=[Ordinary(wireValue=42)]),
+            UnionOrdinary(item=NumericOrdinary(wireValue=42)),
+            UnionOrdinary(item=TextOrdinary(text="retained")),
+            ChoiceOrdinary(legacyValue=42),
+            PathOrdinary(payload={"value": 42}),
+            OptInCustom(wireValue=42),
+            NestedOptIn(inner=OptInCustom(wireValue=42)),
+        ],
+    )
+    def test_author_scoped_roundtrip(obj):
+        serde = JsonPlusSerializer(allowed_msgpack_modules=True)
+>       assert serde.loads_typed(serde.dumps_typed(obj)) == obj
+E       AssertionError: assert UnionOrdinary...er', value=1)) == UnionOrdinary...r', value=42))
+E         
+E         Use -v to get more diff
+
+co-do-round3/track-c/test_author_scope.py:69: AssertionError
+------------------------------ Captured log call -------------------------------
+WARNING  langgraph.checkpoint.serde.jsonplus:jsonplus.py:80 Deserializing unregistered type test_author_scope.UnionOrdinary from checkpoint. This will be blocked in a future version. Set LANGGRAPH_STRICT_MSGPACK=true to block now, or add to allowed_msgpack_modules to allow explicitly: [('test_author_scope', 'UnionOrdinary')]
+______________________ test_author_scoped_roundtrip[obj4] ______________________
+
+obj = ChoiceOrdinary(value=42)
+
+    @pytest.mark.parametrize(
+        "obj",
+        [
+            Ordinary(wireValue=42),
+            NestedOrdinary(values=[Ordinary(wireValue=42)]),
+            UnionOrdinary(item=NumericOrdinary(wireValue=42)),
+            UnionOrdinary(item=TextOrdinary(text="retained")),
+            ChoiceOrdinary(legacyValue=42),
+            PathOrdinary(payload={"value": 42}),
+            OptInCustom(wireValue=42),
+            NestedOptIn(inner=OptInCustom(wireValue=42)),
+        ],
+    )
+    def test_author_scoped_roundtrip(obj):
+        serde = JsonPlusSerializer(allowed_msgpack_modules=True)
+>       assert serde.loads_typed(serde.dumps_typed(obj)) == obj
+E       assert ChoiceOrdinary(value=1) == ChoiceOrdinary(value=42)
+E         
+E         Use -v to get more diff
+
+co-do-round3/track-c/test_author_scope.py:69: AssertionError
+------------------------------ Captured log call -------------------------------
+WARNING  langgraph.checkpoint.serde.jsonplus:jsonplus.py:80 Deserializing unregistered type test_author_scope.ChoiceOrdinary from checkpoint. This will be blocked in a future version. Set LANGGRAPH_STRICT_MSGPACK=true to block now, or add to allowed_msgpack_modules to allow explicitly: [('test_author_scope', 'ChoiceOrdinary')]
+______________________ test_author_scoped_roundtrip[obj5] ______________________
+
+obj = PathOrdinary(value=42)
+
+    @pytest.mark.parametrize(
+        "obj",
+        [
+            Ordinary(wireValue=42),
+            NestedOrdinary(values=[Ordinary(wireValue=42)]),
+            UnionOrdinary(item=NumericOrdinary(wireValue=42)),
+            UnionOrdinary(item=TextOrdinary(text="retained")),
+            ChoiceOrdinary(legacyValue=42),
+            PathOrdinary(payload={"value": 42}),
+            OptInCustom(wireValue=42),
+            NestedOptIn(inner=OptInCustom(wireValue=42)),
+        ],
+    )
+    def test_author_scoped_roundtrip(obj):
+        serde = JsonPlusSerializer(allowed_msgpack_modules=True)
+>       assert serde.loads_typed(serde.dumps_typed(obj)) == obj
+E       assert PathOrdinary(value=1) == PathOrdinary(value=42)
+E         
+E         Use -v to get more diff
+
+co-do-round3/track-c/test_author_scope.py:69: AssertionError
+------------------------------ Captured log call -------------------------------
+WARNING  langgraph.checkpoint.serde.jsonplus:jsonplus.py:80 Deserializing unregistered type test_author_scope.PathOrdinary from checkpoint. This will be blocked in a future version. Set LANGGRAPH_STRICT_MSGPACK=true to block now, or add to allowed_msgpack_modules to allow explicitly: [('test_author_scope', 'PathOrdinary')]
+=========================== short test summary info ============================
+FAILED co-do-round3/track-c/test_author_scope.py::test_author_scoped_roundtrip[obj0]
+FAILED co-do-round3/track-c/test_author_scope.py::test_author_scoped_roundtrip[obj1]
+FAILED co-do-round3/track-c/test_author_scope.py::test_author_scoped_roundtrip[obj2]
+FAILED co-do-round3/track-c/test_author_scope.py::test_author_scoped_roundtrip[obj4]
+FAILED co-do-round3/track-c/test_author_scope.py::test_author_scoped_roundtrip[obj5]
+5 failed, 3 passed in 0.16s
