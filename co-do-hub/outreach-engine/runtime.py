@@ -135,7 +135,8 @@ class Runtime:
             if isinstance(value,dict):
                 return {k:((excerpt(v)+' [EXCERPT; full text retained in source file]')
                            if k=='text' and isinstance(v,str) and len(v)>4000 else bounded(v[:8] if isinstance(v,list) and 'sources' in k else v))
-                        for k,v in value.items()}
+                        for k,v in value.items()
+                        if k not in ('links','link_records') or task.startswith('Select up to three')}
             if isinstance(value,list): return [bounded(x) for x in value]
             return value
         context=bounded(context)
