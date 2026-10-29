@@ -1,0 +1,24 @@
+{
+  "version": "v0.1.0",
+  "date": "2026-10-29",
+  "local_runner": "Python 3.10+ stdlib",
+  "human_draft_review": true,
+  "sent_emails": 0,
+  "external_replies_observed": 0,
+  "training_pairs": 2,
+  "issue_reselection": "Aneesh ORG-02 -> ORG-03",
+  "delivered_assets": [
+    "engine.py",
+    "data/researchers.json",
+    "data/feedback.jsonl",
+    "state/learned.json",
+    "tests/test_engine.py",
+    "README.md"
+  ],
+  "known_limits": [
+    "source curation manual",
+    "two revisions in sample",
+    "not automatically sending or contacting",
+    "not an LLM"
+  ]
+}
