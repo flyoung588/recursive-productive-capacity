@@ -36,9 +36,11 @@ def load(path, default=None):
 
 class Text(HTMLParser):
     def __init__(self):
-        super().__init__(); self.parts = []; self.hidden = 0
+        super().__init__(); self.parts = []; self.links = []; self.hidden = 0
     def handle_starttag(self, tag, attrs):
         if tag in ('script', 'style'): self.hidden += 1
+        if tag=='a':
+            self.links.extend(v for k,v in attrs if k=='href' and v)
     def handle_endtag(self, tag):
         if tag in ('script', 'style'): self.hidden = max(0, self.hidden - 1)
     def handle_data(self, data):
@@ -70,11 +72,14 @@ def fetch(url):
         final = response.url
     if 'pdf' in kind or raw.startswith(b'%PDF'):
         raise ValueError('PDF requires a text/abstract source; not silently parsed')
+    links=[]
     text = raw.decode('utf-8', errors='replace')
     if 'html' in kind or '<html' in text[:500].lower():
         parser = Text(); parser.feed(text); text = ' '.join(parser.parts)
+        links=list(dict.fromkeys(urllib.parse.urljoin(final,u) for u in parser.links
+                               if urllib.parse.urljoin(final,u).startswith('https://')))[:150]
     return {'url':url, 'final_url':final, 'sha256':hashlib.sha256(raw).hexdigest(),
-            'content_type':kind, 'text':(text if 'json' in kind else re.sub(r'\s+', ' ', text)[:40000]),
+            'content_type':kind, 'links':links, 'text':(text if 'json' in kind else re.sub(r'\s+', ' ', text)[:40000]),
             'retrieved_at':time.time()}
 
 
@@ -241,7 +246,20 @@ class Runtime:
                         query = identity['research_search_query']
                     result = self.search(query,folder/'discovery.search.json')
                     sources = self.sources(result, folder/'sources')
-                    if homepage: sources.insert(0,homepage)
+                    if homepage:
+                        sources.insert(0,homepage)
+                        selected=stage('primary_selection',lambda:self.model(
+                            'Select up to three recent original paper abstract or research project URLs '
+                            'directly linked on this researcher homepage, most informative about their '
+                            'research findings and limitations. Prefer readable HTML over PDFs. Return '
+                            'source_urls (exact members of supplied links) and reasons. Do not invent URLs '
+                            'or infer findings yet. Do not select news, social media or contact links.',
+                            {'homepage':homepage},folder/'primary_selection.call.json'))
+                        self.validate_urls(selected,set(homepage.get('links',[])))
+                        for url in selected.get('source_urls',[])[:3]:
+                            try: sources.append(fetch(url))
+                            except Exception as exc:
+                                save(folder/('primary-'+hashlib.sha256(url.encode()).hexdigest()[:12]+'.error.json'),{'url':url,'error':str(exc)})
                     for person in load(ROOT/'data/researchers.json',[]):
                         if person['name'].lower() in researcher.lower():
                             for evidence in person.get('evidence',[]):
