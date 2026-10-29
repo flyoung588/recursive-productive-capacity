@@ -9,7 +9,10 @@ import argparse
 import hashlib
 import json
 import math
+import os
 import re
+import urllib.parse
+import urllib.request
 from pathlib import Path
 from datetime import datetime, timezone
 
@@ -217,6 +220,56 @@ def generate(person, model, all_styles=False):
             'send_authorized': False}
 
 
+
+def draft_with_local_model(person, match, events, endpoint, model_name, allow_external=False):
+    """Optional explicit OpenAI-compatible drafting endpoint. Never sends emails."""
+    parsed = urllib.parse.urlsplit(endpoint)
+    local = parsed.hostname in ('localhost', '127.0.0.1', '::1')
+    if not (parsed.scheme == 'http' and local or parsed.scheme == 'https' and local
+            or parsed.scheme == 'https' and allow_external):
+        raise ValueError('Model endpoint must be localhost, or explicitly allowed HTTPS remote')
+    intersection = next(m for m in person['intersections'] if m['issue_id'] == match['issue_id'])
+    # Raw feedback (including unsent edits) never leaves the machine without opt-in.
+    recent_edits = ([e for e in events if e.get('type') == 'revision'
+                     and e.get('researcher_id') == person['id']][-2:] if local else [])
+    preferred_examples = [e['preferred'][:1100] for e in recent_edits]
+    cited = [x for x in person.get('evidence', []) if x.get('url') in intersection['evidence_urls']]
+    context = {'recipient': person['name'], 'research_facts': cited,
+               'research_observation': intersection['research_observation'],
+               'co_do_scenario': intersection['co_do_scenario'],
+               'possible_shared_question': intersection['research_question'],
+               'specific_question_to_person': intersection['specific_ask'],
+               'issue_url': ISSUE_URL + str(intersection['issue_number']),
+               'preferred_edits_private_local_only': preferred_examples}
+    system = ('Write one natural, concise, individually addressed English research invitation. '
+              'Start with what this researcher actually found; move to a meaningful research question. '
+              'Co-Do means projects can assemble independent PEOPLE and AI as they require, not just one person using AI. '
+              'Invite dialogue rather than recruitment or task assignment. Avoid disclaimer cascades, '
+              'promotional claims and made-up novelty, citations or background. Use only the stated facts. '
+              'Aim for 140-230 words. Output the email body only, no markdown fencing. Never send anything.')
+    payload = {'model': model_name, 'temperature': 0.5,
+               'messages': [{'role':'system', 'content':system},
+                            {'role':'user', 'content':json.dumps(context, ensure_ascii=False)}]}
+    data = json.dumps(payload, ensure_ascii=False).encode('utf-8')
+    headers = {'Content-Type':'application/json'}
+    if not local and os.getenv('CO_DO_API_KEY'):
+        headers['Authorization'] = 'Bearer ' + os.environ['CO_DO_API_KEY']
+    request = urllib.request.Request(endpoint, data=data, headers=headers, method='POST')
+    with urllib.request.urlopen(request, timeout=75) as response:
+        raw = json.loads(response.read(500000).decode('utf-8'))
+    draft_text = raw['choices'][0]['message']['content'].strip()
+    if not draft_text or len(draft_text) < 160:
+        raise ValueError('model response too short to be a reviewable draft')
+    allowed = set(intersection['evidence_urls'] + [ISSUE_URL + str(intersection['issue_number'])])
+    found_urls = re.findall(r'https?://[^\s<>\])]+', draft_text)
+    if any(x.rstrip('.,;') not in allowed for x in found_urls):
+        raise ValueError('model invented or introduced a non-approved URL')
+    return {'subject': intersection['mail_subject'], 'body': draft_text,
+            'status':'MODEL_DRAFT_UNVERIFIED', 'source_urls':intersection['evidence_urls'],
+            'local_model':local, 'human_factual_review_required':True,
+            'send_authorized':False}
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description='Co-Do recursive outreach; local drafts only, no mail sender')
     sub = parser.add_subparsers(dest='command', required=True)
@@ -228,6 +281,9 @@ def main(argv=None):
     draft.add_argument('researcher')
     draft.add_argument('--untrained', action='store_true', help='Ablation: equal style preferences')
     draft.add_argument('--alternatives', action='store_true')
+    draft.add_argument('--model-endpoint', help='Explicit OpenAI-compatible local URL, no default network calls')
+    draft.add_argument('--model-name', help='Local model identifier at that endpoint')
+    draft.add_argument('--allow-external-model', action='store_true', help='Opt-in to an HTTPS remote model; never transmits past private edits')
     feed = sub.add_parser('feedback', help='Append an actual preference pair (requires local files)')
     feed.add_argument('researcher')
     feed.add_argument('--preferred', type=Path, required=True)
@@ -306,6 +362,12 @@ def main(argv=None):
                 if args.untrained:
                     model = dict(model, weights={k:0. for k in FEATURES}, match_feedback={})
                 result = generate(p, model, args.alternatives)
+                if args.model_endpoint:
+                    if not args.model_name: parser.error('--model-name required with --model-endpoint')
+                    if result['status'] == 'REVIEW_REQUIRED':
+                        result['model_candidate'] = draft_with_local_model(
+                            p, result['match'], events, args.model_endpoint, args.model_name,
+                            allow_external=args.allow_external_model)
                 dest = STATE / 'drafts' / f"{p['id']}.json"
                 if not args.untrained:
                     write_json(dest, result)
