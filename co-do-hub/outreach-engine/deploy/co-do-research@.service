@@ -1,0 +1,15 @@
+[Unit]
+Description=Co-Do research task %i (draft only)
+After=network-online.target
+[Service]
+Type=oneshot
+User=co-do
+Group=co-do
+WorkingDirectory=/srv/co-do/outreach-engine
+Environment=CO_DO_STATE=/var/lib/co-do
+Environment=CO_DO_MODEL_BRIDGE=/usr/local/libexec/co-do-model
+ExecStart=/usr/bin/python3 /srv/co-do/outreach-engine/worker.py %i
+UMask=0077
+PrivateTmp=true
+TimeoutStartSec=45min
+Restart=no

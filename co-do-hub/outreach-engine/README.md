@@ -77,3 +77,44 @@ python3 engine.py draft qing-xiao --model-endpoint http://127.0.0.1:11434/v1/cha
 ```
 
 This returns both the deterministic draft and `model_candidate`. The model candidate is **not automatically promoted**, sent, or treated as fact-checked. The engine rejects model-invented URLs, but that cannot detect every invented claim. The command has no default model calls; there is no required paid API. HTTPS remote model endpoints require the extra `--allow-external-model` flag and must be explicitly authorized; private preference text is withheld from remote prompts. Use `CO_DO_API_KEY` only for the remote endpoint if needed. **No model endpoint was available in this execution environment, so model-based writing quality has not been validated.**
+
+## v0.2 research cognition runtime
+
+`runtime.py research <name-or-official-HTTPS-homepage> --run-id <id>` autonomously
+reads public source pages and Crossref metadata, asks GPT-6.1 Sol Low through the
+existing OpenClaw gateway to interpret findings, generates falsification searches,
+compares competing work, and may reject a match. A supported candidate receives
+an English invitation and Chinese review draft, then a semantic revision using
+relevant persisted human feedback. There is no sender, SMTP client, mail tool or
+contact permission. All drafts require human factual and editorial review.
+
+Use `--state /private/persistent/directory` BEFORE the subcommand. Default is
+`/var/lib/co-do`; do not use a public checkout as private state. `learn` reuses the
+original public seed and private `feedback.jsonl`, storing semantic lessons keyed
+by the original revision digest. `feedback --researcher ID --before FILE --after
+FILE --note TEXT` records actual human edits; do not feed model edits as human.
+Run IDs are immutable input bindings and completed stages are reused after
+restart. Errors persist as FAILED; invoke the same task to resume. No automatic
+retries of failed model requests, fallback model, schedule or open network port.
+
+For a paired evidence-controlled run, execute A with `--no-learning`, then B with
+`--evidence-from A_RUN_ID`. The same discovery, interpretation and competition
+bundles are reused byte-for-byte. This controls sources, not model randomness;
+quality and novelty remain for human evaluation. `checks.json` reports only URL
+membership and source digest, never semantic correctness or learning success.
+
+On the existing host, a dedicated `co-do` user can invoke a root-owned fixed-model
+adapter (`deploy/model_bridge.py`) via a single sudo rule; it accepts prompt text
+on stdin, fixes gateway/model/thinking, and cannot execute arbitrary commands or
+mail tools. This reuses existing OAuth and gateway credentials without copying
+them into Co-Do or changing other applications. Model usage/cost metadata is
+retained privately; it is not a cash billing receipt. Deploy code root-owned,
+state co-do-owned mode 0700. Optional `co-do-research@RUN.service` is an explicit
+oneshot worker, not a daemon or scheduler. Queue JSON under state/tasks and start
+the instance manually; rerun the same instance to resume checkpoints.
+
+Retrieval limitations: Crossref deposits may omit abstracts, and not every recent
+paper is indexed; raw DOI pages can reject automated readers. Metadata-only
+sources must not support detailed result claims. URL membership cannot prove
+entailment. Scholarly novelty, researcher interest and improved writing quality
+are not automatically established. No contacts occur.
