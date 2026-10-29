@@ -4,3 +4,4 @@ state/drafts/
 private/
 *.private.jsonl
 *.secret
+data/feedback.local.jsonl
