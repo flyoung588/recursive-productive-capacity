@@ -113,9 +113,21 @@ class Runtime:
         if result.returncode: raise RuntimeError(f'OpenClaw failed; private log: {path}')
         return json.loads(result.stdout)
     def model(self, task, context, path):
+        def excerpt(text):
+            try:
+                data=json.loads(text)
+                message=data.get('message',data)
+                records=message.get('items') or data.get('notes') or [message]
+                compact=[]
+                for record in records[:6]:
+                    c=record.get('content',record)
+                    compact.append({k:(v.get('value') if isinstance(v,dict) and 'value' in v else v)
+                                    for k,v in c.items() if k in ('title','abstract','author','authors','DOI','URL','pdf','year','published')})
+                return json.dumps(compact,ensure_ascii=False)[:12000]
+            except (ValueError,AttributeError,TypeError): return text[:7000]
         def bounded(value):
             if isinstance(value,dict):
-                return {k:((v[:4000]+' [EXCERPT; full text retained in source file]')
+                return {k:((excerpt(v)+' [EXCERPT; full text retained in source file]')
                            if k=='text' and isinstance(v,str) and len(v)>4000 else bounded(v))
                         for k,v in value.items()}
             if isinstance(value,list): return [bounded(x) for x in value]
@@ -175,6 +187,13 @@ class Runtime:
                 'sha256':result['sha256'], 'items':data['message']['items']}
     @staticmethod
     def research_source(url):
+        parsed=urllib.parse.urlsplit(url)
+        if parsed.hostname=='openreview.net' and parsed.path=='/forum':
+            paper_id=urllib.parse.parse_qs(parsed.query).get('id',[''])[0]
+            record=fetch('https://api2.openreview.net/notes?'+urllib.parse.urlencode({'id':paper_id}))
+            record['source_kind']='Original OpenReview submitted paper record'
+            record['requested_paper_url']=url
+            return record
         try: return fetch(url)
         except urllib.error.HTTPError as exc:
             p=urllib.parse.urlsplit(url)
@@ -307,6 +326,7 @@ class Runtime:
             co_do = {'definition':(ROOT.parent/'DEFINITION.md').read_text(),
                      'open_questions':(ROOT.parent/'research/OPEN_QUESTIONS.md').read_text()}
             source_urls = {s['url'] for s in discovery['sources']+competitors['sources']}
+            source_urls.update(s['requested_paper_url'] for s in discovery['sources']+competitors['sources'] if s.get('requested_paper_url'))
             source_urls.update(re.findall(r'https://github.com/[^\s)]+',co_do['open_questions']))
             for bundle in [discovery['search']] + [x['result'] for x in competitors['searches']]:
                 source_urls.update(x['URL'] for x in bundle.get('items',[]) if x.get('URL'))
@@ -337,7 +357,8 @@ class Runtime:
                 'Select relevant historical lessons by scope and researcher, then revise BOTH scientific '
                 'intersection reasoning and invitation. Return applied_lesson_ids with specific changes, '
                 'researcher_specific_lessons_not_applied, revised_intersection, subject, english_email, '
-                'chinese_review, uncertainties. Start from a specific evidenced finding, naturally ask a '
+                'chinese_review (a full Chinese translation of the invitation, not revision notes), '
+                'review_notes, uncertainties. Start from a specific evidenced finding, naturally ask a '
                 'research question and allow them to redefine it. No platform pitch, no forced group, '
                 'no novelty inflation. For empty lessons retain evidence-based independent revision; '
                 'do not pretend historical learning occurred. Draft only. Source URLs must be from supplied evidence.',
@@ -347,6 +368,16 @@ class Runtime:
             self.validate_urls(revised,source_urls)
             for key in ('english_email','chinese_review','subject'):
                 if not isinstance(revised.get(key),str) or not revised[key].strip(): raise ValueError('Incomplete invitation')
+            translation=stage('chinese_translation',lambda:self.model(
+                'Translate this English draft invitation faithfully into natural Chinese for human review. '
+                'Return chinese_email only. Include the full greeting, invitation and closing. '
+                'No new scientific claims, promises, explanations or editorial notes. Do not send.',
+                {'subject':revised['subject'],'english_email':revised['english_email']},
+                folder/'chinese_translation.call.json'))
+            if not translation.get('chinese_email'): raise ValueError('Missing Chinese invitation')
+            stage('delivery',lambda:{'subject':revised['subject'],'english_email':revised['english_email'],
+                                    'chinese_review':translation['chinese_email'],'delivery':'DRAFT_ONLY',
+                                    'send_authorized':False,'quality':'HUMAN_REVIEW_REQUIRED'})
             checks={'same_evidence_sha256':hashlib.sha256(json.dumps([discovery,competitors],sort_keys=True).encode()).hexdigest(),
                     'url_membership':'PASS','scientific_value':'HUMAN_REVIEW_REQUIRED',
                     'naturalness':'HUMAN_REVIEW_REQUIRED','external_outcome':'NOT_OBSERVED',
