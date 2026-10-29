@@ -67,3 +67,13 @@ Feedback is intentionally not scraped from Gmail. Its storage and source referen
 - Two preference pairs support only a first calibration. A real test needs **new researchers, blinded editorial assessment and eventual reply/research outcomes**, not more model-generated labels.
 
 The project is intentionally small: one runtime, two JSON/JSONL inputs, one persistent learned model and executable tests. The objective is a progressively better research-collaboration process, not more governance artifacts.
+
+## Optional locally generated candidate (explicitly invoked)
+
+The offline draft above is a deterministic baseline. To let an installed, user-controlled **OpenAI-compatible local model** actually compose a new email from the research record and retrieved preference examples, use an endpoint you run yourself (for example an Ollama-compatible local server exposing `/v1/chat/completions`):
+
+```bash
+python3 engine.py draft qing-xiao --model-endpoint http://127.0.0.1:11434/v1/chat/completions --model-name <your-installed-model>
+```
+
+This returns both the deterministic draft and `model_candidate`. The model candidate is **not automatically promoted**, sent, or treated as fact-checked. The engine rejects model-invented URLs, but that cannot detect every invented claim. The command has no default model calls; there is no required paid API. HTTPS remote model endpoints require the extra `--allow-external-model` flag and must be explicitly authorized; private preference text is withheld from remote prompts. Use `CO_DO_API_KEY` only for the remote endpoint if needed. **No model endpoint was available in this execution environment, so model-based writing quality has not been validated.**
