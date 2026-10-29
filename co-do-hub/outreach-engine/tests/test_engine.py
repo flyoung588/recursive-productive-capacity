@@ -1,4 +1,6 @@
 import importlib.util
+import threading
+from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 import subprocess
 import sys
@@ -74,6 +76,50 @@ class LearningEngineTest(unittest.TestCase):
             state = Path(folder) / 'learned.json'
             engine.write_json(state, updated)
             self.assertEqual(engine.load_json(state)['feedback_sha256'], updated['feedback_sha256'])
+
+    def test_optional_local_model_protocol_is_real_and_draft_only(self):
+        # Local mock simulates the OpenAI-compatible response schema; NOT a model-quality test.
+        requests = []
+        class Server(BaseHTTPRequestHandler):
+            def do_POST(self):
+                n = int(self.headers['Content-Length'])
+                requests.append(json.loads(self.rfile.read(n)))
+                body = ('Dear Qing, Your newsroom findings made me wonder what happens '
+                        'when a team does not exist yet. Could different people and AI '
+                        'come together around a real question, change its direction, '
+                        'and leave useful capability for the next collaboration? '
+                        'I would value your perspective on a small case we might study. '
+                        'Best, Fei Yang')
+                payload = json.dumps({'choices':[{'message':{'content':body}}]}).encode()
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/json')
+                self.send_header('Content-Length', str(len(payload)))
+                self.end_headers()
+                self.wfile.write(payload)
+            def log_message(self, *args): pass
+        srv = HTTPServer(('127.0.0.1', 0), Server)
+        thread = threading.Thread(target=srv.serve_forever, daemon=True)
+        thread.start()
+        try:
+            p = PEOPLE['qing-xiao']
+            m = engine.rank_matches(p, self.learned)[0]
+            result = engine.draft_with_local_model(p, m, EVENTS,
+                    f'http://127.0.0.1:{srv.server_port}/v1/chat/completions', 'mock-local')
+            self.assertEqual(result['status'], 'MODEL_DRAFT_UNVERIFIED')
+            self.assertFalse(result['send_authorized'])
+            self.assertTrue(result['human_factual_review_required'])
+            self.assertEqual(len(requests), 1)
+            self.assertTrue(requests[0]['messages'])
+        finally:
+            srv.shutdown()
+            srv.server_close()
+            thread.join(2)
+
+    def test_external_model_requires_explicit_https(self):
+        p = PEOPLE['qing-xiao']
+        m = engine.rank_matches(p, self.learned)[0]
+        with self.assertRaises(ValueError):
+            engine.draft_with_local_model(p, m, EVENTS, 'http://example.org/chat', 'foo')
 
     def test_cli_real_execution(self):
         run = subprocess.run([sys.executable, str(HERE / 'engine.py'), 'draft', 'aneesh-pappu', '--untrained'],
