@@ -1,0 +1,27 @@
+{
+  "claim": "In-sample fit only. No external researcher reply or collaboration outcome has been observed.",
+  "feedback_sha256": "b43335db253cda5de0de3703d7d8be1e2917177cbeb52c7a21b2e340f8a577e1",
+  "match_feedback": {
+    "aneesh-pappu": {
+      "ORG-02": -1,
+      "ORG-03": 1
+    }
+  },
+  "mean_margin_after": 3.894,
+  "mean_margin_before": 2.35,
+  "observed_outcomes": {},
+  "revision_pairs": 2,
+  "schema": "co-do.learn.v0.1",
+  "training_pairs_preferred": 2,
+  "weights": {
+    "disclaimer": -1.8566099700317242,
+    "length": -0.8686337502553466,
+    "multi_party": 1.6284989394506169,
+    "on_demand": 1.1916199474444147,
+    "other_focus": 0.3474535001021386,
+    "question": 0.6974691170828061,
+    "research_hook": 0.6949070002042772,
+    "reuse": 0.7843324921083404,
+    "self_promotion": -1.9109942505617645
+  }
+}
