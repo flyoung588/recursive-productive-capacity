@@ -1,0 +1,181 @@
+diff --git a/src/components/features/chat/git-drift-banner.test.tsx b/src/components/features/chat/git-drift-banner.test.tsx
+new file mode 100644
+index 0000000..a456139
+--- /dev/null
++++ b/src/components/features/chat/git-drift-banner.test.tsx
+@@ -0,0 +1,44 @@
++import { cleanup, render, screen } from "@testing-library/react";
++import { createInstance } from "i18next";
++import { I18nextProvider } from "react-i18next";
++import { afterEach, expect, it, vi } from "vitest";
++import translations from "#/i18n/translation.json";
++import { GitDriftBanner } from "./git-drift-banner";
++
++// Exercise real interpolation instead of the shared key-returning test stub.
++vi.unmock("react-i18next");
++
++afterEach(cleanup);
++
++it("renders both supplied revisions through the actual translation resources", async () => {
++  const i18n = createInstance();
++  await i18n.init({
++    lng: "en",
++    defaultNS: "openhands",
++    interpolation: { escapeValue: false },
++    resources: {
++      en: {
++        openhands: Object.fromEntries(
++          Object.entries(translations).map(([key, value]) => [key, value.en]),
++        ),
++      },
++    },
++  });
++  const previousHead = "a1b2c3d4".repeat(5);
++  const currentHead = "e5f6a7b8".repeat(5);
++
++  render(
++    <I18nextProvider i18n={i18n}>
++      <GitDriftBanner
++        summary="External commit"
++        previousHead={previousHead}
++        currentHead={currentHead}
++        onRefreshBaseline={vi.fn()}
++        onDismiss={vi.fn()}
++      />
++    </I18nextProvider>,
++  );
++
++  expect(screen.getByText(new RegExp(previousHead.slice(0, 8)))).toBeTruthy();
++  expect(screen.getByText(new RegExp(currentHead.slice(0, 8)))).toBeTruthy();
++});
+diff --git a/src/components/features/chat/git-drift-banner.tsx b/src/components/features/chat/git-drift-banner.tsx
+index 1224128..8f05d7e 100644
+--- a/src/components/features/chat/git-drift-banner.tsx
++++ b/src/components/features/chat/git-drift-banner.tsx
+@@ -1,4 +1,5 @@
+ import { useTranslation } from "react-i18next";
++import { I18nKey } from "#/i18n/declaration";
+ import { RefreshCw, GitFork, X } from "lucide-react";
+ 
+ interface GitDriftBannerProps {
+@@ -40,20 +41,24 @@ export function GitDriftBanner({
+       <GitFork className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
+       <div className="min-w-0 flex-1">
+         <div className="font-medium text-amber-100">
+-          {t("GIT_DRIFT$BANNER_TITLE")}
++          {t(I18nKey.GIT_DRIFT$BANNER_TITLE)}
+         </div>
+         <div className="mt-0.5 truncate opacity-90">{summary}</div>
+         {(previousHead || currentHead) && (
+           <div className="mt-0.5 font-mono text-[10px] text-amber-300/70">
+             {previousHead && (
+               <span>
+-                {t("GIT_DRIFT$PREV_HEAD", { hash: previousHead.slice(0, 8) })}
++                {t(I18nKey.GIT_DRIFT$PREV_HEAD, {
++                  hash: previousHead.slice(0, 8),
++                })}
+               </span>
+             )}
+             {previousHead && currentHead && <span className="mx-1">→</span>}
+             {currentHead && (
+               <span>
+-                {t("GIT_DRIFT$NOW_HEAD", { hash: currentHead.slice(0, 8) })}
++                {t(I18nKey.GIT_DRIFT$NOW_HEAD, {
++                  hash: currentHead.slice(0, 8),
++                })}
+               </span>
+             )}
+           </div>
+@@ -65,13 +70,13 @@ export function GitDriftBanner({
+             className="inline-flex items-center gap-1 rounded border border-amber-500/40 px-2 py-0.5 text-[11px] font-medium text-amber-100 transition-colors hover:bg-amber-500/20"
+           >
+             <RefreshCw className="h-3 w-3" aria-hidden />
+-            {t("GIT_DRIFT$ACKNOWLEDGE")}
++            {t(I18nKey.GIT_DRIFT$ACKNOWLEDGE)}
+           </button>
+         </div>
+       </div>
+       <button
+         type="button"
+-        aria-label={t("GIT_DRIFT$DISMISS_LABEL")}
++        aria-label={t(I18nKey.GIT_DRIFT$DISMISS_LABEL)}
+         onClick={onDismiss}
+         className="shrink-0 rounded p-0.5 text-amber-200/60 transition-colors hover:bg-amber-500/20 hover:text-amber-100"
+       >
+diff --git a/src/i18n/translation.json b/src/i18n/translation.json
+index 905273c..e2a87a4 100644
+--- a/src/i18n/translation.json
++++ b/src/i18n/translation.json
+@@ -39654,40 +39654,40 @@
+     "id": "Workspace changed since the agent last worked here"
+   },
+   "GIT_DRIFT$PREV_HEAD": {
+-    "en": "prev {hash}",
+-    "ja": "prev {hash}",
+-    "zh-CN": "prev {hash}",
+-    "zh-TW": "prev {hash}",
+-    "ko-KR": "prev {hash}",
+-    "no": "prev {hash}",
+-    "ar": "prev {hash}",
+-    "de": "prev {hash}",
+-    "fr": "prev {hash}",
+-    "it": "prev {hash}",
+-    "pt": "prev {hash}",
+-    "es": "prev {hash}",
+-    "ca": "prev {hash}",
+-    "tr": "prev {hash}",
+-    "uk": "prev {hash}",
+-    "id": "prev {hash}"
++    "en": "prev {{hash}}",
++    "ja": "prev {{hash}}",
++    "zh-CN": "prev {{hash}}",
++    "zh-TW": "prev {{hash}}",
++    "ko-KR": "prev {{hash}}",
++    "no": "prev {{hash}}",
++    "ar": "prev {{hash}}",
++    "de": "prev {{hash}}",
++    "fr": "prev {{hash}}",
++    "it": "prev {{hash}}",
++    "pt": "prev {{hash}}",
++    "es": "prev {{hash}}",
++    "ca": "prev {{hash}}",
++    "tr": "prev {{hash}}",
++    "uk": "prev {{hash}}",
++    "id": "prev {{hash}}"
+   },
+   "GIT_DRIFT$NOW_HEAD": {
+-    "en": "now {hash}",
+-    "ja": "now {hash}",
+-    "zh-CN": "now {hash}",
+-    "zh-TW": "now {hash}",
+-    "ko-KR": "now {hash}",
+-    "no": "now {hash}",
+-    "ar": "now {hash}",
+-    "de": "now {hash}",
+-    "fr": "now {hash}",
+-    "it": "now {hash}",
+-    "pt": "now {hash}",
+-    "es": "now {hash}",
+-    "ca": "now {hash}",
+-    "tr": "now {hash}",
+-    "uk": "now {hash}",
+-    "id": "now {hash}"
++    "en": "now {{hash}}",
++    "ja": "now {{hash}}",
++    "zh-CN": "now {{hash}}",
++    "zh-TW": "now {{hash}}",
++    "ko-KR": "now {{hash}}",
++    "no": "now {{hash}}",
++    "ar": "now {{hash}}",
++    "de": "now {{hash}}",
++    "fr": "now {{hash}}",
++    "it": "now {{hash}}",
++    "pt": "now {{hash}}",
++    "es": "now {{hash}}",
++    "ca": "now {{hash}}",
++    "tr": "now {{hash}}",
++    "uk": "now {{hash}}",
++    "id": "now {{hash}}"
+   },
+   "GIT_DRIFT$ACKNOWLEDGE": {
+     "en": "Acknowledge",

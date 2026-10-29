@@ -1,0 +1,4 @@
+src/components/features/chat/git-drift-banner.test.tsx 7f6c4d2dfaa36cbdadfdf32ca9023282dc3afc37796a3a695a23d8289eca697b
+src/components/features/chat/git-drift-banner.tsx ea28365711b13d62d7e02c2f765c282df503729b88d8e089c02f16422cad40ce
+src/i18n/translation.json 66e31ae28528913726e9484ce4afc3bb3e844b4a91921b535fe15453b387895d
+All3 patched files directly apply to exact upstream head contents and byte-match tested code commit.
