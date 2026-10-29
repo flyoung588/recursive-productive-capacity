@@ -40,6 +40,19 @@ class RuntimeTest(unittest.TestCase):
             r=m.Runtime(tmp)
             with patch.object(r,'command',return_value={'model':'gpt-6-astra','provider':'openai'}):
                 with self.assertRaises(ValueError): r.model('task',{},Path(tmp)/'call.json')
+    def test_model_resume_uses_original_raw_response(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            r=m.Runtime(tmp); path=Path(tmp)/'call.json'
+            m.save(path,{'returncode':0,'stdout':json.dumps({'provider':'openai',
+                'model':'gpt-6.1-sol','outputs':[{'text':'{"resumed":true}'}]})})
+            with patch.object(r,'command',side_effect=AssertionError('must not repeat model')):
+                self.assertTrue(r.model('same stage',{},path)['resumed'])
+    def test_doi_fallback_retains_source_kind_and_original_url(self):
+        error=m.urllib.error.HTTPError('https://doi.org/10.1/example',403,'blocked',{},None)
+        with patch.object(m,'fetch',side_effect=[error,{'url':'https://api.crossref.org/works/10.1%2Fexample','text':'{}'}]):
+            source=m.Runtime.research_source('https://doi.org/10.1/example')
+        self.assertIn('metadata',source['source_kind'])
+        self.assertEqual(source['requested_paper_url'],'https://doi.org/10.1/example')
     def test_json_object_required(self):
         self.assertEqual(m.parse_json('```json\n{"ok":true}\n```'),{'ok':True})
         with self.assertRaises(ValueError): m.parse_json('[]')

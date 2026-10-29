@@ -123,12 +123,12 @@ class Runtime:
                     c=record.get('content',record)
                     compact.append({k:(v.get('value') if isinstance(v,dict) and 'value' in v else v)
                                     for k,v in c.items() if k in ('title','abstract','author','authors','DOI','URL','pdf','year','published')})
-                return json.dumps(compact,ensure_ascii=False)[:12000]
-            except (ValueError,AttributeError,TypeError): return text[:7000]
+                return json.dumps(compact,ensure_ascii=False)[:5000]
+            except (ValueError,AttributeError,TypeError): return text[:4500]
         def bounded(value):
             if isinstance(value,dict):
                 return {k:((excerpt(v)+' [EXCERPT; full text retained in source file]')
-                           if k=='text' and isinstance(v,str) and len(v)>4000 else bounded(v))
+                           if k=='text' and isinstance(v,str) and len(v)>4000 else bounded(v[:8] if isinstance(v,list) and 'sources' in k else v))
                         for k,v in value.items()}
             if isinstance(value,list): return [bounded(x) for x in value]
             return value

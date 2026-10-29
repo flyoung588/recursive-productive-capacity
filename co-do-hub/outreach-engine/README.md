@@ -114,7 +114,7 @@ oneshot worker, not a daemon or scheduler. Queue JSON under state/tasks and star
 the instance manually; rerun the same instance to resume checkpoints.
 
 Retrieval limitations: Crossref deposits may omit abstracts, and not every recent
-paper is indexed; raw DOI pages can reject automated readers. Metadata-only
+paper is indexed; raw DOI pages can reject automated readers. The runtime reads linked original research pages, uses the public OpenReview API for submitted records, and can extract bounded PDFs with an already installed `pdftotext`; no dependency is automatically installed. It falls back to deposited Crossref DOI metadata where a publisher refuses access. Full retrieved text is retained privately; bounded source excerpts enter the model context. Metadata-only
 sources must not support detailed result claims. URL membership cannot prove
 entailment. Scholarly novelty, researcher interest and improved writing quality
 are not automatically established. No contacts occur.
