@@ -12,6 +12,7 @@ from pathlib import Path
 import re
 import socket
 import subprocess
+import tempfile
 import time
 import urllib.error
 import urllib.parse
@@ -68,12 +69,18 @@ def fetch(url):
     req = urllib.request.Request(url, headers={'User-Agent':'CoDoResearch/0.2 (public academic research)'})
     with urllib.request.build_opener(Redirect).open(req, timeout=15) as response:
         kind = response.headers.get('Content-Type', '')
-        raw = response.read(1500000)
+        raw = response.read(8000001)
+        if len(raw)>8000000: raise ValueError('Source exceeds 8 MB retrieval bound')
         final = response.url
-    if 'pdf' in kind or raw.startswith(b'%PDF'):
-        raise ValueError('PDF requires a text/abstract source; not silently parsed')
     links=[]
-    text = raw.decode('utf-8', errors='replace')
+    if 'pdf' in kind or raw.startswith(b'%PDF'):
+        with tempfile.TemporaryDirectory() as tmp:
+            pdf=Path(tmp)/'paper.pdf'; pdf.write_bytes(raw)
+            result=subprocess.run(['pdftotext','-layout',str(pdf),'-'],capture_output=True,text=True,timeout=25)
+            if result.returncode or not result.stdout.strip(): raise ValueError('PDF text extraction failed')
+            text=result.stdout
+    else:
+        text = raw.decode('utf-8', errors='replace')
     if 'html' in kind or '<html' in text[:500].lower():
         parser = Text(); parser.feed(text); text = ' '.join(parser.parts)
         links=list(dict.fromkeys(urllib.parse.urljoin(final,u) for u in parser.links
@@ -166,6 +173,16 @@ class Runtime:
         data = json.loads(result['text'])
         return {'query':query, 'api_url':url, 'retrieved_at':result['retrieved_at'],
                 'sha256':result['sha256'], 'items':data['message']['items']}
+    @staticmethod
+    def research_source(url):
+        try: return fetch(url)
+        except urllib.error.HTTPError as exc:
+            p=urllib.parse.urlsplit(url)
+            if p.hostname not in ('doi.org','dx.doi.org') or exc.code not in (403,429): raise
+            fallback=fetch('https://api.crossref.org/works/'+urllib.parse.quote(p.path.lstrip('/'),safe=''))
+            fallback['source_kind']='Crossref deposited metadata; publisher source unavailable'
+            fallback['requested_paper_url']=url
+            return fallback
     def sources(self, result, folder):
         # Search output format varies. Extract URLs; only independently read pages count as evidence.
         urls = list(dict.fromkeys(re.findall(r'https?://[^\s"<>\\]+', json.dumps(result))))
@@ -179,7 +196,7 @@ class Runtime:
             path = folder / (key+'.json')
             source = load(path)
             if source is None:
-                try: source = fetch(url)
+                try: source = self.research_source(url)
                 except Exception as exc: source = {'url':url, 'error':type(exc).__name__+': '+str(exc)[:250]}
                 save(path, source)
             if source.get('text'): sources.append(source)
@@ -257,13 +274,13 @@ class Runtime:
                             {'homepage':homepage},folder/'primary_selection.call.json'))
                         self.validate_urls(selected,set(homepage.get('links',[])))
                         for url in selected.get('source_urls',[])[:3]:
-                            try: sources.append(fetch(url))
+                            try: sources.append(self.research_source(url))
                             except Exception as exc:
                                 save(folder/('primary-'+hashlib.sha256(url.encode()).hexdigest()[:12]+'.error.json'),{'url':url,'error':str(exc)})
                     for person in load(ROOT/'data/researchers.json',[]):
                         if person['name'].lower() in researcher.lower():
                             for evidence in person.get('evidence',[]):
-                                try: sources.append(fetch(evidence['url']))
+                                try: sources.append(self.research_source(evidence['url']))
                                 except Exception as exc:
                                     save(folder/('seed-source-'+hashlib.sha256(evidence['url'].encode()).hexdigest()[:12]+'.error.json'),{'url':evidence['url'],'error':str(exc)})
                     if not sources: raise ValueError('No independently readable research sources')
