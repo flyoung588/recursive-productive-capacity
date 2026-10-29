@@ -24,7 +24,7 @@ A draft writes `state/drafts/<researcher>.json` and prints subject, body, suppor
 ## Where recurrence actually happens
 
 1. `data/researchers.json` keeps **grounded** public research facts, specific hypotheses, competing questions and source URLs. It is **not** a live academic search result, and a theoretical gap is not automatically verified or novel.
-2. `data/feedback.jsonl` keeps append-only, anonymized examples of editorial corrections and an issue-choice correction. The seed examples are **paraphrases of observed discussion**, not complete verbatim original emails and not real external replies.
+2. `data/feedback.jsonl` contains **public, de-identified seed examples** of editorial corrections and an issue-choice correction. Actual new feedback is appended to **`data/feedback.local.jsonl`**, which is gitignored and never automatically published. The seed examples are **paraphrases of observed discussion**, not complete verbatim original emails and not real external replies.
 3. `python3 engine.py learn` (or the **next `draft`/`match` command automatically**, when feedback has changed) fits a pairwise preference model from revisions; it also learns per-person research-question choices and separately records real external outcomes, **only if a human explicitly supplies them**. The output is saved in `state/learned.json` and used by the next draft. The model stores actual numeric weights, not just another instruction document.
 4. `draft` ranks the research intersections, builds four distinct narrative candidates, applies the learned preference scores and saves the selected draft for review. It does not confuse a higher style score with scientific correctness.
 5. Repeat. New feedback changes the saved model and subsequent draft choice. No dependency on ChatGPT chat memory.
@@ -52,7 +52,7 @@ python3 engine.py draft qing-xiao # detects new outcome automatically
 
 To add a new person, prepare a JSON researcher profile using `data/researchers.json` as a shape example, with dated public research evidence, two-sided question hypotheses and links. Then run `python3 engine.py import-researcher /path/to/new-person.json`. Profiles are **curated inputs**, not fabricated by a profile-name search.
 
-Feedback is intentionally not scraped from Gmail. Its storage and source reference remain under user control. **Do not commit private raw email contents** to a public repo; put confidential runs in a private working copy, or move `data/feedback.jsonl` to private storage before recording real messages. GitHub publishing of new learned weights should likewise be reviewed.
+Feedback is intentionally not scraped from Gmail. New real corrections go to gitignored `data/feedback.local.jsonl`; generated drafts go to gitignored `state/drafts/`. **Never publish actual unsent emails, raw replies, private source references or local feedback** to this public repository. Publishing changed learned weights is a separate review decision.
 
 ## What has been demonstrated (2026-10-29)
 
