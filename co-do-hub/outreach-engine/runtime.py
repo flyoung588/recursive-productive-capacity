@@ -188,12 +188,24 @@ class Runtime:
     @staticmethod
     def research_source(url):
         parsed=urllib.parse.urlsplit(url)
+        if parsed.hostname=='arxiv.org' and parsed.path.startswith('/abs/'):
+            pdf_url='https://arxiv.org/pdf/'+parsed.path.removeprefix('/abs/')
+            try:
+                paper=fetch(pdf_url);paper['requested_paper_url']=url
+                return paper
+            except Exception:
+                return fetch(url)
         if parsed.hostname=='openreview.net' and parsed.path=='/forum':
             paper_id=urllib.parse.parse_qs(parsed.query).get('id',[''])[0]
             record=fetch('https://api2.openreview.net/notes?'+urllib.parse.urlencode({'id':paper_id}))
             record['source_kind']='Original OpenReview submitted paper record'
             record['requested_paper_url']=url
-            return record
+            try:
+                paper=fetch('https://openreview.net/pdf?'+urllib.parse.urlencode({'id':paper_id}))
+                paper['requested_paper_url']=url
+                return paper
+            except Exception:
+                return record
         try: return fetch(url)
         except urllib.error.HTTPError as exc:
             p=urllib.parse.urlsplit(url)
