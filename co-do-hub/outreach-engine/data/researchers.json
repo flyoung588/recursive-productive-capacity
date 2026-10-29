@@ -1,0 +1,70 @@
+[
+  {
+    "id": "qing-xiao", "name": "Qing Xiao", "salutation": "Qing", "anchor_terms": ["newsroom", "newswork", "CHI 2026", "TeamFlow"],
+    "affiliation": "Carnegie Mellon University", "record_reviewed": "2026-10-29", "email": "qingx@andrew.cmu.edu",
+    "evidence": [
+      {"title": "Can GenAI Move from Individual Use to Collaborative Work?", "url": "https://doi.org/10.1145/3772318.3790984", "year": 2026, "finding": "Individual GenAI adoption in newsroom work remained disconnected from team workflows in the 27-interview study."},
+      {"title": "TeamFlow (funded proposal, not a reported result)", "url": "https://www.microsoft.com/en-us/research/academic-program/ai-and-the-new-future-of-work-cfp-spring-2026/recipients/", "year": 2026, "finding": "A proposed research direction on collective attention, team coordination and worker agency."}
+    ],
+    "intersections": [
+      {
+        "issue_id": "ORG-01", "issue_number": 5, "fit": 4.0, "evidence_status": "supported_intersection",
+        "connection": "Her empirical research observes a gap between individual AI use and group coordination; Co-Do examines how an initially absent team becomes genuine joint production.",
+        "research_question": "What would make people who join a project as it unfolds genuine co-creators rather than separate helpers?",
+        "research_observation": "Your CHI 2026 study of AI in newsrooms stayed with me: people can use AI individually without their team finding a shared way of working. It made me think of an even earlier moment: what if no team exists yet?",
+        "co_do_scenario": "Someone begins investigating a question with AI. The work then needs another person's judgment, a different perspective, or an experimental partner. Those people can join and reshape the work, not merely execute assigned tasks. The collaboration grows around the problem.",
+        "specific_ask": "Given what you have seen in real teams, what would you watch for to tell whether that group has truly started creating together?",
+        "experiment": "A possible first step is to follow a consented real collaboration from its first question and examine who could change the goals, decisions and outcome; compare to straightforward task delegation.",
+        "mail_subject": "What if the team doesn't exist yet?",
+        "evidence_urls": ["https://doi.org/10.1145/3772318.3790984", "https://github.com/flyoung588/recursive-productive-capacity/issues/5"],
+        "source_note": "An adjacent question, not a demonstrated novel gap or a claim of partner interest."
+      },
+      {
+        "issue_id": "ORG-02", "issue_number": 6, "fit": 1.8, "evidence_status": "adjacent_hypothesis",
+        "connection": "AI-mediated coordination is in her area, but no evidence she prioritizes economic comparison of dynamic versus fixed teams.",
+        "research_question": "Does a newly assembled human-AI group outperform an established team once the cost of assembling it is counted?",
+        "research_observation": "Your study of collaborative newswork shows how organizational practices shape whether AI changes team work.",
+        "co_do_scenario": "We study whether a problem can attract the people and AI it needs, without a standing organization.",
+        "specific_ask": "Is this a question your empirical work suggests examining?",
+        "experiment": "Compare a fixed team and newly assembled group on comparable outcomes, accounting for coordination time.",
+        "mail_subject": "A question about the cost of assembling AI-enabled teams",
+        "evidence_urls": ["https://doi.org/10.1145/3772318.3790984"],
+        "source_note": "Weak evidence of personal relevance; stop if the researcher is not interested."
+      }
+    ]
+  },
+  {
+    "id": "aneesh-pappu", "name": "Aneesh Pappu", "salutation": "Aneesh", "anchor_terms": ["agent teams", "self-organizing", "learn to reason", "experts"],
+    "affiliation": "Stanford University", "record_reviewed": "2026-10-29", "email": "apappu@stanford.edu",
+    "evidence": [
+      {"title": "Multi-Agent Teams Hold Experts Back", "url": "https://arxiv.org/abs/2602.01011", "year": 2026, "finding": "Unconstrained self-organizing teams can fail to use their strongest member."},
+      {"title": "Self-Organizing Agent Teams Learn to Reason Together", "url": "https://arxiv.org/abs/2609.22682", "year": 2026, "finding": "Fixed teams of AI agents learn reusable teamwork strategies that transfer to unseen problems; not a test of changing membership or human participants."}
+    ],
+    "intersections": [
+      {
+        "issue_id": "ORG-02", "issue_number": 6, "fit": 2.9, "evidence_status": "adjacent_hypothesis",
+        "connection": "Learned agent teamwork is directly relevant, but dynamic teams of independent humans and AI are outside the paper's main measured system.",
+        "research_question": "Do learned teamwork advantages persist when a task assembles independent human and AI contributors and all coordination costs count?",
+        "research_observation": "Your research on self-organizing agent teams shows a striking contrast: teams can hold experts back, yet trained teams can learn to reason together beyond the strongest single agent.",
+        "co_do_scenario": "Co-Do explores projects that bring different people and AI together only when their contribution is needed. Their roles and decision rights may change as work develops.",
+        "specific_ask": "Would changing membership and the true cost of coordination be an interesting next comparison from your perspective?",
+        "experiment": "Compare learned fixed-team strategies with a changing-membership setting under a comparable budget; human teams require a separately scoped test.",
+        "mail_subject": "An adjacent question about the cost of agent teamwork",
+        "evidence_urls": ["https://arxiv.org/abs/2602.01011", "https://arxiv.org/abs/2609.22682"],
+        "source_note": "Do not imply published agent-only results establish multi-owner human-AI organizational gains."
+      },
+      {
+        "issue_id": "ORG-03", "issue_number": 7, "fit": 2.5, "evidence_status": "adjacent_hypothesis",
+        "connection": "The new SAT paper explicitly studies learned, transferable teamwork strategies in fixed agent teams; Co-Do asks whether capacity survives changed membership and a second project.",
+        "research_question": "If the members change as well as the problem, can what one team learned about collaboration still help the next team?",
+        "research_observation": "I was intrigued by the progression in your self-organizing agent teams research: teams can suppress experts, but learned collaboration strategies in fixed agent teams can also carry over to unseen problems.",
+        "co_do_scenario": "In Co-Do we are exploring how a project might bring together a scientist, an engineer and AI systems as needed. The next project may need entirely different people and AI. The group can change or dissolve, while useful knowledge and ways of working could remain.",
+        "specific_ask": "How much of a learned strategy belongs to the original set of agents, and how much might transfer when the group itself changes?",
+        "experiment": "First test learned teamwork with membership held fixed versus changed under matched problems. Only then ask what changes when independent human collaborators join.",
+        "mail_subject": "What if the team changes, not just the problem?",
+        "evidence_urls": ["https://arxiv.org/abs/2609.22682", "https://github.com/flyoung588/recursive-productive-capacity/issues/7"],
+        "source_note": "A proposed extension. Fixed-agent team transfer is published; changing membership has not been established here."
+      }
+    ]
+  }
+]
