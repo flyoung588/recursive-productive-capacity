@@ -303,16 +303,25 @@ class Runtime:
                     sources = self.sources(result, folder/'sources')
                     if homepage:
                         sources.insert(0,homepage)
+                        indexes=[u for u in homepage.get('links',[])
+                                 if urllib.parse.urlsplit(u).hostname==urllib.parse.urlsplit(researcher).hostname
+                                 and urllib.parse.urlsplit(u).path.rstrip('/')=='/publications']
+                        index=None
+                        if indexes:
+                            try:
+                                index=stage('publication_index',lambda:fetch(indexes[0]))
+                                sources.insert(1,index)
+                            except Exception as exc: save(folder/'publication-index.error.json',{'error':str(exc)})
                         selected=stage('primary_selection',lambda:self.model(
                             'Select up to three recent original paper abstract or research project URLs '
                             'directly linked on this researcher homepage, most informative about their '
                             'research findings and limitations. Prefer readable HTML over PDFs. Return '
                             'source_urls (exact members of supplied links) and reasons. Do not invent URLs '
                             'or infer findings yet. Do not select news, social media or contact links.',
-                            {'homepage':homepage},folder/'primary_selection.call.json'))
-                        self.validate_urls(selected,set(homepage.get('links',[])))
+                            {'homepage':homepage,'publication_index':index},folder/'primary_selection.call.json'))
+                        self.validate_urls(selected,set(homepage.get('links',[])+(index or {}).get('links',[])))
                         for url in selected.get('source_urls',[])[:3]:
-                            try: sources.append(self.research_source(url))
+                            try: sources.insert(1,self.research_source(url))
                             except Exception as exc:
                                 save(folder/('primary-'+hashlib.sha256(url.encode()).hexdigest()[:12]+'.error.json'),{'url':url,'error':str(exc)})
                     for person in load(ROOT/'data/researchers.json',[]):
@@ -377,7 +386,9 @@ class Runtime:
                 'intersection reasoning and invitation. Return applied_lesson_ids with specific changes, '
                 'researcher_specific_lessons_not_applied, revised_intersection, subject, english_email, '
                 'chinese_review (a full Chinese translation of the invitation, not revision notes), '
-                'review_notes, uncertainties. Start from a specific evidenced finding, naturally ask a '
+                'review_notes, uncertainties. Start with the RECIPIENTS OWN evidenced research finding, '
+                'never another authors result. If unavailable, use their documented research question '
+                'and explicitly mark the missing empirical hook in uncertainties. Naturally ask a '
                 'research question and allow them to redefine it. No platform pitch, no forced group, '
                 'no novelty inflation. For empty lessons retain evidence-based independent revision; '
                 'do not pretend historical learning occurred. Draft only. Source URLs must be from supplied evidence.',
@@ -413,8 +424,9 @@ class Runtime:
         if unknown: raise ValueError('Unsourced model URL: '+repr(unknown[:3]))
     def invite(self, researcher, intersection, discovery, lessons, path):
         return self.model('Generate an individually reasoned research invitation. Return subject, '
-            'english_email, chinese_review, source_urls and uncertainties. Begin with a specific finding '
-            'from provided research, ask a concrete open question, explain Co-Do multiparty independent '
+            'english_email, chinese_review, source_urls and uncertainties. Begin with the RECIPIENTS OWN '
+            'evidenced research finding; never another authors result. If unavailable use their '
+            'documented research question and mark the missing empirical hook in uncertainties. ', ask a concrete open question, explain Co-Do multiparty independent '
             'co-production, invite their own reframing. No templates, recruitment, claims of novelty or '
             'external agreement. Do not introduce URLs except provided evidence. DRAFT_ONLY.',
             {'researcher':researcher,'intersection':intersection,'sources':discovery['sources'],'lessons':lessons},path)
