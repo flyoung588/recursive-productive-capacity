@@ -320,10 +320,31 @@ class Runtime:
                             'or infer findings yet. Do not select news, social media or contact links.',
                             {'homepage':homepage,'publication_index':index},folder/'primary_selection.call.json'))
                         self.validate_urls(selected,set(homepage.get('links',[])+(index or {}).get('links',[])))
+                        readable=0; failed=[]
                         for url in selected.get('source_urls',[])[:3]:
-                            try: sources.insert(1,self.research_source(url))
+                            try:
+                                sources.insert(1,self.research_source(url));readable+=1
                             except Exception as exc:
                                 save(folder/('primary-'+hashlib.sha256(url.encode()).hexdigest()[:12]+'.error.json'),{'url':url,'error':str(exc)})
+                                failed.append(url)
+                        if not readable and failed and index:
+                            blocked_hosts={urllib.parse.urlsplit(u).hostname for u in failed}
+                            alternatives=[u for u in index.get('links',[])
+                                          if urllib.parse.urlsplit(u).hostname not in blocked_hosts]
+                            alternative_records=[x for x in index.get('link_records',[]) if x['url'] in alternatives]
+                            fallback=stage('primary_fallback',lambda:self.model(
+                                'Select up to three alternatives, at most TWO URLs, from this authors '
+                                'publication index. Prior primary hosts refused access. Prefer public arXiv '
+                                'abstracts or author-hosted original papers. Return source_urls and reasons; '
+                                'URLs must be exact members of links. No inferred findings or invented URLs.',
+                                {'publication_index':{'text':index['text'],'links':alternatives,
+                                                      'link_records':alternative_records},'failed_urls':failed},
+                                folder/'primary_fallback.call.json'))
+                            self.validate_urls(fallback,set(alternatives))
+                            for url in fallback.get('source_urls',[])[:2]:
+                                try: sources.insert(1,self.research_source(url))
+                                except Exception as exc:
+                                    save(folder/('fallback-'+hashlib.sha256(url.encode()).hexdigest()[:12]+'.error.json'),{'url':url,'error':str(exc)})
                     for person in load(ROOT/'data/researchers.json',[]):
                         if person['name'].lower() in researcher.lower():
                             for evidence in person.get('evidence',[]):
