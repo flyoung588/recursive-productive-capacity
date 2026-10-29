@@ -153,3 +153,14 @@ becomes inactive after successful completion by design; inspect `Result` and
 job. After a process or host restart, starting that same instance reuses its
 persisted stages. No host-wide reboot is required or performed for validation.
 Never expose private state or logs through the public repository or web server.
+
+Recompute the paired comparison without another model call:
+
+```sh
+python3 compare.py --state /var/lib/co-do study-a study-b
+```
+
+This refuses differing evidence/interpretation bundles, incomplete tasks, wrong
+learning conditions and unexpected actual models. It reports a draft diff,
+applied lessons, token counts and unresolved human review questions. It does
+not score academic quality or infer a causal improvement from one stochastic pair.
