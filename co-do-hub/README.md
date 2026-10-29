@@ -1,37 +1,52 @@
 # Co-Do · 共做
-**Start with something worth doing. Form capabilities and collaborations as needed. Let what is useful persist.**
 
-**当前状态 / Current state — 2026-10-29:** One initiator (`@flyoung588`), three proposed seed projects, **no confirmed external collaborators yet**. This is a public *incubation space*, not a finished community, institution, funded team, or commercial service.
+## What if meaningful work could bring its own team into being?
 
-**[中文介绍](README.zh-CN.md) · [What Co-Do is](DEFINITION.md) · [How to participate](PARTICIPATE.md) · [Current state](STATUS.md)**
+An idea can begin with one person. AI can help explore it, turn it into experiments, and reveal what is missing. When another person's expertise or perspective matters, they can join by choice. People and machines work together; roles and arrangements evolve with the goal. The work may end, but useful knowledge, methods, tools and connections can make the next beginning easier.
 
-**Open discussions:** [Start here · general conversation](https://github.com/flyoung588/recursive-productive-capacity/issues/1) · [Seed 01](https://github.com/flyoung588/recursive-productive-capacity/issues/2) · [Seed 02](https://github.com/flyoung588/recursive-productive-capacity/issues/3) · [Seed 03](https://github.com/flyoung588/recursive-productive-capacity/issues/4). You may also reply by email without registering.
+**Start with something worth doing. Form the collaboration it needs. Keep the capability it creates.**
 
-## Three seed projects / 三个种子项目
-| Project | What we want to explore | What is open |
-| --- | --- | --- |
-| **[01 · From Tasks to Organizations](projects/01-organization-and-paper.md)** | How human–AI collaborations form on demand, create value and pass on useful capabilities; the research and eventual working paper can themselves be a Co-Do project | Independent theories, counterexamples, cases, collaborators; **paper start date not fixed** |
-| **[02 · ARIA teaming & agent interactions](projects/02-aria-teaming.md)** | Can an on-demand research team study agent-to-agent coordination, trusted interactions and transactions, and qualify for a relevant ARIA funding call? | Verify current call/eligibility; jointly choose a credible research question; find complementary applicants |
-| **[03 · Autonomous scientific discovery](projects/03-autonomous-science.md)** | Scientific work where AI carries out substantive exploration, while real-world validation and scarce expertise enter only when needed | Falsifiable questions, independent critique, data and validation partners |
+This is **Co-Do**: an open exploration of how people and AI can create together in a machine-economy era, when work, capabilities and even organizations can be assembled *on demand*.
 
-These are **three proposals launched by one person**, not three already staffed or funded projects. Being interested does not imply you have joined a team.
+[中文介绍](README.zh-CN.md) · [The idea behind Co-Do](DEFINITION.md) · [How to take part](PARTICIPATE.md)
 
-## One possible beginning
-1. Open the project relevant to your own interests. No GitHub account is needed to read.
-2. Challenge an assumption, offer a concrete research question, or state what you want to do. You can reply via the project's GitHub Issue (requires a GitHub account), or **email [flyoung588@gmail.com](mailto:flyoung588@gmail.com)** without registering.
-3. We decide together whether there is an actual next step. AI can research, code, test, summarize or coordinate with permission. Humans retain independent judgement, choice of participation and rights.
-4. When something real is done, record only the verified result and the capabilities that may be reused **with permission**.
+## Three ways to begin
 
-**Please do not post passwords, private datasets, unpublished material, personally identifiable information, or confidential grant proposals in public Issues.** Participation, authorship, funding terms and IP reuse require explicit discussion; no blanket assignment or payment promise exists.
+### 01 · From tasks to organizations
+**Can we discover a new way for people and AI to organize?**
 
-## Why this is here
-Co-Do is an open experiment in **on-demand formation of collaborations, work arrangements and capabilities in a machine-economy era**. It is not a gig marketplace, an AI agency, a fixed company or an effort to recruit members for their own sake. The initiating researcher also works on NARQUE / 序束, but **Co-Do is not presumed to belong to NARQUE**.
+We're exploring a working paper on how human–AI collaborations emerge around real goals, how independent contributors make decisions together, and how capabilities survive a particular project. Better still, **the research itself can become a Co-Do experiment**.
 
-### Live, lightweight memory
-- [Capability ledger](commons/CAPABILITIES.md) — only demonstrable or honestly labelled provisional abilities.
-- [People & relationships](commons/PEOPLE.md) — no roster without consent.
-- [Outcomes](commons/OUTCOMES.md) — facts, provenance and limits.
-- [Working notes](commons/COLLABORATION.md) — minimal context, not organizational bureaucracy.
-- [Next steps](NEXT.md) — start one invitation at a time.
+[Explore this research](projects/01-organization-and-paper.md) · [Discuss the question](https://github.com/flyoung588/recursive-productive-capacity/issues/2)
 
-**Platform note:** this is an initial **Co-Do directory within an existing account-owned public GitHub repository**. It is not yet an independent Co-Do repository, not a GitHub Pages site, and GitHub Discussions is not enabled here. GitHub Issues can serve as the first open discussion channel. Nothing in this site is represented as an externally validated new organization.
+### 02 · ARIA: teaming to study agent cooperation and transactions
+**What must exist before autonomous agents can really work with one another?**
+
+Communication is only the beginning. We want to explore how agents discover one another, negotiate, coordinate under uncertainty, establish trust and exchange value—and bring complementary researchers together around a strong, eligible ARIA funding opportunity.
+
+[Explore the research and teaming idea](projects/02-aria-teaming.md) · [Join the conversation](https://github.com/flyoung588/recursive-productive-capacity/issues/3)
+
+### 03 · AI-driven scientific discovery
+**What would it take for AI to discover something genuinely new?**
+
+AI can generate ideas and run computations; reality still decides which scientific claims survive. Could scientific capabilities, experimental partners and independent critics come together as a research question demands, without needing a permanent lab first?
+
+[Explore autonomous research](projects/03-autonomous-science.md) · [Discuss an experiment](https://github.com/flyoung588/recursive-productive-capacity/issues/4)
+
+## The more interesting outcome isn't just a finished project
+
+Imagine one collaboration creates a reliable experiment, an unexpected theoretical insight, or a reusable way for agents to coordinate. Another person can build on that—with the contributors' agreement—without first rebuilding the whole team. The network grows not by collecting members, but by **making the next meaningful collaboration easier**.
+
+And the idea is open to challenge: perhaps a conventional research group or a single powerful AI would work better. That is exactly the kind of question worth investigating together.
+
+## Where could you enter?
+
+Perhaps you have a theory to challenge, a scientific bottleneck that deserves an experiment, a real agent-coordination problem, or a project you'd love to pursue but cannot do alone.
+
+**You don't have to sign up for a team to start a conversation.**
+
+- **Share a thought publicly:** [Co-Do open conversation](https://github.com/flyoung588/recursive-productive-capacity/issues/1)
+- **Go directly to a project:** [Organization research](https://github.com/flyoung588/recursive-productive-capacity/issues/2) · [ARIA research](https://github.com/flyoung588/recursive-productive-capacity/issues/3) · [Autonomous science](https://github.com/flyoung588/recursive-productive-capacity/issues/4)
+- **Prefer email?** Write to [flyoung588@gmail.com](mailto:flyoung588@gmail.com?subject=Co-Do%20%E2%80%94%20Let's%20explore%20an%20idea). You can simply say what interested you, or what you disagree with.
+
+**A personal beginning. An open future.** Co-Do starts with Fei Yang and AI-assisted work, inviting the first independent collaborators one conversation at a time. Its ideas and ways of working are meant to evolve through what we actually do together.

@@ -1,28 +1,38 @@
-# Seed 03 · Autonomous scientific research / AI 自主科研
-**[Open project discussion · Issue #4](https://github.com/flyoung588/recursive-productive-capacity/issues/4)**
+# 03 · AI-driven scientific discovery
+### When the next experiment decides what we believe
 
-**Status:** Co-Do collaboration seed; **no independent Co-Do research team or new scientific discovery confirmed.**
+**What would it take for AI to discover something the world has not yet told it?**
 
-## Research intent
-Can AI perform substantive discovery work while independent researchers, data stewards, laboratories, evaluators and physical-world resources join **only when actually needed**? How can genuine reality evidence decide whether a claimed discovery survives?
+AI can read research, propose hypotheses, write code and explore enormous spaces of possibilities. But scientific discovery changes only when a claim survives contact with evidence that can contradict it.
 
-The organizing question is as important as the scientific one: can research capability be assembled around a goal without requiring a permanent single-discipline laboratory first?
+We want to explore **AI as an active researcher**, with independent scientists, laboratories, experimental resources and other capabilities joining when the question makes them necessary.
 
-## Minimum research standards
-- A scientific question that remains genuinely uncertain and **falsifiable**.
-- Transparent separation between model ideas, code execution, retrospective replay, prospective tests and physical validation.
-- Independent challenge, including alternative explanations and failures.
-- Real permission to access data, operate equipment and use findings.
-- Honest status: simulated, internally tested, independently reproduced and physically confirmed are **not interchangeable**.
+## The scientific challenge
 
-## Possible collaborators (not existing team members)
-Domain scientists, experimental laboratories, data owners, independent reviewers, engineering tool builders and AI research agents. The right mix depends on the concrete scientific question; no compulsory “member quota”.
+A model proposes a new representation, mechanism or test. It searches, encounters contrary evidence, revises its plan and decides what question should be asked next. At some point the world must decide what is true.
 
-Existing NARQUE / XREM research may supply relevant context **only when sharing and rights are separately authorized**. Co-Do does not automatically own or rebrand another initiative's research.
+What would a research system need to make this loop genuine, repeatable and more productive than simply generating plausible papers?
 
-## First useful input
-A well-scoped scientific question, a critical independent challenge, a public dataset with an appropriate validation target, or a concrete missing capability required to test a hypothesis.
+## Three connected questions
 
-**Not yet claimed:** a staffed project, lab access, prospective success, peer review, discovery or accepted scientific partnership.
+1. **Discovery:** Which scientific questions are sufficiently open, consequential and testable for AI to explore?
+2. **Reality:** Where can computational evaluation suffice, and where do we need new data, laboratory experiments or an independent physical check?
+3. **Organization:** Can the right scientific capabilities be assembled on demand—AI exploration, specialist judgement, data access and real experiments—without needing to own a permanent laboratory?
 
-[Start here / 参与](../PARTICIPATE.md) · [Other seeds](../README.md)
+Potential fields include materials, energy, biology and other domains where real observations can overturn attractive hypotheses. The field should follow the strongest tractable scientific question, not a quota.
+
+## An invitation to researchers and builders
+
+A strong entry might be:
+- A scientific question whose uncertainty can be stated precisely.
+- A public dataset paired with a rigorous, independent evaluation method.
+- A counterexample showing why an AI-generated scientific claim fails.
+- A concrete laboratory or domain capability that would enable a decisive test.
+
+Our aim is **shared inquiry that can change direction in response to the world**, not a preset demonstration of AI's superiority.
+
+Relevant existing AI research may offer methods or evidence when its owners authorize sharing; each project and contributor retains their own identity and rights.
+
+**[Explore the scientific conversation](https://github.com/flyoung588/recursive-productive-capacity/issues/4)** · [Email Fei Yang](mailto:flyoung588@gmail.com?subject=Co-Do%20%E2%80%94%20Autonomous%20science) · [About Co-Do](../README.md)
+
+*Starting phase: identifying research questions and collaborators who can materially strengthen their tests.*

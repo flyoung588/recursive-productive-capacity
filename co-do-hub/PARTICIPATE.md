@@ -1,27 +1,28 @@
-# Take part / 如何一起做
+# 一起做 · Take part
 
-**You do not need to join a standing team before discussing an idea.** Three projects have been proposed by the initial participant; their scope can change through real, mutually agreed research.
+## 你不必先成为“成员”，就可以开始共做。
 
-### Step 1 · Read or reply
-Choose a [seed project](README.md#three-seed-projects--三个种子项目) and share one of:
-- A precise question, independent objection, real-world observation or useful precedent.
-- A capability you *choose* to contribute and its practical limits.
-- One scoped piece of work you would like to explore together.
-- A new goal you genuinely want to pursue; Co-Do need not remain limited to the original three.
+你可以带来一个问题、一个大胆想法、一项真实能力，或者一个会让我们改变方向的反例。也可以直接从三个种子项目中选择你真正感兴趣的那个。
 
-GitHub account holders can use [the general discussion (#1)](https://github.com/flyoung588/recursive-productive-capacity/issues/1), [paper/research (#2)](https://github.com/flyoung588/recursive-productive-capacity/issues/2), [ARIA teaming (#3)](https://github.com/flyoung588/recursive-productive-capacity/issues/3), or [autonomous science (#4)](https://github.com/flyoung588/recursive-productive-capacity/issues/4); for a no-login first contact, email **flyoung588@gmail.com**. No chat group membership is required.
+### 选一个入口
 
-### Step 2 · Agree on the next actual action
-We clarify who is initiating, what each party actually chooses, what AI may do, how the result can be checked, and whether help from another person or machine is genuinely needed. No one is assigned a job merely by commenting.
+- **[从任务到组织 · 论文研究](https://github.com/flyoung588/recursive-productive-capacity/issues/2)** — 组织研究、AI 研究、经济学、社会学、实践案例和理论反例。
+- **[ARIA · Agent 协作与交易](https://github.com/flyoung588/recursive-productive-capacity/issues/3)** — Agent 系统、可信协作、安全、协议、经济机制和跨专业组队。
+- **[AI 自主科研](https://github.com/flyoung588/recursive-productive-capacity/issues/4)** — 真实科学问题、实验设计、数据、独立验证与研究能力。
+- **[提出一件你自己想做的事](https://github.com/flyoung588/recursive-productive-capacity/issues/1)** — 不局限于前三个项目。
 
-### Step 3 · Do and learn
-Use project threads for safe public updates and versioned files for authorized artifacts. Recognize failed paths and critical disagreements. Document actual results without turning work into paperwork.
+**不想注册 GitHub？** 直接发送邮件给 [flyoung588@gmail.com](mailto:flyoung588@gmail.com?subject=Co-Do%20%E2%80%94%20Collaborate)。简单说清楚哪个想法吸引了你、你正在研究什么、或者你觉得我们忽略了什么，就足够开始一次对话。
 
-### Rights, safety and honest status
-- External people are independent subjects, not “members owned by the platform.” No public contact list, promotional reuse or follow-up without consent.
-- Do not post private research data, identifiers, credentials, unpublished funding plans, or third-party proprietary materials in public Issues.
-- Posting publicly **does not grant blanket rights** to copy, relicense, commercially exploit, retrain on, or attribute someone else's contribution. Decide authorship, data, license and compensation **case by case** before sensitive joint work.
-- A project proposal is not a funding award, research result, accepted collaborator or employment opportunity.
-- AI assistance must be disclosed and the responsible human retains control over permitted external actions.
+### 然后会发生什么？
 
-**初期现实：只有一位发起者。** We will research and invite appropriate people **one by one** based on a specific relevant project, rather than pretending a team exists or mass-mailing strangers.
+我们共同理解问题，看看 AI 能先做出什么，再一起判断缺少哪些真实能力、是否值得形成合作，以及可以做出的第一项可检查成果。
+
+合作的深浅由参与者自主决定：一个反例、一轮讨论、一次实验，都可能是真正有价值的贡献。不必承诺加入永久团队。
+
+### 共做之后留下些什么？
+
+工具、方法、研究发现、合作经验和新的问题，可能为下一次共做提供基础。涉及公开署名、成果使用、共享数据和权益时，我们先与相关贡献者商量清楚。
+
+**只需一个小提醒：**公开 GitHub 讨论适合公开思想和资料；未公开科研数据、私人信息与保密提案请先通过邮件沟通。
+
+[共做首页](README.md) · [中文版](README.zh-CN.md)

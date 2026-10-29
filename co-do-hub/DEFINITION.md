@@ -1,20 +1,35 @@
-# Co-Do · Working definition / 当前工作定义
-**Public excerpt of living definition v0.2.0 (2026-10-29), provisional, NOT FROZEN.**
+# Co-Do · 共做的核心想法
 
-**Co-Do explores whether people and machines can form effective, voluntary collaborations around things worth doing, without requiring a permanent firm or fixed team first; whether the collaboration can create real results, then end, recombine or continue while useful, authorized capabilities persist.**
+## 一件真实想做的事，能否生成自己的组织？
 
-中文：共做探索在人与机器共同创造的时代，能否因一件真正想做的事而按需生成组织、分工与协作；完成后可结束或重组，同时合法保留可复用的能力、知识与关系。
+今天，我们往往先建立公司、招人、配置部门，再去做事。
 
-### Working principles / 暂定原则
-- **D1 · Real intention:** fixing problems, exploring ideas and making new things can all initiate Co-Do.
-- **D2 · Minimum, not ceiling:** “one initiator + one AI coordinator” is an easy start, never a permanent limit on collaborators, AI agents or organizational evolution.
-- **D3 · Economic sustainability matters:** durable value and actual costs must eventually be addressed, but not every project must charge money or become a service order.
-- **D4 · Evidence of organization:** one person + AI completing tasks is a valid production result, **not by itself proof** of new multi-party organization. Look for independent decision-making, joint production and reusable capabilities across work.
-- **D5 · Independence:** NARQUE / 序束 may act as an initiator or contributor; it does not by default own Co-Do, its collaborators or their outputs.
+如果 AI 已经能够承担大量探索、执行与协调工作，是否可以反过来：**先有值得做的事，再让所需的人、机器、专业与资源围绕它形成协作？**
 
-People are not an owned resource. Voluntary involvement, correction, exit, rights, permission to reuse and transparent uncertainty are essential.
+这就是共做想探索的变化。
 
-### Still open
-The exact legal vehicle, IP terms, allocation of contributions and benefits, financial model, technical infrastructure, machine legal personhood, and final publication or grant participation are **not decided**. No DAO/token, mandatory platform fee or universal equity allocation is implied.
+> **一个问题（或一个真正想做的目标），一个发起者，一个 AI 协调者；需要时组队。做完了，组织可以解散，但有用能力留下来。**
 
-This is an exploration that may be revised by actual projects and independent collaborators, not a constitution frozen in advance.
+这是一种容易开始的方式，不是规定组织只能有一个发起者或一位 AI。
+
+## 五个仍在实践中演进的原则
+
+**D1 · 事情先行。** 解决问题、探索未知、创造新事物，都可以成为共做的起点。
+
+**D2 · 从小开始，自由生长。** 一个人与 AI 可以先动手；当需要其他能力时，自然形成跨人、跨机器的协作，也可以发展为稳定关系。
+
+**D3 · 创造真正可持续的价值。** 长远需要正视成本、价值回流和参与者权益，但一次探索不需要先变成商业订单。
+
+**D4 · 共同生产，而不只是任务分发。** 参与者有独立判断，能够改变问题、方案和结果。合作结束后，可授权复用的能力可以流向下一件事。
+
+**D5 · 开放而非单方占有。** 序束 / NARQUE 可以作为早期践行者之一，但共做不是任何公司的当然附属物。
+
+## 这件事为什么重要？
+
+我们真正感兴趣的不是 AI 帮忙完成更多任务，而是**机器能力增长之后，组织能否从固定结构变成随真实目标不断生成、组合和演化的生产关系**。
+
+三个种子项目分别从 [组织研究与论文](projects/01-organization-and-paper.md)、[Agent 互动与 ARIA 组队](projects/02-aria-teaming.md)、[AI 自主科研](projects/03-autonomous-science.md) 探索同一个问题。
+
+这些只是当前的工作想法，欢迎真实合作与批评不断改变它们。
+
+[回到共做首页](README.zh-CN.md) · [English](README.md) · [一起讨论](https://github.com/flyoung588/recursive-productive-capacity/issues/1)

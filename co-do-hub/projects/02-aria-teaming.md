@@ -1,25 +1,34 @@
-# Seed 02 · ARIA teaming, agent coordination & transactions / ARIA 组队研究
-**[Open project discussion · Issue #3](https://github.com/flyoung588/recursive-productive-capacity/issues/3)**
+# 02 · ARIA: Agents, trust and on-demand research teams
+### A research question worth assembling the right team for
 
-**Status:** A proposed teaming-and-research direction; **no confirmed partners, grant application, eligibility decision or funding award**.
+**机器如果能自主寻找能力，如何与另一个机器协商、合作，乃至交换价值？**
 
-## The Co-Do experiment
-A research call creates a possible shared objective. Could participants with different specialties form a **temporary, voluntary team** to formulate a credible programme, study agent-to-agent interactions, coordination, trust, transaction/settlement mechanisms where relevant, and submit an application **only when eligible and agreed**?
+Today's agents increasingly use tools. But an agent economy asks for more: agents may need to discover unfamiliar counterparties, decide what each can deliver, agree on constraints, verify a result, handle failure and—in appropriate settings—transact.
 
-This is an experiment in on-demand formation of research capabilities and resource arrangements, not merely a task “AI writes a grant proposal”.
+These are not just software integration problems. They touch **trust, coordination, incentives and the institutions that make autonomous cooperation possible**.
 
-### Research and action threads
-1. **Reality first:** check the current official ARIA opportunities, deadlines, applicant rules, budget/eligibility/UK impact and teaming arrangements. No old call is automatically assumed live.
-2. **Choose a focused problem:** distinguish agent communication, trust, negotiation, transaction and verification; do not pretend that every ARIA call supports all of them.
-3. **Map real complementary capabilities:** scientific framing, agent systems, security, economics/institutions, experiments and eligible lead organization, but recruit **one person at a time** only for a genuine gap.
-4. **Co-design before filing:** let potential partners change the project question, intended outcomes and role distribution.
-5. **Record actual joint work:** authorship/credit, proposed funds, data rights and application authority must be agreed by the participants and conform to programme rules.
+## Two experiments in one
 
-## First useful input
-A relevant recent ARIA call or a precise research challenge about agent coordination, machine-to-machine interaction or trusted transactions, plus an independent reason to believe it is fundable and research-worthy.
+**Scientific experiment:** formulate and test a serious question about agent-to-agent coordination, trusted interaction or machine-to-machine transactions.
 
-**Do not claim:** ARIA endorsement, grant eligibility, institutional partnerships, a fixed application deadline, financial sponsorship or an active proposal submission.
+**Organizational experiment:** bring together complementary people and AI capabilities *because the research question needs them*, and pursue a suitable **ARIA research funding opportunity** together when the topic, eligibility and collaboration genuinely align.
 
-Official starting point: https://www.aria.org.uk/funding-opportunities/
+An agent systems researcher, a security specialist, an economist and an experimental scientist may see different failure modes. Their disagreement is a potential advantage—not a reason to start with a fixed hierarchy.
 
-[Start here / 参与](../PARTICIPATE.md) · [Other seeds](../README.md)
+## Questions we could pursue
+
+- **Discovery and negotiation:** How should an agent understand what an unfamiliar agent can actually do, beyond advertised descriptions?
+- **Verifiable outcomes:** What evidence would justify trusting a machine-produced result, especially when counterparties have different incentives?
+- **Transaction and cooperation:** What makes machine-to-machine exchange meaningful and reliable rather than merely an automated API call?
+- **Coordination under failure:** Can participants renegotiate, substitute capabilities or recover from unexpected constraints?
+- **Research credibility:** What is the smallest experiment that can disprove a preferred protocol or economic mechanism?
+
+## What joining might look like
+
+Start with a critical research question, a threat model, a testable design or an alternative explanation. If the idea warrants an ARIA application, the team and proposal can grow around the actual research—not the other way around.
+
+**ARIA funding is a research goal, not an assumed award or predetermined programme fit.** We will choose the relevant call from current official requirements: [ARIA funding opportunities](https://www.aria.org.uk/funding-opportunities/).
+
+**[Discuss the research and teaming idea](https://github.com/flyoung588/recursive-productive-capacity/issues/3)** · [Email Fei Yang](mailto:flyoung588@gmail.com?subject=Co-Do%20%E2%80%94%20ARIA%20research) · [About Co-Do](../README.md)
+
+*Current phase: defining the strongest research question and discovering genuinely complementary collaborators.*
