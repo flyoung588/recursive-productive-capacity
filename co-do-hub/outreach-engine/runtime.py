@@ -37,14 +37,18 @@ def load(path, default=None):
 
 class Text(HTMLParser):
     def __init__(self):
-        super().__init__(); self.parts = []; self.links = []; self.hidden = 0
+        super().__init__(); self.parts = []; self.links = []; self.anchors = []; self.anchor = None; self.hidden = 0
     def handle_starttag(self, tag, attrs):
         if tag in ('script', 'style'): self.hidden += 1
         if tag=='a':
             self.links.extend(v for k,v in attrs if k=='href' and v)
+            self.anchor={'url':dict(attrs).get('href',''),'label':''}
     def handle_endtag(self, tag):
+        if tag=='a' and self.anchor:
+            self.anchors.append(self.anchor);self.anchor=None
         if tag in ('script', 'style'): self.hidden = max(0, self.hidden - 1)
     def handle_data(self, data):
+        if self.anchor and not self.hidden: self.anchor['label']+=data
         if not self.hidden: self.parts.append(data)
 
 
@@ -72,7 +76,7 @@ def fetch(url):
         raw = response.read(8000001)
         if len(raw)>8000000: raise ValueError('Source exceeds 8 MB retrieval bound')
         final = response.url
-    links=[]
+    links=[]; link_records=[]
     if 'pdf' in kind or raw.startswith(b'%PDF'):
         with tempfile.TemporaryDirectory() as tmp:
             pdf=Path(tmp)/'paper.pdf'; pdf.write_bytes(raw)
@@ -85,8 +89,10 @@ def fetch(url):
         parser = Text(); parser.feed(text); text = ' '.join(parser.parts)
         links=list(dict.fromkeys(urllib.parse.urljoin(final,u) for u in parser.links
                                if urllib.parse.urljoin(final,u).startswith('https://')))[:150]
+        link_records=[{'url':urllib.parse.urljoin(final,x['url']),'label':x['label'].strip()[:300]}
+                      for x in parser.anchors if urllib.parse.urljoin(final,x['url']).startswith('https://')][:150]
     return {'url':url, 'final_url':final, 'sha256':hashlib.sha256(raw).hexdigest(),
-            'content_type':kind, 'links':links, 'text':(text if 'json' in kind else re.sub(r'\s+', ' ', text)[:40000]),
+            'content_type':kind, 'links':links, 'link_records':link_records, 'text':(text if 'json' in kind else re.sub(r'\s+', ' ', text)[:40000]),
             'retrieved_at':time.time()}
 
 
