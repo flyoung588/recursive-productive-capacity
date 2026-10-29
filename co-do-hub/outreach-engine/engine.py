@@ -34,14 +34,17 @@ def write_json(path, obj):
 
 
 def read_events(path=None):
-    path = path or DATA / 'feedback.jsonl'
-    if not path.exists():
-        return []
-    return [json.loads(line) for line in path.read_text(encoding='utf-8').splitlines() if line.strip()]
+    # The public seed is read-only; user feedback is stored in an ignored local file.
+    paths = [path] if path else [DATA / 'feedback.jsonl', DATA / 'feedback.local.jsonl']
+    events = []
+    for p in paths:
+        if p and p.exists():
+            events += [json.loads(line) for line in p.read_text(encoding='utf-8').splitlines() if line.strip()]
+    return events
 
 
 def append_event(event, path=None):
-    path = path or DATA / 'feedback.jsonl'
+    path = path or DATA / 'feedback.local.jsonl'
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open('a', encoding='utf-8') as fp:
         fp.write(json.dumps(event, ensure_ascii=False, sort_keys=True) + '\n')
