@@ -1,4 +1,6 @@
 # Seed 02 · ARIA teaming, agent coordination & transactions / ARIA 组队研究
+**[Open project discussion · Issue #3](https://github.com/flyoung588/recursive-productive-capacity/issues/3)**
+
 **Status:** A proposed teaming-and-research direction; **no confirmed partners, grant application, eligibility decision or funding award**.
 
 ## The Co-Do experiment

@@ -13,6 +13,8 @@
 2. **[ARIA 资助与 Agent 互动／交易协作研究](projects/02-aria-teaming.md)**：围绕合适的 ARIA 研究征集，按真实能力缺口形成跨专业申请团队；研究 Agent 之间的可信互动、协作与交易。尚未取得资助、未形成正式申请团队。
 3. **[AI 自主科研](projects/03-autonomous-science.md)**：AI 实际承担科学探索，人类科研者和外部实验能力按需进入，靠真实科学证据验证结果。与已有独立研究资产的关系需要逐项确认。
 
+**直接进入讨论：** [共做起点](https://github.com/flyoung588/recursive-productive-capacity/issues/1) · [论文项目](https://github.com/flyoung588/recursive-productive-capacity/issues/2) · [ARIA 组队](https://github.com/flyoung588/recursive-productive-capacity/issues/3) · [自主科研](https://github.com/flyoung588/recursive-productive-capacity/issues/4)。
+
 ## 如何参与
 
 不必先加入组织。可以阅读相关项目、提出反例、改写问题、贡献证据、说明愿意参与的某一部分，也可以只是提出自己想做的一件事。

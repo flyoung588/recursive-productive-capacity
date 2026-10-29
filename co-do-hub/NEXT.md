@@ -1,6 +1,6 @@
 # Current next actions — one person to begin
 
-1. **Publish and verify this minimal GitHub base.** Make the three seed projects easy to open by link, expose a way to discuss without joining a fixed team, and keep machine-readable files for AI participation.
+1. **Base published:** the hub files and [four public Issues](https://github.com/flyoung588/recursive-productive-capacity/issues) are online; confirm all links and update only when real usage reveals a problem.
 2. **Do not invite people en masse.** For each seed project, first identify a genuine capability gap, 2–5 specifically relevant independent people and what they have already publicly worked on. Prefer one thoughtful contact at a time, with truthful context and a concrete invitation.
 3. **Use the actual project to learn.** When someone responds, let them change the research question, role or proposed solution. Support their chosen communication channel; do not demand GitHub membership.
 4. **After first joint work, capture only what matters.** Check the right to use/reuse outputs; add an outcome and a capability entry only with real evidence and permission.

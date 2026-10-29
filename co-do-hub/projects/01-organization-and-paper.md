@@ -1,4 +1,6 @@
 # Seed 01 · From Tasks to Organizations / 从任务到组织
+**[Open project discussion · Issue #2](https://github.com/flyoung588/recursive-productive-capacity/issues/2)**
+
 **Status:** Open research idea and collaboration invitation · **paper work start/date undecided; no joint authors confirmed.**
 
 ## Why this project belongs in Co-Do

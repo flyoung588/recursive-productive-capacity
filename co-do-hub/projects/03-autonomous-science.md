@@ -1,4 +1,6 @@
 # Seed 03 · Autonomous scientific research / AI 自主科研
+**[Open project discussion · Issue #4](https://github.com/flyoung588/recursive-productive-capacity/issues/4)**
+
 **Status:** Co-Do collaboration seed; **no independent Co-Do research team or new scientific discovery confirmed.**
 
 ## Research intent

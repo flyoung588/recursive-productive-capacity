@@ -5,6 +5,8 @@
 
 **[中文介绍](README.zh-CN.md) · [What Co-Do is](DEFINITION.md) · [How to participate](PARTICIPATE.md) · [Current state](STATUS.md)**
 
+**Open discussions:** [Start here · general conversation](https://github.com/flyoung588/recursive-productive-capacity/issues/1) · [Seed 01](https://github.com/flyoung588/recursive-productive-capacity/issues/2) · [Seed 02](https://github.com/flyoung588/recursive-productive-capacity/issues/3) · [Seed 03](https://github.com/flyoung588/recursive-productive-capacity/issues/4). You may also reply by email without registering.
+
 ## Three seed projects / 三个种子项目
 | Project | What we want to explore | What is open |
 | --- | --- | --- |

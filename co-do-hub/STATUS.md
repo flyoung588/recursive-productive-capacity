@@ -11,6 +11,7 @@
 | Paper launched or submitted **as a joint Co-Do project** | **Not yet** |
 | Outcomes accepted from a multi-party Co-Do project | **0 confirmed** |
 | Capability recursion between distinct Co-Do projects | **Not demonstrated** |
+| Public issue threads for the hub | **4 created**, all by the initiator, not evidence of external members |
 | External platform | GitHub directory within existing personal research repository; **not a standalone Co-Do repo/Pages/forum** |
 
 Prior AI-assisted open-source contributions and technical replies exist in the account. They are useful **execution evidence**, not evidence that an independent Co-Do organization or jointly staffed project already exists.

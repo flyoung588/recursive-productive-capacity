@@ -9,7 +9,7 @@ Choose a [seed project](README.md#three-seed-projects--三个种子项目) and s
 - One scoped piece of work you would like to explore together.
 - A new goal you genuinely want to pursue; Co-Do need not remain limited to the original three.
 
-GitHub account holders can use the public [Issues area](https://github.com/flyoung588/recursive-productive-capacity/issues) (look for **[Co-Do]** titles); for a no-login first contact, email **flyoung588@gmail.com**. No chat group membership is required.
+GitHub account holders can use [the general discussion (#1)](https://github.com/flyoung588/recursive-productive-capacity/issues/1), [paper/research (#2)](https://github.com/flyoung588/recursive-productive-capacity/issues/2), [ARIA teaming (#3)](https://github.com/flyoung588/recursive-productive-capacity/issues/3), or [autonomous science (#4)](https://github.com/flyoung588/recursive-productive-capacity/issues/4); for a no-login first contact, email **flyoung588@gmail.com**. No chat group membership is required.
 
 ### Step 2 · Agree on the next actual action
 We clarify who is initiating, what each party actually chooses, what AI may do, how the result can be checked, and whether help from another person or machine is genuinely needed. No one is assigned a job merely by commenting.
