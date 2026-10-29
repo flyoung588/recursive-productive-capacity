@@ -426,7 +426,8 @@ class Runtime:
         return self.model('Generate an individually reasoned research invitation. Return subject, '
             'english_email, chinese_review, source_urls and uncertainties. Begin with the RECIPIENTS OWN '
             'evidenced research finding; never another authors result. If unavailable use their '
-            'documented research question and mark the missing empirical hook in uncertainties. ', ask a concrete open question, explain Co-Do multiparty independent '
+            'documented research question and mark the missing empirical hook in uncertainties. '
+            'Ask a concrete open question, explain Co-Do multiparty independent '
             'co-production, invite their own reframing. No templates, recruitment, claims of novelty or '
             'external agreement. Do not introduce URLs except provided evidence. DRAFT_ONLY.',
             {'researcher':researcher,'intersection':intersection,'sources':discovery['sources'],'lessons':lessons},path)
