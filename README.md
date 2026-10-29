@@ -30,3 +30,9 @@ The manuscript discloses substantial OpenAI ChatGPT assistance in literature dis
 Criticism, closer methodological precedents and counterexamples are welcome. The primary question is whether this application-specific evidence contract adds useful measurement or decision value after equal information and complete acquisition/verification costs.
 
 No additional open-source or manuscript license is assigned by this release preparation.
+
+---
+
+## Separate experiment: Co-Do · 共做
+
+The independent, one-person-started [Co-Do incubation hub](co-do-hub/README.md) explores on-demand human–AI collaborations, including three seed research projects. It is **not** the same undertaking as this scholarly manuscript, and no separate Co-Do organization or external team is claimed.
