@@ -1,0 +1,27 @@
+{
+  "schema": "co-do.learn.v0.1",
+  "weights": {
+    "other_focus": 0.3474535001021386,
+    "research_hook": 0.6949070002042772,
+    "question": 0.6974691170828061,
+    "on_demand": 1.1916199474444147,
+    "multi_party": 1.6284989394506169,
+    "reuse": 0.7843324921083404,
+    "disclaimer": -1.8566099700317242,
+    "self_promotion": -1.9109942505617645,
+    "length": -0.8686337502553466
+  },
+  "match_feedback": {
+    "aneesh-pappu": {
+      "ORG-03": 1,
+      "ORG-02": -1
+    }
+  },
+  "observed_outcomes": {},
+  "feedback_sha256": "b43335db253cda5de0de3703d7d8be1e2917177cbeb52c7a21b2e340f8a577e1",
+  "revision_pairs": 2,
+  "training_pairs_preferred": 2,
+  "mean_margin_before": 2.35,
+  "mean_margin_after": 3.894,
+  "claim": "In-sample fit only. No external researcher reply or collaboration outcome has been observed."
+}
