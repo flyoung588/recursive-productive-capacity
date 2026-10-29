@@ -401,7 +401,7 @@ class Runtime:
             {'researcher':researcher,'intersection':intersection,'sources':discovery['sources'],'lessons':lessons},path)
 
 
-def main():
+def main(argv=None):
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--state',default=os.environ.get('CO_DO_STATE','/var/lib/co-do'))
     p.add_argument('--binary',default='openclaw')
@@ -413,7 +413,7 @@ def main():
     feed=sub.add_parser('feedback'); feed.add_argument('--researcher',required=True)
     feed.add_argument('--before',type=Path,required=True); feed.add_argument('--after',type=Path,required=True)
     feed.add_argument('--note',required=True)
-    args=p.parse_args(); runtime=Runtime(args.state,args.binary)
+    args=p.parse_args(argv); runtime=Runtime(args.state,args.binary)
     if args.command=='research': result=runtime.run(args.researcher,args.run_id,not args.no_learning,args.evidence_from)
     elif args.command=='learn': result=runtime.learn_feedback()
     elif args.command=='status':

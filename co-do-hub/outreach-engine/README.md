@@ -118,3 +118,38 @@ paper is indexed; raw DOI pages can reject automated readers. The runtime reads 
 sources must not support detailed result claims. URL membership cannot prove
 entailment. Scholarly novelty, researcher interest and improved writing quality
 are not automatically established. No contacts occur.
+
+The existing entrypoint now exposes the new runtime directly:
+
+```sh
+python3 engine.py cognition --state /var/lib/co-do research https://juhokim.com/ --run-id study-a --no-learning
+python3 engine.py cognition --state /var/lib/co-do research https://juhokim.com/ --run-id study-b --evidence-from study-a
+python3 engine.py cognition --state /var/lib/co-do status study-b
+```
+
+The older `draft` command remains a v0.1 curated-template regression tool. It is
+not research cognition and its scores are not scientific quality estimates.
+
+Deployment uses a pinned checkout of this same repository under
+`/srv/co-do/source`, an `outreach-engine` symlink to its existing engine directory,
+root-owned code and `/var/lib/co-do` owned by a nologin system user `co-do`.
+Install the model bridge root-owned at `/usr/local/libexec/co-do-model`; validate
+this isolated sudoers rule with `visudo -cf` before use:
+
+```text
+co-do ALL=(root) NOPASSWD: /usr/local/libexec/co-do-model ""
+```
+
+Install the template unit from deploy/, then `systemctl daemon-reload` (does not
+restart other services). Queue a private file `/var/lib/co-do/tasks/RUN.json`:
+
+```json
+{"researcher":"https://juhokim.com/","learning":false}
+```
+
+Start explicitly with `systemctl start --no-block co-do-research@RUN`. The unit
+becomes inactive after successful completion by design; inspect `Result` and
+`ExecMainStatus`, plus `state.json`. It is not enabled as an autonomous recurring
+job. After a process or host restart, starting that same instance reuses its
+persisted stages. No host-wide reboot is required or performed for validation.
+Never expose private state or logs through the public repository or web server.
