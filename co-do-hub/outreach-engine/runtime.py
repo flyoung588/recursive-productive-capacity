@@ -13,6 +13,7 @@ import re
 import socket
 import subprocess
 import time
+import urllib.error
 import urllib.parse
 import urllib.request
 from html.parser import HTMLParser
@@ -124,9 +125,22 @@ class Runtime:
         # Public Crossref API: no paid service or hidden search-model delegation.
         url = 'https://api.crossref.org/works?' + urllib.parse.urlencode({
             'query.bibliographic':query, 'rows':6,
-            'select':'DOI,title,author,published,abstract,URL,type'})
-        result = fetch(url)
-        save(path, result)
+            'select':'DOI,title,author,published,abstract,URL,type',
+            'mailto':'flyoung588@gmail.com'})
+        result=load(path)
+        if result is None:
+            errors=[]
+            with (self.state/'retrieval.lock').open('a') as lock:
+                fcntl.flock(lock,fcntl.LOCK_EX)
+                for attempt in range(3):
+                    try:
+                        result=fetch(url); save(path,result); break
+                    except urllib.error.HTTPError as exc:
+                        errors.append({'status':exc.code,'time':time.time()})
+                        save(path.with_suffix('.errors.json'),errors)
+                        if exc.code not in (429,503) or attempt==2: raise
+                        time.sleep(min(30,8*(attempt+1)))
+                time.sleep(1)
         data = json.loads(result['text'])
         return {'query':query, 'api_url':url, 'retrieved_at':result['retrieved_at'],
                 'sha256':result['sha256'], 'items':data['message']['items']}
@@ -136,6 +150,7 @@ class Runtime:
         sources = [{'url':result['api_url'], 'text':json.dumps(result['items'],ensure_ascii=False),
                     'sha256':result['sha256'], 'retrieved_at':result['retrieved_at'],
                     'source_kind':'Crossref original bibliographic metadata; abstracts when deposited'}]
+        urls=[u for u in urls if u != result['api_url']]
         for url in urls[:4]:
             url = url.rstrip('.,;)')
             key = hashlib.sha256(url.encode()).hexdigest()[:16]
