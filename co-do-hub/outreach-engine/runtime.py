@@ -3,6 +3,8 @@
 from __future__ import annotations
 import argparse
 import hashlib
+import fcntl
+import uuid
 import ipaddress
 import json
 import os
@@ -21,7 +23,7 @@ MODEL = 'openai/gpt-6.1-sol'
 
 def save(path, value):
     path.parent.mkdir(parents=True, exist_ok=True)
-    tmp = path.with_suffix('.tmp')
+    tmp = path.with_name(path.name+'.'+uuid.uuid4().hex+'.tmp')
     tmp.write_text(json.dumps(value, ensure_ascii=False, indent=2) + '\n')
     os.chmod(tmp, 0o600)
     tmp.replace(path)
@@ -146,6 +148,10 @@ class Runtime:
             if source.get('text'): sources.append(source)
         return sources
     def learn_feedback(self):
+        with (self.state/'learning.lock').open('a') as lock:
+            fcntl.flock(lock, fcntl.LOCK_EX)
+            return self._learn_feedback()
+    def _learn_feedback(self):
         events = []
         seed = ROOT/'data/feedback.jsonl'
         for p in (seed, self.state/'feedback.jsonl'):
@@ -252,6 +258,7 @@ class Runtime:
             if intersection['status']=='NO_CREDIBLE_INTERSECTION':
                 state['status']='NO_CREDIBLE_INTERSECTION'; save(folder/'state.json',state); return state
             initial=stage('initial_candidate',lambda:self.invite(researcher,intersection,discovery,{},folder/'initial.call.json'))
+            self.validate_urls(initial,source_urls)
             revised=stage('revised_candidate',lambda:self.model(
                 'Select relevant historical lessons by scope and researcher, then revise BOTH scientific '
                 'intersection reasoning and invitation. Return applied_lesson_ids with specific changes, '
