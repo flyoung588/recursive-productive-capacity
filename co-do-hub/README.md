@@ -10,6 +10,8 @@ This is **Co-Do**: an open exploration of how people and AI can create together 
 
 [中文介绍](README.zh-CN.md) · [The idea behind Co-Do](DEFINITION.md) · [How to take part](PARTICIPATE.md)
 
+**Want to start from a concrete scientific question?** [Explore nine open research gaps and first experiments](research/OPEN_QUESTIONS.md) across organizational science, agent transactions and autonomous discovery. Pick the question that genuinely intersects your research; you can challenge its premises or help redefine it.
+
 ## Three ways to begin
 
 ### 01 · From tasks to organizations
