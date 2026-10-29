@@ -106,6 +106,13 @@ class Runtime:
                   'from missing search results. Distinguish observed findings from hypotheses and unknowns. '
                   'Never infer actual researcher interest or agreement.\nTASK: '+task+'\nCONTEXT:\n'+
                   json.dumps(context, ensure_ascii=False))
+        cached=load(path)
+        if cached and cached.get('returncode')==0:
+            raw=json.loads(cached['stdout'])
+            if raw.get('model') not in ('gpt-6.1-sol',MODEL) or raw.get('provider')!='openai':
+                raise ValueError('Unexpected cached model')
+            return parse_json(raw['outputs'][0]['text'])
+        if cached: save(path.with_name(path.stem+'.previous-'+uuid.uuid4().hex+'.json'),cached)
         bridge = os.environ.get('CO_DO_MODEL_BRIDGE')
         if bridge:
             start=time.monotonic()
@@ -225,6 +232,12 @@ class Runtime:
                     result = self.search(query,folder/'discovery.search.json')
                     sources = self.sources(result, folder/'sources')
                     if homepage: sources.insert(0,homepage)
+                    for person in load(ROOT/'data/researchers.json',[]):
+                        if person['name'].lower() in researcher.lower():
+                            for evidence in person.get('evidence',[]):
+                                try: sources.append(fetch(evidence['url']))
+                                except Exception as exc:
+                                    save(folder/('seed-source-'+hashlib.sha256(evidence['url'].encode()).hexdigest()[:12]+'.error.json'),{'url':evidence['url'],'error':str(exc)})
                     if not sources: raise ValueError('No independently readable research sources')
                     return {'query':researcher,'sources':sources,'search':result}
                 discovery = stage('discovery',discover)
@@ -249,6 +262,7 @@ class Runtime:
             co_do = {'definition':(ROOT.parent/'DEFINITION.md').read_text(),
                      'open_questions':(ROOT.parent/'research/OPEN_QUESTIONS.md').read_text()}
             source_urls = {s['url'] for s in discovery['sources']+competitors['sources']}
+            source_urls.update(re.findall(r'https://github.com/[^\s)]+',co_do['open_questions']))
             for bundle in [discovery['search']] + [x['result'] for x in competitors['searches']]:
                 source_urls.update(x['URL'] for x in bundle.get('items',[]) if x.get('URL'))
             def think():
