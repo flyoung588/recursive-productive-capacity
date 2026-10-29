@@ -1,38 +1,46 @@
-# 03 · AI-driven scientific discovery
-### When the next experiment decides what we believe
+# 03 · Autonomous Scientific Discovery
+### AI 自主科研：机器能否选择真正的未知、开展实验，并因现实反馈而改变下一步？
 
-**What would it take for AI to discover something the world has not yet told it?**
+**The scientific ambition:** An AI scientist should do more than propose attractive hypotheses or write plausible papers. It should select meaningful research frontiers, make predictions that reality can refute, learn from negative results and seek domain or laboratory capabilities only when the problem actually requires them.
 
-AI can read research, propose hypotheses, write code and explore enormous spaces of possibilities. But scientific discovery changes only when a claim survives contact with evidence that can contradict it.
+Strong prior work exists: [Co-Scientist (Nature, 2026)](https://www.nature.com/articles/s41586-026-10644-y) and [The AI Scientist (Nature, 2026)](https://www.nature.com/articles/s41586-026-10265-5). The opportunities below are specific **extensions to investigate**, not claims that no AI scientist has performed useful research.
 
-We want to explore **AI as an active researcher**, with independent scientists, laboratories, experimental resources and other capabilities joining when the question makes them necessary.
+## Three concrete research opportunities / 三个具体科学缺口
 
-## The scientific challenge
+### [SCI-01 · Choosing the frontier / 怎样选择真正值得攻克的科学未知？](https://github.com/flyoung588/recursive-productive-capacity/issues/11)
 
-A model proposes a new representation, mechanism or test. It searches, encounters contrary evidence, revises its plan and decides what question should be asked next. At some point the world must decide what is true.
+**What is already known:** Co-Scientist generates and refines hypotheses **given a research goal**; The AI Scientist explores computational research workflows.
 
-What would a research system need to make this loop genuine, repeatable and more productive than simply generating plausible papers?
+**The gap:** Before hypothesis generation, can AI **choose a valuable, uncertain and testable question** from multiple competing frontier candidates—rather than pursue a question a human picked or one that merely sounds novel?
 
-## Three connected questions
+**First experiment:** In one bounded scientific domain, compare a domain expert's frontier ranking, a novelty-only heuristic, an LLM selector and an approach accounting for importance, uncertainty, cost and a feasible evaluation oracle. Use independent subsequent tests—not literary plausibility—to judge the quality of the chosen frontier. **[Explore #11](https://github.com/flyoung588/recursive-productive-capacity/issues/11)**.
 
-1. **Discovery:** Which scientific questions are sufficiently open, consequential and testable for AI to explore?
-2. **Reality:** Where can computational evaluation suffice, and where do we need new data, laboratory experiments or an independent physical check?
-3. **Organization:** Can the right scientific capabilities be assembled on demand—AI exploration, specialist judgement, data access and real experiments—without needing to own a permanent laboratory?
+*Potential collaborators:* domain scientists, scientific method, active learning, experiment design.
 
-Potential fields include materials, energy, biology and other domains where real observations can overturn attractive hypotheses. The field should follow the strongest tractable scientific question, not a quota.
+### [SCI-02 · Prospective validation / 独立留出与现实检验下的新颖性是否成立？](https://github.com/flyoung588/recursive-productive-capacity/issues/12)
 
-## An invitation to researchers and builders
+**What is already known:** Co-Scientist's authors discuss incomplete/contradictory published evidence, scarce negative results and preliminary validation. The AI Scientist reports wrong implementations and other scientific-quality limitations.
 
-A strong entry might be:
-- A scientific question whose uncertainty can be stated precisely.
-- A public dataset paired with a rigorous, independent evaluation method.
-- A counterexample showing why an AI-generated scientific claim fails.
-- A concrete laboratory or domain capability that would enable a decisive test.
+**The gap:** Can a proposed scientific claim survive **blind, independent evaluation** when its evidence is incomplete and some observations directly contradict the initial idea?
 
-Our aim is **shared inquiry that can change direction in response to the world**, not a preset demonstration of AI's superiority.
+**First experiment:** Select a safe public scientific setting with a legitimate development set and an independently withheld evaluation, declare the prediction in advance, compare to a strong simple model, then have an outside reviewer assess prediction, traceability and uncertainty. A historical holdout is **not** a newly performed physical experiment. **[Explore #12](https://github.com/flyoung588/recursive-productive-capacity/issues/12)**.
 
-Relevant existing AI research may offer methods or evidence when its owners authorize sharing; each project and contributor retains their own identity and rights.
+*Potential collaborators:* reproducible science, domain expertise, experimental statistics, independent reviewers.
 
-**[Explore the scientific conversation](https://github.com/flyoung588/recursive-productive-capacity/issues/4)** · [Email Fei Yang](mailto:flyoung588@gmail.com?subject=Co-Do%20%E2%80%94%20Autonomous%20science) · [About Co-Do](../README.md)
+### [SCI-03 · Failure changes the research plan / 失败反馈能否真正改变机器的下一轮科研动作？](https://github.com/flyoung588/recursive-productive-capacity/issues/13)
 
-*Starting phase: identifying research questions and collaborators who can materially strengthen their tests.*
+**What is already known:** AI Scientist systems can run search-and-experiment loops, but published work documents errors and limitations. Generating another list of hypotheses alone does not show that the next action used a real negative observation.
+
+**The gap:** After a **genuine observed failure**, can an AI search policy select a demonstrably more informative next experiment than one that ignores the feedback or a strong conventional adaptive method?
+
+**First experiment:** In a bounded scientific world with independent observations and a finite budget, compare **feedback-enabled**, **feedback-blind**, and **strong adaptive-search** procedures. Track the actual change in action, informativeness, cost and scientific progress. **[Explore #13](https://github.com/flyoung588/recursive-productive-capacity/issues/13)**.
+
+*Potential collaborators:* AI for science, domain experiment owners, active learning, prospective evaluation.
+
+## Research can generate the organization it needs
+
+A scientific question may first require computation, then an expert's independent critique, a dataset or a physical test. **Rather than presupposing a fixed lab, we want to see whether research capability can form around the question itself**, while real scientific evidence changes both the question and the collaboration.
+
+Existing autonomous research systems may contribute methods or evaluation material when appropriately shared; Co-Do does not need to claim ownership of those projects for this to work.
+
+**[Discuss the scientific project](https://github.com/flyoung588/recursive-productive-capacity/issues/4) · [Browse all nine research questions](../research/OPEN_QUESTIONS.md) · [Email](mailto:flyoung588@gmail.com?subject=Co-Do%20%E2%80%94%20autonomous%20science) · [About Co-Do](../README.md)**

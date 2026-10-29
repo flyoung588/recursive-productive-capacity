@@ -1,34 +1,46 @@
-# 02 · ARIA: Agents, trust and on-demand research teams
-### A research question worth assembling the right team for
+# 02 · ARIA: Agent Coordination, Trust and Economic Exchange
+### ARIA 组队研究：Agent 之间能否真正协商、合作并交换可验证的价值？
 
-**机器如果能自主寻找能力，如何与另一个机器协商、合作，乃至交换价值？**
+**The research opportunity:** Autonomous agents acting for different people or institutions need to do more than exchange messages. Can they discover capabilities, agree on constraints, perform work, verify delivery and handle conflicts—without assuming a single central owner?
 
-Today's agents increasingly use tools. But an agent economy asks for more: agents may need to discover unfamiliar counterparties, decide what each can deliver, agree on constraints, verify a result, handle failure and—in appropriate settings—transact.
+ARIA's [Scaling Trust programme](https://aria.org.uk/opportunity-spaces/trust-everything-everywhere/scaling-trust/funding) creates a potential funding route for complementary research teams. Its [October 2026 portfolio map](https://scalingtrust.org.uk/blog/building-the-scaling-trust-portfolio/) describes **remaining possible directions**, and existing funded research must be treated as a strong foundation, not ignored.
 
-These are not just software integration problems. They touch **trust, coordination, incentives and the institutions that make autonomous cooperation possible**.
+## Three concrete research opportunities / 三个具体技术问题
 
-## Two experiments in one
+### [ARIA-01 · Two-owner agents, verified work / 独立主体 Agent 的可验证交易](https://github.com/flyoung588/recursive-productive-capacity/issues/8)
 
-**Scientific experiment:** formulate and test a serious question about agent-to-agent coordination, trusted interaction or machine-to-machine transactions.
+**Published demand:** ARIA's October portfolio note mentions **small end-to-end cases of independently owned agents using cryptographic tools to do useful work**. [CCTI](https://scalingtrust.org.uk/projects/ccti/) and [Project HAMMER](https://scalingtrust.org.uk/projects/) already cover important pieces.
 
-**Organizational experiment:** bring together complementary people and AI capabilities *because the research question needs them*, and pursue a suitable **ARIA research funding opportunity** together when the topic, eligibility and collaboration genuinely align.
+**Proposed gap:** Test an end-to-end **agreement → execution → verification** chain that does not confuse a signed message or a capability advertisement with real delivery.
 
-An agent systems researcher, a security specialist, an economist and an experimental scientist may see different failure modes. Their disagreement is a potential advantage—not a reason to start with a fixed hierarchy.
+**First experiment:** Two independently configured principals negotiate an ordinary computational service in a sandbox. Inject a false capability claim and an incorrect deliverable. Compare a naive A2A/API exchange against a verifiable contract/evidence approach and a strong central orchestration baseline. Track false acceptance, utility and verification cost. **[Explore #8](https://github.com/flyoung588/recursive-productive-capacity/issues/8)**.
 
-## Questions we could pursue
+*Potential collaborators:* security, agent systems, trusted computing, economics.
 
-- **Discovery and negotiation:** How should an agent understand what an unfamiliar agent can actually do, beyond advertised descriptions?
-- **Verifiable outcomes:** What evidence would justify trusting a machine-produced result, especially when counterparties have different incentives?
-- **Transaction and cooperation:** What makes machine-to-machine exchange meaningful and reliable rather than merely an automated API call?
-- **Coordination under failure:** Can participants renegotiate, substitute capabilities or recover from unexpected constraints?
-- **Research credibility:** What is the smallest experiment that can disprove a preferred protocol or economic mechanism?
+### [ARIA-02 · Bounded physical permissions / 物理资源的可撤销按需授权](https://github.com/flyoung588/recursive-productive-capacity/issues/9)
 
-## What joining might look like
+**Published demand:** The same ARIA portfolio note explicitly highlights **bounded access to sensors and actuators** for externally owned agents. Existing physical policy verification projects cover related but different problems.
 
-Start with a critical research question, a threat model, a testable design or an alternative explanation. If the idea warrants an ARIA application, the team and proposal can grow around the actual research—not the other way around.
+**Proposed gap:** Can a resource owner grant **task-scoped, time-bounded, revocable authority** to an unfamiliar agent while still achieving useful work?
 
-**ARIA funding is a research goal, not an assumed award or predetermined programme fit.** We will choose the relevant call from current official requirements: [ARIA funding opportunities](https://www.aria.org.uk/funding-opportunities/).
+**First experiment:** A small simulated sensor/actuator with explicit permissions, timeout and revocation. Try malicious out-of-scope calls and replayed requests; compare simple API keys, role-based access and task-bound grants. A later *real* hardware test would require a genuine physical collaborator. **[Explore #9](https://github.com/flyoung588/recursive-productive-capacity/issues/9)**.
 
-**[Discuss the research and teaming idea](https://github.com/flyoung588/recursive-productive-capacity/issues/3)** · [Email Fei Yang](mailto:flyoung588@gmail.com?subject=Co-Do%20%E2%80%94%20ARIA%20research) · [About Co-Do](../README.md)
+*Potential collaborators:* robotics, security, controls, formal methods.
 
-*Current phase: defining the strongest research question and discovering genuinely complementary collaborators.*
+### [ARIA-03 · Agent negotiation that creates value / 协商如何变成真正的经济合作](https://github.com/flyoung588/recursive-productive-capacity/issues/10)
+
+**Related funded work:** [Dovetail](https://scalingtrust.org.uk/projects/dovetail/) researches automated protocol design; [Project HAMMER](https://scalingtrust.org.uk/projects/) researches agent procurement and adversarial negotiations. Our research would need a **distinct complementary experiment**, not a duplicate proposal.
+
+**Proposed gap:** Under private costs, uncertain quality and non-delivery, do negotiation and verification mechanisms increase **actual value delivered after costs**, rather than just agreement rates?
+
+**First experiment:** A finite sandbox with several independent buyer/provider agents, strategic misreporting and failed delivery. Compare baseline central brokerage, naive bidding and verification-aware agreements; measure verified welfare, excluded good providers, disputes and cost. **[Explore #10](https://github.com/flyoung588/recursive-productive-capacity/issues/10)**.
+
+*Potential collaborators:* mechanism design, economics, agent security, evaluation.
+
+## Research first, team formed around the question
+
+A strong idea will determine which expertise is needed; those people and AI systems can then jointly reshape it. **The same process is a Co-Do organization experiment**: temporary collaboration generated by a research opportunity, not a fixed research team created in advance.
+
+ARIA's [rolling Track 2/3 funding page](https://aria.org.uk/opportunity-spaces/trust-everything-everywhere/scaling-trust/funding) and [official programme gap map](https://scalingtrust.org.uk/blog/building-the-scaling-trust-portfolio/) are the starting points. The best study may be smaller, larger or different from the examples above.
+
+**[Discuss the ARIA project](https://github.com/flyoung588/recursive-productive-capacity/issues/3) · [Browse all nine research questions](../research/OPEN_QUESTIONS.md) · [Email](mailto:flyoung588@gmail.com?subject=Co-Do%20%E2%80%94%20ARIA%20research) · [About Co-Do](../README.md)**
