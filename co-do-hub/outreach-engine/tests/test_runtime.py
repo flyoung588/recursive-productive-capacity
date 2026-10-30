@@ -26,14 +26,14 @@ class RuntimeTest(unittest.TestCase):
             m.save(f/'lessons.json',{'lessons':[]})
             m.save(f/'intersection.json',{'status':'NO_CREDIBLE_INTERSECTION'})
             with patch.object(r,'model',side_effect=AssertionError('No repeat call')):
-                self.assertEqual(r.run('new person','one')['status'],'NO_CREDIBLE_INTERSECTION')
-            with self.assertRaises(ValueError): r.run('different person','one')
+                self.assertEqual(r.legacy_run('new person','one')['status'],'NO_CREDIBLE_INTERSECTION')
+            with self.assertRaises(ValueError): r.legacy_run('different person','one')
             self.assertEqual((f/'state.json').stat().st_mode & 0o777,0o600)
     def test_error_persists_for_restart(self):
         with tempfile.TemporaryDirectory() as tmp:
             r=m.Runtime(tmp)
             with patch.object(r,'search',side_effect=RuntimeError('retrieval unavailable')):
-                with self.assertRaises(RuntimeError): r.run('new person','error')
+                with self.assertRaises(RuntimeError): r.legacy_run('new person','error')
             self.assertEqual(m.load(Path(tmp)/'runs/error/state.json')['status'],'FAILED')
     def test_protocol_does_not_accept_other_model(self):
         with tempfile.TemporaryDirectory() as tmp:

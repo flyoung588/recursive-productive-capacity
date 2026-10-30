@@ -164,3 +164,49 @@ This refuses differing evidence/interpretation bundles, incomplete tasks, wrong
 learning conditions and unexpected actual models. It reports a draft diff,
 applied lessons, token counts and unresolved human review questions. It does
 not score academic quality or infer a causal improvement from one stochastic pair.
+
+## v0.2.1: gold-guided scientific discovery
+
+Private approved revisions are communication evidence, not scientific validation.
+An optional private `gold/active.json` points to human annotations inside the private
+state tree; these and the original before/after events enter model-derived semantic
+learning. Nothing imports private mail into source code or a public example.
+
+```sh
+python3 engine.py cognition --state /var/lib/co-do learn
+python3 engine.py cognition --state /var/lib/co-do pair https://researcher.example/ --pair-id fresh-pair
+python3 compare.py --state /var/lib/co-do fresh-pair-A fresh-pair-B
+python3 blind.py --state /var/lib/co-do fresh-pair
+```
+
+The paired pipeline reads a neutral shared researcher evidence bundle, then generates
+three different candidate mechanisms plus a no-invitation option in EACH condition.
+A has no historical asset. B uses scoped semantic experience during question and
+counter-search generation, scientific selection, joint-value reasoning, first-study
+design, and invitation generation. Person-specific facts are not transferred to a
+new researcher. Complete private request contexts and prompt hashes make this
+wiring inspectable; changed contexts or learning assets require a fresh run ID.
+
+Counter-searches from both conditions are actually executed. Their union becomes
+the same public corpus for both selections. This controls evidence access; it is
+NOT a comparison of independent search recall, natural research cost or learning
+quality. Already answered candidates can be eliminated or revised. NO_INVITE
+suppresses the experiment/invitation instead of manufacturing a good match.
+
+The scientific selection explains possible recipient and Co-Do learning, additional
+knowledge versus separate work, resource assumptions, and reasons joint work may
+not be worthwhile. These are reasoning fields, never fixed mail paragraphs. No
+recipient availability, private dataset, experimental instrument or participant
+pool is assumed. Approved letters are not copied as templates or novelty evidence.
+
+For server tasks use `{"mode":"pair","researcher":"https://researcher.example/"}`
+under the existing private task directory. The existing oneshot worker runs it;
+there is no new listener, scheduler, auth platform or model route.
+`research` also uses the paired scientific path and returns the requested condition.
+Legacy v0.2.0 code is only an internal compatibility/evidence-capture helper.
+
+Blind review exports randomized X/Y scientific candidates, counterevidence decisions,
+experiments and full bilingual drafts under `blind_review/`; the separate private
+key is under `blind_keys/`. No human review or causal improvement is inferred by
+exporting those files. Neither branch is numerically self-scored. All outputs stay
+DRAFT_ONLY; no sender or mail permissions are added.

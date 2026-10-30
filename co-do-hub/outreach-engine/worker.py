@@ -10,5 +10,7 @@ name=sys.argv[1]
 if not re.fullmatch(r'[a-zA-Z0-9_-]+',name): raise SystemExit('Invalid task name')
 state=Path(os.environ.get('CO_DO_STATE','/var/lib/co-do'))
 task=json.loads((state/'tasks'/f'{name}.json').read_text())
-result=Runtime(state).run(task['researcher'],name,task.get('learning',True),task.get('evidence_from'))
+runtime=Runtime(state)
+result=(runtime.pair(task['researcher'],name) if task.get('mode')=='pair' else
+        runtime.run(task['researcher'],name,task.get('learning',True),task.get('evidence_from')))
 print(json.dumps(result,ensure_ascii=False))
