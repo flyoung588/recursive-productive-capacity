@@ -11,6 +11,8 @@ m=importlib.util.module_from_spec(S); S.loader.exec_module(m)
 class RuntimeTest(unittest.TestCase):
     def test_citation_membership_rejects_hallucination(self):
         m.Runtime.validate_urls({'source_urls':['https://example.org/a']},{'https://example.org/a'})
+        m.Runtime.validate_urls({'reason':'https://example.org/a: method remains unread'}, {'https://example.org/a'})
+        m.Runtime.validate_urls({'source_urls':['https://example.org/a:']},{'https://example.org/a:'})
         with self.assertRaises(ValueError):
             m.Runtime.validate_urls({'source_urls':['https://fake.org/b']},{'https://example.org/a'})
     def test_private_addresses_rejected(self):

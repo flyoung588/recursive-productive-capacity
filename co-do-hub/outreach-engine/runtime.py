@@ -889,7 +889,7 @@ class Runtime:
     @staticmethod
     def validate_urls(value, allowed):
         urls=re.findall(r'https?://[^\s"<>\\]+',json.dumps(value))
-        unknown=[u.rstrip('.,;)') for u in urls if u.rstrip('.,;)') not in allowed]
+        unknown=[u for u in urls if u not in allowed and u.rstrip(':.,;)') not in allowed]
         if unknown: raise ValueError('Unsourced model URL: '+repr(unknown[:3]))
     def invite(self, researcher, intersection, discovery, lessons, path):
         return self.model('Generate an individually reasoned research invitation. Return subject, '
