@@ -15,6 +15,34 @@ def plan(prefix):
 
 
 class GuidedTest(unittest.TestCase):
+    def test_paper_read_includes_late_methods_results_not_abstract_only(self):
+        text='ABSTRACT '+('background '*1800)+' METHODS randomized assignment '+('protocol '*900)+' RESULTS intervention failed '+('data '*1500)+' LIMITATIONS no human study'
+        excerpt=m.paper_passages(text,7000)
+        self.assertIn('randomized assignment',excerpt)
+        self.assertIn('intervention failed',excerpt)
+        self.assertIn('no human study',excerpt)
+        self.assertLessEqual(len(excerpt),7000)
+        self.assertIn('captured characters',excerpt)
+    def test_primary_landing_page_resolves_its_fulltext(self):
+        with patch.object(m,'fetch',side_effect=[{'url':'https://example.org/paper',
+             'text':'abstract','content_type':'text/html',
+             'link_records':[{'url':'https://example.org/paper.pdf','label':'PDF'}]},
+             {'url':'https://example.org/paper.pdf','text':'Methods and results','content_type':'application/pdf'}]):
+            source=m.Runtime.research_source('https://example.org/paper')
+        self.assertEqual(source['requested_paper_url'],'https://example.org/paper')
+        self.assertEqual(source['text'],'Methods and results')
+    def test_missing_critical_read_is_retained_and_recovery_is_cached(self):
+        with tempfile.TemporaryDirectory() as d:
+            r=m.Runtime(d);folder=Path(d)/'pair'
+            source={'sources':[{'url':'https://example.org/paper','text':'abstract'}],'search':{}}
+            counter={'sources':[],'searches':[],'balanced_model_sources':[]}
+            with patch.object(r,'model',return_value={'source_urls':['https://example.org/paper'],
+                'additional_queries':[]}),patch.object(r,'research_source',side_effect=OSError('unavailable')):
+                result=r.deepen_evidence(source,[plan('a'),plan('b')],counter,folder)
+            self.assertEqual(len(result['reading_recovery']['failed_reads']),1)
+            self.assertEqual(result['reading_recovery']['search_completeness'],'BOUNDED_NOT_EXHAUSTIVE')
+            with patch.object(r,'model',side_effect=AssertionError('must not rerun')):
+                self.assertEqual(r.deepen_evidence(source,[],counter,folder),result)
     def test_blind_export_removes_condition_leak_without_editing_science(self):
         import sys
         sys.path.insert(0,str(Path(__file__).resolve().parents[1]))

@@ -42,7 +42,7 @@ def compare(state, a, b):
         actual_models.append(sorted(models));usage.append(total)
     if actual_models[0]!=['openai/gpt-6.1-sol'] or actual_models[1]!=actual_models[0]:
         raise ValueError('Unexpected actual model in comparison')
-    revised=read(dirs[1]/('invitation.json' if snapshots[1].get('version')=='0.2.1' and (dirs[1]/'invitation.json').exists() else 'revised_candidate.json')) if ((dirs[1]/'invitation.json').exists() or (dirs[1]/'revised_candidate.json').exists()) else {}
+    revised=read(dirs[1]/('invitation.json' if (dirs[1]/'invitation.json').exists() else 'revised_candidate.json')) if ((dirs[1]/'invitation.json').exists() or (dirs[1]/'revised_candidate.json').exists()) else {}
     upstream={}
     for d in dirs:
         upstream[d.name]={}
