@@ -1,3 +1,5 @@
+> Current scientific workflow: **v0.2.2 `pair`**, documented below. The v0.1 template and v0.2 separate-run examples are historical; new scientific A/B runs use fresh pair IDs.
+
 # Co-Do Outreach Learning Engine v0.1
 
 **Executable prototype, not an email campaign.** The user-facing principle is: **their research first; identify a real, testable shared question; enable on-demand cooperation among independent people and AI; learn from corrections and real outcomes.**
@@ -77,3 +79,167 @@ python3 engine.py draft qing-xiao --model-endpoint http://127.0.0.1:11434/v1/cha
 ```
 
 This returns both the deterministic draft and `model_candidate`. The model candidate is **not automatically promoted**, sent, or treated as fact-checked. The engine rejects model-invented URLs, but that cannot detect every invented claim. The command has no default model calls; there is no required paid API. HTTPS remote model endpoints require the extra `--allow-external-model` flag and must be explicitly authorized; private preference text is withheld from remote prompts. Use `CO_DO_API_KEY` only for the remote endpoint if needed. **No model endpoint was available in this execution environment, so model-based writing quality has not been validated.**
+
+## v0.2 research cognition runtime
+
+`runtime.py research <name-or-official-HTTPS-homepage> --run-id <id>` autonomously
+reads public source pages and Crossref metadata, asks GPT-6.1 Sol Low through the
+existing OpenClaw gateway to interpret findings, generates falsification searches,
+compares competing work, and may reject a match. A supported candidate receives
+an English invitation and Chinese review draft, then a semantic revision using
+relevant persisted human feedback. There is no sender, SMTP client, mail tool or
+contact permission. All drafts require human factual and editorial review.
+
+Use `--state /private/persistent/directory` BEFORE the subcommand. Default is
+`/var/lib/co-do`; do not use a public checkout as private state. `learn` reuses the
+original public seed and private `feedback.jsonl`, storing semantic lessons keyed
+by the original revision digest. `feedback --researcher ID --before FILE --after
+FILE --note TEXT` records actual human edits; do not feed model edits as human.
+Run IDs are immutable input bindings and completed stages are reused after
+restart. Errors persist as FAILED; invoke the same task to resume. No automatic
+retries of failed model requests, fallback model, schedule or open network port.
+
+For a paired evidence-controlled run, execute A with `--no-learning`, then B with
+`--evidence-from A_RUN_ID`. The same discovery, interpretation and competition
+bundles are reused byte-for-byte. This controls sources, not model randomness;
+quality and novelty remain for human evaluation. `checks.json` reports only URL
+membership and source digest, never semantic correctness or learning success.
+
+On the existing host, a dedicated `co-do` user can invoke a root-owned fixed-model
+adapter (`deploy/model_bridge.py`) via a single sudo rule; it accepts prompt text
+on stdin, fixes gateway/model/thinking, and cannot execute arbitrary commands or
+mail tools. This reuses existing OAuth and gateway credentials without copying
+them into Co-Do or changing other applications. Model usage/cost metadata is
+retained privately; it is not a cash billing receipt. Deploy code root-owned,
+state co-do-owned mode 0700. Optional `co-do-research@RUN.service` is an explicit
+oneshot worker, not a daemon or scheduler. Queue JSON under state/tasks and start
+the instance manually; rerun the same instance to resume checkpoints.
+
+Retrieval limitations: Crossref deposits may omit abstracts, and not every recent
+paper is indexed; raw DOI pages can reject automated readers. The runtime reads linked original research pages, uses the public OpenReview API for submitted records, and can extract bounded PDFs with an already installed `pdftotext`; no dependency is automatically installed. It falls back to deposited Crossref DOI metadata where a publisher refuses access. Captured source text (up to 140,000 normalized characters per HTML/PDF source in the current pipeline; JSON metadata retained whole) and original-byte hashes are retained privately; bounded source excerpts enter the model context. Original PDF bytes are downloaded for extraction and hashing, not retained as a complete PDF archive. Metadata-only
+sources must not support detailed result claims. URL membership cannot prove
+entailment. Scholarly novelty, researcher interest and improved writing quality
+are not automatically established. No contacts occur.
+
+The existing entrypoint now exposes the new runtime directly:
+
+```sh
+python3 engine.py cognition --state /var/lib/co-do research https://juhokim.com/ --run-id study-a --no-learning
+python3 engine.py cognition --state /var/lib/co-do research https://juhokim.com/ --run-id study-b --evidence-from study-a
+python3 engine.py cognition --state /var/lib/co-do status study-b
+```
+
+The older `draft` command remains a v0.1 curated-template regression tool. It is
+not research cognition and its scores are not scientific quality estimates.
+
+Deployment uses a pinned checkout of this same repository under
+`/srv/co-do/source`, an `outreach-engine` symlink to its existing engine directory,
+root-owned code and `/var/lib/co-do` owned by a nologin system user `co-do`.
+Install the model bridge root-owned at `/usr/local/libexec/co-do-model`; validate
+this isolated sudoers rule with `visudo -cf` before use:
+
+```text
+co-do ALL=(root) NOPASSWD: /usr/local/libexec/co-do-model ""
+```
+
+Install the template unit from deploy/, then `systemctl daemon-reload` (does not
+restart other services). Queue a private file `/var/lib/co-do/tasks/RUN.json`:
+
+```json
+{"researcher":"https://juhokim.com/","learning":false}
+```
+
+Start explicitly with `systemctl start --no-block co-do-research@RUN`. The unit
+becomes inactive after successful completion by design; inspect `Result` and
+`ExecMainStatus`, plus `state.json`. It is not enabled as an autonomous recurring
+job. After a process or host restart, starting that same instance reuses its
+persisted stages. No host-wide reboot is required or performed for validation.
+Never expose private state or logs through the public repository or web server.
+
+Recompute the paired comparison without another model call:
+
+```sh
+python3 compare.py --state /var/lib/co-do study-a study-b
+```
+
+This refuses differing evidence/interpretation bundles, incomplete tasks, wrong
+learning conditions and unexpected actual models. It reports a draft diff,
+applied lessons, token counts and unresolved human review questions. It does
+not score academic quality or infer a causal improvement from one stochastic pair.
+
+## v0.2.1: gold-guided scientific discovery
+
+Private approved revisions are communication evidence, not scientific validation.
+An optional private `gold/active.json` points to human annotations inside the private
+state tree; these and the original before/after events enter model-derived semantic
+learning. Nothing imports private mail into source code or a public example.
+
+```sh
+python3 engine.py cognition --state /var/lib/co-do learn
+python3 engine.py cognition --state /var/lib/co-do pair https://researcher.example/ --pair-id fresh-pair
+python3 compare.py --state /var/lib/co-do fresh-pair-A fresh-pair-B
+python3 blind.py --state /var/lib/co-do fresh-pair
+```
+
+The paired pipeline reads a neutral shared researcher evidence bundle, then generates
+three different candidate mechanisms plus a no-invitation option in EACH condition.
+A has no historical asset. B uses scoped semantic experience during question and
+counter-search generation, scientific selection, joint-value reasoning, first-study
+design, and invitation generation. Person-specific facts are not transferred to a
+new researcher. Complete private request contexts and prompt hashes make this
+wiring inspectable; changed contexts or learning assets require a fresh run ID.
+
+Counter-searches from both conditions are actually executed. Their union becomes
+the same public corpus for both selections. This controls evidence access; it is
+NOT a comparison of independent search recall, natural research cost or learning
+quality. Already answered candidates can be eliminated or revised. NO_INVITE
+suppresses the experiment/invitation instead of manufacturing a good match.
+
+The scientific selection explains possible recipient and Co-Do learning, additional
+knowledge versus separate work, resource assumptions, and reasons joint work may
+not be worthwhile. These are reasoning fields, never fixed mail paragraphs. No
+recipient availability, private dataset, experimental instrument or participant
+pool is assumed. Approved letters are not copied as templates or novelty evidence.
+
+For server tasks use `{"mode":"pair","researcher":"https://researcher.example/"}`
+under the existing private task directory. The existing oneshot worker runs it;
+there is no new listener, scheduler, auth platform or model route.
+`research` also uses the paired scientific path and returns the requested condition.
+Legacy v0.2.0 code is only an internal compatibility/evidence-capture helper.
+
+Blind review exports randomized X/Y scientific candidates, counterevidence decisions,
+experiments and full bilingual drafts under `blind_review/`; the separate private
+key is under `blind_keys/`. No human review or causal improvement is inferred by
+exporting those files. Neither branch is numerically self-scored. All outputs stay
+DRAFT_ONLY; no sender or mail permissions are added.
+
+For a new development iteration, `pair ... --pair-id NEW --source-pair OLD`
+reuses only OLD's neutral researcher discovery and interpretation. It regenerates
+candidate plans, performs actual counter-searches, and selects/designs again;
+OLD is never overwritten. Server task JSON accepts `source_pair` for this purpose.
+These repeated subjects are a development sensitivity check, not fresh confirmatory
+validation. Blind export removes explicit condition-audit sentences by fixed rules,
+keeps raw outputs unchanged, and preserves scientific uncertainty and refusal.
+
+### v0.2.2: critical reading before a frozen decision
+
+The same commands now use a fresh v0.2.2 pair. Before candidate generation a neutral
+research-program read connects multiple results and records whose current interests
+are actually evidenced. Captured HTML/PDF text is bounded at 140,000 normalized
+characters; model excerpts include offset-labeled methods/results/discussion
+passages rather than only the opening prefix. These excerpts are not full-paper
+reading or independent verification of every claim.
+
+Before either selection, one shared recovery pass targets up to four observed
+primary URLs and two further rival queries. Queries use Crossref and the public,
+unauthenticated OpenAlex endpoint; errors and inaccessible papers are retained.
+The resulting corpus is identical in A/B. Retrieval is bounded and non-exhaustive;
+there is no novelty certification from a fixed result count. A linked reference is
+distinguished from a paper whose text was retrieved.
+
+Selection compares studied units, populations, mechanisms, interventions and
+outcomes, separating fully/partly answered, adjacent, unanswered-in-read-sources,
+and missing-evidence cases. Joint value includes each side's solo counterfactual
+and an observable possible knowledge gain. A draft still requires independent
+scientific/editorial review; code changes and model output differences establish
+neither better science nor more compelling collaboration.
