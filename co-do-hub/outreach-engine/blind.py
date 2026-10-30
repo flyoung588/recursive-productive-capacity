@@ -3,6 +3,7 @@
 import argparse
 from pathlib import Path
 import secrets
+import re
 from runtime import load, save, Runtime
 
 
@@ -10,7 +11,10 @@ def redact(value):
     if isinstance(value,dict):
         return {k:redact(v) for k,v in value.items() if k not in (
             'applied_lesson_ids','researcher_specific_lessons_not_applied','historical_experience')}
-    if isinstance(value,list):return [redact(v) for v in value]
+    if isinstance(value,list):return [r for v in value if (r:=redact(v))!='']
+    if isinstance(value,str):
+        # Remove only explicit condition audit, not scientific reasons or uncertainty.
+        return re.sub(r'(?i)\bNo\s+(?:scoped\s+)?historical\s+lessons\s+were\s+supplied\b[^.]*\.', '',value).strip()
     return value
 
 
@@ -34,7 +38,8 @@ def export(state,pair_id):
              'Is the gap already answered?','What can joint work teach beyond separate work?',
              'Does the first study distinguish rival mechanisms?','Is the invitation natural and worth replying to?',
              'What substantive edits are necessary?'],
-            'review_status':'NOT_YET_HUMAN_EVALUATED','source_evidence':
+            'review_status':'NOT_YET_HUMAN_EVALUATED',
+            'redaction_notice':'Explicit training-condition audit removed by fixed rules; raw scientific outputs preserved separately','source_evidence':
                 load(state/'runs'/(pair_id+'-A')/'competitors.json')}
     path=state/'blind_review'/(pair_id+'.json');save(path,packet)
     lines=['# Private scientific review: '+pair['researcher'],'',

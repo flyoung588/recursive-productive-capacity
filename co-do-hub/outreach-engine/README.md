@@ -212,3 +212,11 @@ experiments and full bilingual drafts under `blind_review/`; the separate privat
 key is under `blind_keys/`. No human review or causal improvement is inferred by
 exporting those files. Neither branch is numerically self-scored. All outputs stay
 DRAFT_ONLY; no sender or mail permissions are added.
+
+For a new development iteration, `pair ... --pair-id NEW --source-pair OLD`
+reuses only OLD's neutral researcher discovery and interpretation. It regenerates
+candidate plans, performs actual counter-searches, and selects/designs again;
+OLD is never overwritten. Server task JSON accepts `source_pair` for this purpose.
+These repeated subjects are a development sensitivity check, not fresh confirmatory
+validation. Blind export removes explicit condition-audit sentences by fixed rules,
+keeps raw outputs unchanged, and preserves scientific uncertainty and refusal.

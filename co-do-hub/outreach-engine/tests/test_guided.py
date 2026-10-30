@@ -15,6 +15,15 @@ def plan(prefix):
 
 
 class GuidedTest(unittest.TestCase):
+    def test_blind_export_removes_condition_leak_without_editing_science(self):
+        import sys
+        sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+        from blind import redact
+        raw={'selection_reason':'Further evidence is needed. No scoped historical lessons were supplied.',
+             'applied_lesson_ids':['private-condition-id']}
+        hidden=redact(raw)
+        self.assertEqual(hidden,{'selection_reason':'Further evidence is needed.'})
+        self.assertIn('No scoped historical',raw['selection_reason'])
     def test_person_facts_do_not_transfer(self):
         with tempfile.TemporaryDirectory() as d:
             r=m.Runtime(d)
