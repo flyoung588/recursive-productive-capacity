@@ -1,3 +1,5 @@
+> Current scientific workflow: **v0.2.1 `pair`**, documented below. The v0.1 template and v0.2 separate-run examples are historical; new scientific A/B runs use fresh pair IDs.
+
 # Co-Do Outreach Learning Engine v0.1
 
 **Executable prototype, not an email campaign.** The user-facing principle is: **their research first; identify a real, testable shared question; enable on-demand cooperation among independent people and AI; learn from corrections and real outcomes.**
