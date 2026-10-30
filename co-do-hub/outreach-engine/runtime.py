@@ -555,7 +555,8 @@ class Runtime:
             metadata.append(found[0]);papers.extend(found[1:])
         # Every A and B query is visible to both selection calls; no first-branch monopoly.
         complete=list({s['url']:s for s in metadata+papers}.values())
-        model_view=list({s['url']:s for s in metadata+sorted(papers,key=lambda s:s['url'])[:2]}.values())
+        model_view=list({s['url']:s for s in metadata+sorted(papers,key=lambda s:(s.get('source_kind','').startswith('Crossref'),
+                      not s.get('content_type','').lower().startswith('application/pdf')))[:2]}.values())
         value={'searches':searches,'sources':complete,'balanced_model_sources':model_view,
                'design':'union of A/B queries; equal evidence access, not an independent search-recall experiment'}
         save(folder/'union_counterevidence.json',value)

@@ -33,6 +33,16 @@ class GuidedTest(unittest.TestCase):
                 evidence=r.retrieve_counterevidence([plan('alpha'),plan('beta')],Path(d)/'pair')
             self.assertEqual(len(evidence['searches']),6)
             self.assertEqual(len(evidence['balanced_model_sources']),6)
+    def test_source_reads_follow_relevance_and_fulltext_not_doi_alphabet(self):
+        with tempfile.TemporaryDirectory() as d:
+            r=m.Runtime(d)
+            result={'api_url':'https://api.example.org/query','sha256':'fixture','retrieved_at':0,
+              'items':[{'DOI':'10.1234/z-top','link':[{'content-type':'application/pdf','URL':'https://example.org/top.pdf'}]},
+                       {'DOI':'10.1234/a-lower'}]}
+            with patch.object(r,'research_source',side_effect=lambda u:{'url':u,'text':'controlled fixture'}) as call:
+                r.sources(result,Path(d)/'sources',max_pages=2)
+            self.assertEqual([x.args[0] for x in call.call_args_list],
+                             ['https://example.org/top.pdf','https://doi.org/10.1234/z-top'])
     def test_no_invite_never_generates_mail(self):
         with tempfile.TemporaryDirectory() as d:
             r=m.Runtime(d);folder=Path(d)/'branch';context={'co_do':{'open_questions':''},'historical_experience':{'lessons':[]}}
