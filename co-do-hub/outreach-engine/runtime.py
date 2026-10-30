@@ -298,7 +298,7 @@ class Runtime:
         urls = list(dict.fromkeys(re.findall(r'https?://[^\s"<>\\]+', json.dumps(result))))
         sources = [{'url':result['api_url'], 'text':json.dumps(result['items'],ensure_ascii=False),
                     'sha256':result['sha256'], 'retrieved_at':result['retrieved_at'],
-                    'source_kind':'Crossref original bibliographic metadata; abstracts when deposited'}]
+                    'source_kind':result.get('provider','Crossref')+' bibliographic metadata; abstracts when available'}]
         urls=[u for u in urls if u != result['api_url']]
         # Keep API relevance order; alphabetic DOI order is not scientific relevance.
         preferred=[]
@@ -558,6 +558,9 @@ class Runtime:
         urls=set()
         for s in discovery['sources']+competitors.get('sources',[]):
             urls.update(s[k] for k in ('url','final_url','requested_paper_url') if s.get(k))
+            # A real link on a read page is an observed reference, not an invented
+            # URL. Membership does NOT certify that the linked paper was read.
+            urls.update(s.get('links',[]))
         for record in [discovery.get('search',{})]+[r['result'] for r in competitors.get('searches',[])]:
             urls.update(i['URL'] for i in record.get('items',[]) if i.get('URL'))
             urls.update('https://doi.org/'+i['DOI'] for i in record.get('items',[]) if i.get('DOI'))
