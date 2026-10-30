@@ -180,7 +180,7 @@ class Runtime:
         # Public Crossref API: no paid service or hidden search-model delegation.
         url = 'https://api.crossref.org/works?' + urllib.parse.urlencode({
             'query.bibliographic':query, 'rows':6,
-            'select':'DOI,title,author,published,abstract,URL,type',
+            'select':'DOI,title,author,published,abstract,URL,type,link',
             'mailto':'flyoung588@gmail.com'})
         result=load(path)
         if result is None:
@@ -235,7 +235,14 @@ class Runtime:
                     'sha256':result['sha256'], 'retrieved_at':result['retrieved_at'],
                     'source_kind':'Crossref original bibliographic metadata; abstracts when deposited'}]
         urls=[u for u in urls if u != result['api_url']]
-        urls.sort(key=lambda u:(not any(h in u for h in ('doi.org/','arxiv.org/','openreview.net/')),u))
+        # Keep API relevance order; alphabetic DOI order is not scientific relevance.
+        preferred=[]
+        for item in result.get('items',[]):
+            preferred.extend(x['URL'] for x in item.get('link',[]) if
+                             x.get('content-type')=='application/pdf' and x.get('URL','').startswith('https://'))
+            if item.get('DOI'):preferred.append('https://doi.org/'+item['DOI'])
+            elif item.get('URL','').startswith('https://'):preferred.append(item['URL'])
+        urls=list(dict.fromkeys(preferred+urls))
         for url in urls[:max_pages]:
             url = url.rstrip('.,;)')
             key = hashlib.sha256(url.encode()).hexdigest()[:16]
@@ -527,7 +534,8 @@ class Runtime:
                 'no_invite_option {when_to_decline,what_evidence_is_missing}, and applied_lesson_ids. '
                 'A colleague\'s extra labor or opinion alone is not joint scientific value. Explain what '
                 'could be learned together beyond either side working independently; do not invent resources '
-                'or commitments. No fixed four-layer mail template. Only source URLs supplied. No numeric self-scores.',
+                'or commitments. Additional joint knowledge may be a falsifiable hypothesis, not an '
+                'already demonstrated necessity or exclusive resource dependency. No fixed four-layer mail template. Only source URLs supplied. No numeric self-scores.',
                 context,folder/'candidates.call.json')
             self.validate_candidates(value)
             save(path,value)
@@ -573,6 +581,11 @@ class Runtime:
             'why_joint_work_might_NOT_be_worthwhile}, selection_reason, uncertainties, applied_lesson_ids. '
             'Use scoped historical experience in selection and joint scientific value, not just writing. '
             'Eliminate or revise an already answered question. Missing search results never prove novelty. '
+            'A concrete provisional joint gain can justify a DRAFT co-design invitation; it need not '
+            'already be demonstrated or impossible for either side alone. Do not require a secured '
+            'partnership or participant pool before discussing a feasible small public-data/software '
+            'first contrast. Keep larger studies and resources explicitly conditional. This is not a '
+            'license to ignore missing critical papers: defer if coverage or joint value is too weak. '
             'If neither evidence nor a credible epistemic complementarity supports an invitation, select '
             'NO_INVITE. Do not ask the recipient merely to validate our plan. Do not claim unique resources '
             'or that the recipient will collaborate. No numeric quality ratings. No historical learning '
@@ -619,17 +632,28 @@ class Runtime:
                               'source_membership':'PASS','historical_asset_used':bool(context['historical_experience']['lessons'])})
         state['status']='DRAFT_ONLY';save(folder/'state.json',state);return state
 
-    def pair(self, researcher, pair_id):
+    def pair(self, researcher, pair_id, source_pair=None):
         self.checked_id(pair_id)
         pair_folder=self.state/'pairs'/pair_id;pair_folder.mkdir(parents=True,exist_ok=True)
         with (pair_folder/'run.lock').open('a') as lock:
             fcntl.flock(lock,fcntl.LOCK_EX)
-            binding={'researcher':researcher,'version':'0.2.1'}
+            binding={'researcher':researcher,'version':'0.2.1','source_pair':source_pair}
             existing=load(pair_folder/'input.json')
             if existing and existing!=binding:raise ValueError('Pair ID already bound to another input')
             save(pair_folder/'input.json',binding)
             source_id=pair_id+'-source';source_folder=self.state/'runs'/source_id
             source_state=load(source_folder/'state.json',{})
+            if source_pair and source_state.get('status')!='EVIDENCE_READY':
+                self.checked_id(source_pair)
+                prior=load(self.state/'pairs'/source_pair/'input.json')
+                if not prior or prior['researcher']!=researcher:raise ValueError('Reused identity differs')
+                origin=self.state/'runs'/(source_pair+'-source')
+                for part in ('discovery','interpretation','input_identity'):
+                    value=load(origin/(part+'.json'))
+                    if value is not None:save(source_folder/(part+'.json'),value)
+                if not (source_folder/'interpretation.json').exists():raise ValueError('No completed neutral evidence')
+                source_state={'status':'EVIDENCE_READY','reused_from':source_pair+'-source'}
+                save(source_folder/'state.json',source_state)
             if source_state.get('status')!='EVIDENCE_READY':
                 self.legacy_run(researcher,source_id,learning=False,evidence_only=True)
             discovery=load(source_folder/'discovery.json');interpretation=load(source_folder/'interpretation.json')
@@ -705,7 +729,7 @@ def main(argv=None):
     sub=p.add_subparsers(dest='command',required=True)
     run=sub.add_parser('research'); run.add_argument('researcher'); run.add_argument('--run-id',required=True)
     run.add_argument('--no-learning',action='store_true'); run.add_argument('--evidence-from')
-    pair=sub.add_parser('pair');pair.add_argument('researcher');pair.add_argument('--pair-id',required=True)
+    pair=sub.add_parser('pair');pair.add_argument('researcher');pair.add_argument('--pair-id',required=True);pair.add_argument('--source-pair')
     sub.add_parser('learn')
     status=sub.add_parser('status'); status.add_argument('run_id')
     feed=sub.add_parser('feedback'); feed.add_argument('--researcher',required=True)
@@ -713,7 +737,7 @@ def main(argv=None):
     feed.add_argument('--note',required=True)
     args=p.parse_args(argv); runtime=Runtime(args.state,args.binary)
     if args.command=='research': result=runtime.run(args.researcher,args.run_id,not args.no_learning,args.evidence_from)
-    elif args.command=='pair': result=runtime.pair(args.researcher,args.pair_id)
+    elif args.command=='pair': result=runtime.pair(args.researcher,args.pair_id,args.source_pair)
     elif args.command=='learn': result=runtime.learn_feedback()
     elif args.command=='status':
         if not re.fullmatch(r'[a-zA-Z0-9_-]+',args.run_id): p.error('Invalid run ID')

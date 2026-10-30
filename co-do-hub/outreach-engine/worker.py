@@ -13,7 +13,7 @@ task=json.loads((state/'tasks'/f'{name}.json').read_text())
 runtime=Runtime(state)
 previous=load(state/'runs'/name/'state.json',{})
 if task.get('mode')=='pair':
-    result=runtime.pair(task['researcher'],name)
+    result=runtime.pair(task['researcher'],name,task.get('source_pair'))
 elif previous.get('version')=='0.2.0':
     result=runtime.legacy_run(task['researcher'],name,task.get('learning',True),task.get('evidence_from'))
 else:
