@@ -52,6 +52,8 @@ class GuidedTest(unittest.TestCase):
         hidden=redact(raw)
         self.assertEqual(hidden,{'selection_reason':'Further evidence is needed.'})
         self.assertIn('No scoped historical',raw['selection_reason'])
+        audit='Evidence still missing. No supplied historical lessons inform this selection, and no researcher interest or agreement is inferred.'
+        self.assertEqual(redact(audit),'Evidence still missing. no researcher interest or agreement is inferred.')
     def test_person_facts_do_not_transfer(self):
         with tempfile.TemporaryDirectory() as d:
             r=m.Runtime(d)

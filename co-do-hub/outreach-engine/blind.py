@@ -14,7 +14,10 @@ def redact(value):
     if isinstance(value,list):return [r for v in value if (r:=redact(v))!='']
     if isinstance(value,str):
         # Remove only explicit condition audit, not scientific reasons or uncertainty.
-        return re.sub(r'(?i)\bNo\s+(?:scoped\s+)?historical\s+lessons\s+were\s+supplied\b[^.]*\.', '',value).strip()
+        text=re.sub(r'(?i)\bNo\s+(?:scoped\s+)?historical\s+lessons\s+were\s+supplied\b[^.]*\.', '',value)
+        text=re.sub(r'(?i)\bNo\s+supplied\s+historical\s+lessons\s+inform\s+this\s+selection'
+                    r'(?:,\s*and\s+|\.\s*)', '',text)
+        return text.strip()
     return value
 
 
