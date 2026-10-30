@@ -855,6 +855,13 @@ class Runtime:
                     'evidence_from':source_id},'version':PIPELINE,'model':MODEL,'thinking':'low',
                     'status':'RUNNING','delivery':'DRAFT_ONLY','send_authorized':False}
                 if state['version']!=PIPELINE:raise ValueError('Old pipeline cache: use new pair ID')
+                if state.get('error'):
+                    failure=folder/('failed-state-'+uuid.uuid4().hex+'.json')
+                    save(failure,state)
+                    state.pop('error')
+                    state['last_failure_record']=failure.name
+                if state.get('status') not in ('DRAFT_ONLY','NO_CREDIBLE_INTERSECTION'):
+                    state['status']='RUNNING'
                 save(folder/'state.json',state);save(folder/'discovery.json',discovery)
                 save(folder/'interpretation.json',interpretation);save(folder/'lessons.json',experience)
                 context=self.guided_context(researcher,discovery,interpretation,experience,co_do)
