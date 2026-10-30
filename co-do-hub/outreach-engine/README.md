@@ -1,4 +1,4 @@
-> Current scientific workflow: **v0.2.1 `pair`**, documented below. The v0.1 template and v0.2 separate-run examples are historical; new scientific A/B runs use fresh pair IDs.
+> Current scientific workflow: **v0.2.2 `pair`**, documented below. The v0.1 template and v0.2 separate-run examples are historical; new scientific A/B runs use fresh pair IDs.
 
 # Co-Do Outreach Learning Engine v0.1
 
@@ -116,7 +116,7 @@ oneshot worker, not a daemon or scheduler. Queue JSON under state/tasks and star
 the instance manually; rerun the same instance to resume checkpoints.
 
 Retrieval limitations: Crossref deposits may omit abstracts, and not every recent
-paper is indexed; raw DOI pages can reject automated readers. The runtime reads linked original research pages, uses the public OpenReview API for submitted records, and can extract bounded PDFs with an already installed `pdftotext`; no dependency is automatically installed. It falls back to deposited Crossref DOI metadata where a publisher refuses access. Captured source text (up to 40,000 normalized characters per HTML/PDF source; JSON metadata retained whole) and original-byte hashes are retained privately; bounded source excerpts enter the model context. Original PDF bytes are downloaded for extraction and hashing, not retained as a complete PDF archive. Metadata-only
+paper is indexed; raw DOI pages can reject automated readers. The runtime reads linked original research pages, uses the public OpenReview API for submitted records, and can extract bounded PDFs with an already installed `pdftotext`; no dependency is automatically installed. It falls back to deposited Crossref DOI metadata where a publisher refuses access. Captured source text (up to 140,000 normalized characters per HTML/PDF source in the current pipeline; JSON metadata retained whole) and original-byte hashes are retained privately; bounded source excerpts enter the model context. Original PDF bytes are downloaded for extraction and hashing, not retained as a complete PDF archive. Metadata-only
 sources must not support detailed result claims. URL membership cannot prove
 entailment. Scholarly novelty, researcher interest and improved writing quality
 are not automatically established. No contacts occur.
@@ -220,3 +220,26 @@ OLD is never overwritten. Server task JSON accepts `source_pair` for this purpos
 These repeated subjects are a development sensitivity check, not fresh confirmatory
 validation. Blind export removes explicit condition-audit sentences by fixed rules,
 keeps raw outputs unchanged, and preserves scientific uncertainty and refusal.
+
+### v0.2.2: critical reading before a frozen decision
+
+The same commands now use a fresh v0.2.2 pair. Before candidate generation a neutral
+research-program read connects multiple results and records whose current interests
+are actually evidenced. Captured HTML/PDF text is bounded at 140,000 normalized
+characters; model excerpts include offset-labeled methods/results/discussion
+passages rather than only the opening prefix. These excerpts are not full-paper
+reading or independent verification of every claim.
+
+Before either selection, one shared recovery pass targets up to four observed
+primary URLs and two further rival queries. Queries use Crossref and the public,
+unauthenticated OpenAlex endpoint; errors and inaccessible papers are retained.
+The resulting corpus is identical in A/B. Retrieval is bounded and non-exhaustive;
+there is no novelty certification from a fixed result count. A linked reference is
+distinguished from a paper whose text was retrieved.
+
+Selection compares studied units, populations, mechanisms, interventions and
+outcomes, separating fully/partly answered, adjacent, unanswered-in-read-sources,
+and missing-evidence cases. Joint value includes each side's solo counterfactual
+and an observable possible knowledge gain. A draft still requires independent
+scientific/editorial review; code changes and model output differences establish
+neither better science nor more compelling collaboration.
