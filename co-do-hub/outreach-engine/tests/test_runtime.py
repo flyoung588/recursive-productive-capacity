@@ -58,5 +58,15 @@ class RuntimeTest(unittest.TestCase):
     def test_json_object_required(self):
         self.assertEqual(m.parse_json('```json\n{"ok":true}\n```'),{'ok':True})
         with self.assertRaises(ValueError): m.parse_json('[]')
+    def test_invalid_model_output_is_preserved_and_recovered_once(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            r=m.Runtime(tmp);p=Path(tmp)/'stage.call.json'
+            raw=lambda text:{'provider':'openai','model':'gpt-6.1-sol','outputs':[{'text':text}]}
+            m.save(p,{'returncode':0,'stdout':json.dumps(raw('No earlier task provided.'))})
+            with patch.object(r,'command',return_value=raw('{"research_question":"conditional hypothesis"}')) as call:
+                self.assertIn('research_question',r.model('Design a study',{'source':'evidence'},p))
+            self.assertEqual(call.call_count,1)
+            self.assertIn('No earlier task',m.load(p)['stdout'])
+            self.assertTrue(p.with_suffix('.validation.json').exists())
 
 if __name__=='__main__': unittest.main()
