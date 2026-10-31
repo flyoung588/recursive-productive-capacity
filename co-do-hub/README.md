@@ -6,6 +6,8 @@ An idea can begin with one person. AI can help explore it, turn it into experime
 
 **Start with something worth doing. Form the collaboration it needs. Keep the capability it creates.**
 
+**The deeper ambition:** Co-Do seeks to **discover unrealized joint value, initiate new relationships of co-production, and contribute to actual results**. A worthwhile project may not even have been recognized yet: independent people may hold complementary questions, capabilities, or resources without knowing what they could create together. Merely matching people or supplying AI assistance does not demonstrate Co-Do's value. The test is whether genuinely new collaborative outcomes arise, with benefits for every participant, beyond what they could accomplish through their own AI, existing teams, or ordinary collaboration—and after accounting for costs. **This remains a research and practice hypothesis, not a proven advantage.**
+
 This is **Co-Do**: an open exploration of how people and AI can create together in a machine-economy era, when work, capabilities and even organizations can be assembled *on demand*.
 
 [中文介绍](README.zh-CN.md) · [The idea behind Co-Do](DEFINITION.md) · [How to take part](PARTICIPATE.md)
