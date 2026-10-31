@@ -1,0 +1,31 @@
+name: Co-Do JV002 real OCV benchmark
+on:
+  push:
+    branches:
+      - codo-jv002-ocv-real-20261031
+    paths:
+      - 'co-do-hub/experiments/jv002-ocv-fullscale/**'
+      - '.github/workflows/codo-jv002-ocv.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  run-real-data:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out public Co-Do experiment branch
+        uses: actions/checkout@v4
+      - name: Set up Python standard library runtime
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Download 16 exact pinned upstream CSVs and compute full 30-trace results
+        working-directory: co-do-hub/experiments/jv002-ocv-fullscale
+        run: python experiment.py
+      - name: Upload non-confidential scientific outputs (not a collaboration claim)
+        uses: actions/upload-artifact@v4
+        with:
+          name: codo-jv002-full-observations-and-models
+          path: co-do-hub/experiments/jv002-ocv-fullscale/out/
+          if-no-files-found: error
