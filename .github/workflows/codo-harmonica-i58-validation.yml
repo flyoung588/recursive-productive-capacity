@@ -50,7 +50,7 @@ jobs:
         run: |
           set -euo pipefail
           bash scripts/local-setup.sh migrate
-          docker compose --env-file .env exec -T postgres sh -ec 'PGPASSWORD="$POSTGRES_PASSWORD" psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -Atqc "select count(*) from information_schema.tables where table_schema=\x27public\x27;"'
+          docker compose --env-file .env exec -T postgres sh -ec 'PGPASSWORD="$POSTGRES_PASSWORD" psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -Atqc "select count(*) from information_schema.tables;"'
       - name: Start Next.js and record HTTP behavior without Auth0 credentials
         working-directory: upstream
         run: |
