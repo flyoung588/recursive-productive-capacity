@@ -44,7 +44,7 @@ jobs:
           docker compose --env-file .env ps
       - name: Install upstream Node dependencies
         working-directory: upstream
-        run: npm ci --no-audit --no-fund
+        run: npm install --no-audit --no-fund
       - name: Execute actual Kysely migrations on local PostgreSQL
         working-directory: upstream
         run: |
