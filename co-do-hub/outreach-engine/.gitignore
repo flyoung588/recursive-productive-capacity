@@ -5,3 +5,5 @@ private/
 *.private.jsonl
 *.secret
 data/feedback.local.jsonl
+# All generated research runs, semantic feedback and drafts are PRIVATE.
+runtime-state/

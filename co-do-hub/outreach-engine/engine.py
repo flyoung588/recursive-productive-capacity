@@ -11,6 +11,7 @@ import json
 import math
 import os
 import re
+import sys
 import urllib.parse
 import urllib.request
 from pathlib import Path
@@ -274,6 +275,10 @@ def draft_with_local_model(person, match, events, endpoint, model_name, allow_ex
 
 
 def main(argv=None):
+    argv = list(sys.argv[1:] if argv is None else argv)
+    if argv and argv[0] == 'cognition':
+        from runtime import main as cognition_main
+        return cognition_main(argv[1:])
     parser = argparse.ArgumentParser(description='Co-Do recursive outreach; local drafts only, no mail sender')
     sub = parser.add_subparsers(dest='command', required=True)
     sub.add_parser('learn', help='Fit and persist pairwise preferences from feedback.jsonl')
