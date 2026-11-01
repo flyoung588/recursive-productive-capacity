@@ -1,20 +1,78 @@
-name: CoDo Harmonica issue 58 cloud check
+name: CoDo Harmonica issue 58 cloud validation
 on:
   push:
-    branches:
-      - codo-harmonica-i58-validation
+    branches: [codo-harmonica-i58-validation]
   workflow_dispatch:
 permissions:
   contents: read
 jobs:
-  runtime:
+  smoke:
     runs-on: ubuntu-24.04
     timeout-minutes: 18
     steps:
-      - name: Tool availability
+      - name: Checkout CoDo test patch
+        uses: actions/checkout@v4
+      - name: Checkout exact public Harmonica source
+        uses: actions/checkout@v4
+        with:
+          repository: harmonicabot/harmonica-web-app
+          ref: 6b57ef8d7031a99e8977ec5a2e7556647fb3a1b2
+          path: upstream
+          persist-credentials: false
+      - name: Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: upstream/package-lock.json
+      - name: Install contribution on actual upstream checkout
         run: |
+          set -euo pipefail
+          cp -a experiments/harmonica-i58/patch/. upstream/
+          chmod +x upstream/scripts/local-setup.sh
+          cd upstream
+          git diff --check
+          bash -n scripts/local-setup.sh
+          echo "Installed patch; verifying actual Docker services next."
+      - name: Bring up real PostgreSQL and Qdrant
+        working-directory: upstream
+        run: |
+          set -euo pipefail
           docker --version
           docker compose version
-          docker info | head -25
-          node --version
-          npm --version
+          bash scripts/local-setup.sh up
+          docker compose --env-file .env ps
+      - name: Install upstream Node dependencies
+        working-directory: upstream
+        run: npm ci --no-audit --no-fund
+      - name: Execute actual Kysely migrations on local PostgreSQL
+        working-directory: upstream
+        run: |
+          set -euo pipefail
+          bash scripts/local-setup.sh migrate
+          docker compose --env-file .env exec -T postgres sh -ec 'PGPASSWORD="$POSTGRES_PASSWORD" psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -Atqc "select count(*) from information_schema.tables where table_schema=\x27public\x27;"'
+      - name: Start Next.js and record HTTP behavior without Auth0 credentials
+        working-directory: upstream
+        run: |
+          set -euo pipefail
+          npm run dev > /tmp/codo-harmonica-dev.log 2>&1 &
+          pid=$!
+          trap 'kill $pid 2>/dev/null || true' EXIT
+          code=000
+          for attempt in $(seq 1 45); do
+            code=$(curl --max-time 3 -sS -o /tmp/codo-harmonica-body.html -w '%{http_code}' http://127.0.0.1:3000/ || true)
+            if [[ "$code" != 000 && -n "$code" ]]; then break; fi
+            sleep 2
+          done
+          echo "Next.js root HTTP status: $code"
+          echo "Dev server excerpt:"
+          tail -40 /tmp/codo-harmonica-dev.log
+          if [[ "$code" = 000 ]]; then echo "App HTTP smoke: no reachable response"; exit 1; fi
+          if [[ "$code" = 500 ]]; then echo "App HTTP smoke: 500; expected possible Auth0 blocker, not full success"; fi
+          echo "App HTTP request was executed; full authenticated workflow remains out of scope."
+      - name: Show live service diagnostics
+        if: always()
+        working-directory: upstream
+        run: |
+          docker compose --env-file .env ps || true
+          docker compose --env-file .env logs --no-color --tail=35 postgres qdrant || true
