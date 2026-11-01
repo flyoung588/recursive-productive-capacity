@@ -28,9 +28,9 @@ jobs:
       - name: Install contribution on actual upstream checkout
         run: |
           set -euo pipefail
-          cp -a experiments/harmonica-i58/patch/. upstream/
-          chmod +x upstream/scripts/local-setup.sh
+          python3 experiments/harmonica-i58/apply_patch.py upstream
           cd upstream
+          git add -N .env.local.example docker-compose.yml docs/local-development.md scripts/local-setup.sh
           git diff --check
           bash -n scripts/local-setup.sh
           echo "Installed patch; verifying actual Docker services next."
