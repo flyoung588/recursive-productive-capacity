@@ -1,0 +1,20 @@
+name: CoDo Harmonica issue 58 cloud check
+on:
+  push:
+    branches:
+      - codo-harmonica-i58-validation
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  runtime:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - name: Tool availability
+        run: |
+          docker --version
+          docker compose version
+          docker info | head -25
+          node --version
+          npm --version
